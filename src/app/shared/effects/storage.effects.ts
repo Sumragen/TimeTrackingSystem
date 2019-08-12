@@ -7,8 +7,6 @@ import {Device} from "@ionic-native/device/ngx";
 import {TimeService} from "../time/time.service";
 import {StorageService} from "../services/storage/storage.service";
 
-export const recordStorageKey: string = 'record_storage';
-
 @Injectable()
 export class StorageEffects {
     constructor(private actions$: Actions,
@@ -26,15 +24,18 @@ export class StorageEffects {
                     if (!!time) {
                         const value = {
                             ...time,
-                            description: action.payload.description,
-                            type: action.payload.type
+                            description: action.payload.description
                         };
 
-                        const storage: any[] = await this.storageService.getItem(recordStorageKey) || [];
+                        const storage: any = await this.storageService.getRecords() || {};
 
-                        storage.push(value);
+                        const type: string = action.payload.type;
+                        if(!storage[type]){
+                            storage[type] = [];
+                        }
+                        storage[type].push(value);
 
-                        await this.storageService.setItem(recordStorageKey, storage);
+                        await this.storageService.setRecords(storage);
                     }
 
                     return action;

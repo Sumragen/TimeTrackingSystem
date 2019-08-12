@@ -1,8 +1,11 @@
 import {Component, OnDestroy, OnInit, ChangeDetectorRef} from "@angular/core";
 import {Store, select} from "@ngrx/store";
-import {Subscription} from "rxjs";
-import {ButtonState} from "../shared/store/reducers";
+import {Subject} from "rxjs";
+import {ButtonState, STOP} from "../shared/store/reducers";
 import {STORE_STATE, BUTTON_STATE_KEY} from "../shared/store/store";
+import {StorageService} from "../shared/services/storage/storage.service";
+import {Actions, ofType} from "@ngrx/effects";
+import {takeUntil, tap} from "rxjs/operators";
 
 @Component({
     selector: 'app-home',
@@ -17,22 +20,36 @@ export class HomePage implements OnInit, OnDestroy {
     public customType: string;
     public customTypeChecked: boolean = false;
     public activityTypes: string[];
-    private state$: Subscription;
+    private destroyed$ = new Subject<boolean>();
 
     constructor(private store: Store<STORE_STATE>,
-                private cdr: ChangeDetectorRef) {
-        this.state$ = this.store.pipe(select(BUTTON_STATE_KEY))
-            .subscribe((state: ButtonState) => {
-                this.button = state;
-            })
+                private cdr: ChangeDetectorRef,
+                private storageService: StorageService,
+                private actions: Actions) {
+        this.store.pipe(
+            takeUntil(this.destroyed$),
+            select(BUTTON_STATE_KEY)
+        ).subscribe((state: ButtonState) => {
+            this.button = state;
+        })
     }
 
     public ngOnInit() {
         this.setupActivityTypes();
+        this.actions.pipe(
+            ofType(STOP),
+            takeUntil(this.destroyed$),
+            tap(() => {
+                this.setupActivityTypes();
+                this.unselectCustomType();
+                this.customType = null;
+            })
+        ).subscribe();
     }
 
     public ngOnDestroy() {
-        this.state$.unsubscribe();
+        this.destroyed$.next(true);
+        this.destroyed$.complete();
     }
 
     public buttonClick() {
@@ -60,7 +77,12 @@ export class HomePage implements OnInit, OnDestroy {
     }
 
     private setupActivityTypes(): void {
-        this.activityTypes = [];
-        this.type = this.activityTypes[0];
+        this.storageService.getKeys().then((types: string[]) => {
+            if (!types) {
+                return;
+            }
+            this.activityTypes = types;
+            this.type = types[0];
+        });
     }
 }

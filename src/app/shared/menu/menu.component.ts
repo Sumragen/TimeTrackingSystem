@@ -11,12 +11,12 @@ export class MenuComponent implements OnInit {
 
   constructor(
       private router: Router,
-      private menuContoller: MenuController
+      private menuController: MenuController
   ) { }
 
   ngOnInit() {}
 
   public handleStatisticClick(): void {
-    this.router.navigate(['statistic']).then(() => this.menuContoller.close());
+    this.router.navigate(['statistic']).then(() => this.menuController.close());
   }
 }
