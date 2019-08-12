@@ -24,7 +24,11 @@ export class StorageEffects {
                     const time = this.timeService.performCalculation(action.payload.target);
 
                     if (!!time) {
-                        const value = {...action, ...time};
+                        const value = {
+                            ...time,
+                            description: action.payload.description
+                        };
+
                         if (this.device.platform === null) {
                             const storage: any[] = JSON.parse(localStorage.getItem(recordStorageKey)) || [];
 
