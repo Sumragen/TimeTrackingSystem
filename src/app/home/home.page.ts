@@ -41,7 +41,7 @@ export class HomePage implements OnInit, OnDestroy {
             payload: {
                 target: this.button.target,
                 description: this.description,
-                type: this.type
+                type: this.type || this.customType
             }
         });
     }
@@ -55,7 +55,12 @@ export class HomePage implements OnInit, OnDestroy {
         this.customTypeChecked = false;
     }
 
+    public isActivityTypeExist(): boolean {
+        return !!this.activityTypes && this.activityTypes.length > 0
+    }
+
     private setupActivityTypes(): void {
-        this.activityTypes = ['smoke', 'work', 'eat', 'learn', 'rest']
+        this.activityTypes = [];
+        this.type = this.activityTypes[0];
     }
 }
