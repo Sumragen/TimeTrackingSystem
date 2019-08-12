@@ -1,14 +1,27 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            Time Tracking System
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
-  </div>
+    <ion-item>
+        <ion-textarea
+                [(ngModel)]="description"
+                placeholder="What we plan to do?"
+                clearOnEdit="true">
+        </ion-textarea>
+    </ion-item>
+
+    <ion-button
+            color="dark"
+            fill="outline"
+            (click)="buttonClick()">
+        {{ button.type }}
+    </ion-button>
 </ion-content>
