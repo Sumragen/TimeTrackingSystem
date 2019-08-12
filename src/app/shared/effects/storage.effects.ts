@@ -5,14 +5,14 @@ import {NativeStorage} from "@ionic-native/native-storage/ngx";
 import {fromPromise} from "rxjs/internal/observable/fromPromise";
 import {Device} from "@ionic-native/device/ngx";
 import {TimeService} from "../time/time.service";
+import {StorageService} from "../services/storage/storage.service";
 
 export const recordStorageKey: string = 'record_storage';
 
 @Injectable()
 export class StorageEffects {
     constructor(private actions$: Actions,
-                private storage: NativeStorage,
-                private device: Device,
+                private storageService: StorageService,
                 private timeService: TimeService) {
     }
 
@@ -30,19 +30,11 @@ export class StorageEffects {
                             type: action.payload.type
                         };
 
-                        if (this.device.platform === null) {
-                            const storage: any[] = JSON.parse(localStorage.getItem(recordStorageKey)) || [];
+                        const storage: any[] = await this.storageService.getItem(recordStorageKey) || [];
 
-                            storage.push(value);
+                        storage.push(value);
 
-                            localStorage.setItem(recordStorageKey, JSON.stringify(storage));
-                        } else {
-                            await this.storage.getItem(recordStorageKey).then(async(storage: any[] = []) => {
-                                storage.push(value);
-
-                                return await this.storage.setItem(recordStorageKey, storage)
-                            });
-                        }
+                        await this.storageService.setItem(recordStorageKey, storage);
                     }
 
                     return action;
