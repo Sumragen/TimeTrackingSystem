@@ -26,7 +26,8 @@ export class StorageEffects {
                     if (!!time) {
                         const value = {
                             ...time,
-                            description: action.payload.description
+                            description: action.payload.description,
+                            type: action.payload.type
                         };
 
                         if (this.device.platform === null) {

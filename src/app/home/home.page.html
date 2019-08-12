@@ -10,6 +10,29 @@
 </ion-header>
 
 <ion-content>
+    <ion-list>
+        <ion-radio-group [(ngModel)]="type" allow-empty-selection>
+            <ion-list-header>
+                <ion-label>Chose type of your activity</ion-label>
+            </ion-list-header>
+
+            <ion-item *ngFor="let activity of activityTypes; let i = index">
+                <ion-label>{{activity}} - {{i}}</ion-label>
+                <ion-radio slot="end" [value]="activity" (ionSelect)="unselectCustomType()"></ion-radio>
+            </ion-item>
+
+            <ion-item>
+                <ion-input
+                        clear-input="true"
+                        placeholder="Put new activity type"
+                        [(ngModel)]="customType"
+                        (ionFocus)="selectNewActivityInput()"></ion-input>
+                <ion-radio slot="end" [value]="customType" [checked]="customTypeChecked"></ion-radio>
+            </ion-item>
+
+        </ion-radio-group>
+    </ion-list>
+
     <ion-item>
         <ion-textarea
                 [(ngModel)]="description"
