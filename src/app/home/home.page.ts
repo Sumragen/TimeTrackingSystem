@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ChangeDetectorRef} from "@angular/core";
 import {Store, select} from "@ngrx/store";
 import {Subject} from "rxjs";
-import {ButtonState, STOP} from "../shared/store/reducers";
+import {ButtonState, STOP, BUTTON_TYPE} from "../shared/store/reducers";
 import {STORE_STATE, BUTTON_STATE_KEY} from "../shared/store/store";
 import {StorageService} from "../shared/services/storage/storage.service";
 import {Actions, ofType} from "@ngrx/effects";
@@ -74,6 +74,10 @@ export class HomePage implements OnInit, OnDestroy {
 
     public isActivityTypeExist(): boolean {
         return !!this.activityTypes && this.activityTypes.length > 0
+    }
+
+    public isInProgress(): boolean {
+        return this.button.type === BUTTON_TYPE.STOP;
     }
 
     private setupActivityTypes(): void {
