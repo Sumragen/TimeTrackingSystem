@@ -1,30 +1,30 @@
-import {Injectable} from "@angular/core";
-import {STOP} from "../store/reducers";
+import { Injectable } from '@angular/core';
+import { STOP } from '../store/reducers';
 
 @Injectable()
 export class TimeService {
-    private loggedTime: number;
+   private loggedTime: number;
 
-    constructor() {
-    }
+   constructor() {
+   }
 
-    public performCalculation(actionType: string): any {
-        const now: number = Date.now();
-        let performedTime: number;
-        let lastLoggedTime: number = this.loggedTime;
+   public performCalculation(actionType: string): any {
+      const now: number = Date.now();
+      let performedTime: number;
+      let lastLoggedTime: number = this.loggedTime;
 
-        if (actionType === STOP) {
-            this.loggedTime = null;
-        } else {
-            this.loggedTime = now;
-            return;
-        }
+      if (actionType === STOP) {
+         this.loggedTime = null;
+      } else {
+         this.loggedTime = now;
+         return;
+      }
 
-        performedTime = now - lastLoggedTime;
+      performedTime = now - lastLoggedTime;
 
-        return {
-            performedTime: performedTime,
-            date: now
-        };
-    }
+      return {
+         performedTime: performedTime,
+         date: now
+      };
+   }
 }

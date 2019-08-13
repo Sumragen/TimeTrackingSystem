@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
-import {MenuController} from "@ionic/angular";
+import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: 'menu.component.html',
-  styleUrls: ['menu.component.scss'],
+   selector: 'app-menu',
+   templateUrl: 'menu.component.html',
+   styleUrls: ['menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
 
-  constructor(
+   constructor(
       private router: Router,
       private menuController: MenuController
-  ) { }
+   ) { }
 
-  ngOnInit() {}
+   ngOnInit() {}
 
-  public handleStatisticClick(): void {
-    this.router.navigate(['statistic']).then(() => this.menuController.close());
-  }
+   public handleStatisticClick(): void {
+      this.router.navigate(['statistic']).then(() => this.menuController.close());
+   }
 }
