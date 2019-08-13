@@ -52,12 +52,13 @@
 <ion-footer>
     <ion-toolbar>
         <ion-button
+                *ngIf="(button$ | async) as button"
                 color="dark"
                 fill="solid"
                 expand="full"
-                (click)="buttonClick()">
+                (click)="buttonClick(button.target)">
             {{ button.type }}
         </ion-button>
-        <ion-progress-bar *ngIf="isInProgress()" type="indeterminate"></ion-progress-bar>
+        <ion-progress-bar *ngIf="isInProgress$ | async" type="indeterminate"></ion-progress-bar>
     </ion-toolbar>
 </ion-footer>
