@@ -1,11 +1,12 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
+import { Actions, ofType } from '@ngrx/effects';
+import { takeUntil, tap } from 'rxjs/operators';
+
 import { BUTTON_TYPE, ButtonState, STOP } from '../shared/store/reducers';
 import { BUTTON_STATE_KEY, STORE_STATE } from '../shared/store/store';
 import { StorageService } from '../shared/services/storage/storage.service';
-import { Actions, ofType } from '@ngrx/effects';
-import { takeUntil, tap } from 'rxjs/operators';
 
 @Component({
    selector: 'app-home',
