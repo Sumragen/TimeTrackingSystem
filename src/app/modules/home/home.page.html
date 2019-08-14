@@ -9,13 +9,14 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="state$ | async as state">
     <app-idle
-            *ngIf="isInIdle((state$ | async).status)"
-            [record]="record">
+            *ngIf="isInIdle(state.status)"
+            [record]="record"
+            (predefinedType)="buttonClick(state.status)">
     </app-idle>
     <app-perform
-            *ngIf="isInPerform((state$ | async).status)"
+            *ngIf="isInPerform(state.status)"
             [record]="record">
     </app-perform>
 </ion-content>
@@ -27,7 +28,7 @@
                 color="dark"
                 fill="solid"
                 expand="full"
-                [disabled]="!record.type"
+                [disabled]="!record.type && isInIdle(state.status)"
                 (click)="buttonClick(state.status)">
             {{ isInIdle(state.status) ? 'start' : 'stop' }}
         </ion-button>

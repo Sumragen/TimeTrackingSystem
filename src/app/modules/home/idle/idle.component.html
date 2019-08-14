@@ -1,7 +1,10 @@
 <ion-input
-    class="custom-type-input"
-    clear-input="true"
-    placeholder="Put new activity type"
-    [(ngModel)]="record.type">
+        class="custom-type-input"
+        clear-input="true"
+        placeholder="Put new activity type"
+        [(ngModel)]="record.type">
 </ion-input>
-<ion-button *ngFor="let type of types">{{type}}</ion-button>
+<ion-button *ngFor="let type of types"
+            (click)="predefinedTypeClick(type)">
+    {{type}}
+</ion-button>
