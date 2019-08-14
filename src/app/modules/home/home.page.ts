@@ -20,6 +20,7 @@ export enum BUTTON_TYPE {
 
 export interface RecordInterface {
    type: string;
+   description?: string;
 }
 
 @Component({
@@ -60,8 +61,7 @@ export class HomePage extends DestroyComponent implements OnInit {
          type: STORAGE_EFFECT.RECORD,
          payload: {
             target,
-            description: this.description,
-            type: this.record.type
+            ...this.record
          }
       });
    }
