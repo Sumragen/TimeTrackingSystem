@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { Actions, ofType } from '@ngrx/effects';
@@ -8,6 +8,7 @@ import { APP_STATUS, AppState } from '../../shared/store/reducers/app.reducer';
 import { APP_STATE_KEY, STORE_STATE } from '../../shared/store/store';
 import { StorageService } from '../../shared/services/storage/storage.service';
 import { STORAGE_EFFECT } from '../../shared/store/effects/storage.effect';
+import { DestroyComponent } from '../../shared/components/destroy/destroy.component';
 
 // TODO: Temporary it will live there, but in future it will go to the separate component
 // but
@@ -22,7 +23,7 @@ export enum BUTTON_TYPE {
    templateUrl: 'home.page.html',
    styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit, OnDestroy {
+export class HomePage extends DestroyComponent implements OnInit {
    public description: string;
    public type: string;
    public customType: string;
@@ -37,13 +38,12 @@ export class HomePage implements OnInit, OnDestroy {
       private cdr: ChangeDetectorRef,
       private storageService: StorageService,
       private actions: Actions
-   ) {}
+   ) {
+      super();
+   }
 
    public ngOnInit() {
-      this.state$ = this.store.pipe(
-         takeUntil(this.destroyed$),
-         select(APP_STATE_KEY)
-      );
+      this.state$ = this.store.pipe(select(APP_STATE_KEY));
 
       this.isInProgress$ = this.state$.pipe(
          map((appState: AppState) => appState.status === APP_STATUS.PERFORMING)
@@ -52,18 +52,13 @@ export class HomePage implements OnInit, OnDestroy {
       this.setupActivityTypes();
       this.actions.pipe(
          ofType(APP_STATUS.PERFORMING),
-         takeUntil(this.destroyed$),
+         takeUntil(this.dispose$),
          tap(() => {
             this.setupActivityTypes();
             this.unselectCustomType();
             this.customType = null;
          })
       ).subscribe();
-   }
-
-   public ngOnDestroy() {
-      this.destroyed$.next(true);
-      this.destroyed$.complete();
    }
 
    public buttonClick(target: APP_STATUS) {
