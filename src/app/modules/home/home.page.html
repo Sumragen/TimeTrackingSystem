@@ -29,7 +29,7 @@
                 expand="full"
                 [disabled]="!record.type"
                 (click)="buttonClick(state.status)">
-            {{ state.status }}
+            {{ isInIdle(state.status) ? 'start' : 'stop' }}
         </ion-button>
         <ion-progress-bar *ngIf="isInProgress$ | async" type="indeterminate"></ion-progress-bar>
     </ion-toolbar>

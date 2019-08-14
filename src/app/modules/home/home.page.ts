@@ -8,14 +8,6 @@ import { APP_STATE_KEY, STORE_STATE } from '../../shared/store/store';
 import { STORAGE_EFFECT } from '../../shared/store/effects/storage.effect';
 import { DestroyComponent } from '../../shared/components/destroy/destroy.component';
 
-// TODO: Temporary it will live there, but in future it will go to the separate component
-// but
-// need to clarify is't nice solution to move button and loading indicator to the separate component
-export enum BUTTON_TYPE {
-   START = 'start',
-   STOP = 'stop'
-}
-
 export interface RecordInterface {
    type: string;
    description?: string;
