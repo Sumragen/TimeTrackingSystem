@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RecordInterface } from '../home.page';
+import { RecordInterface } from '../../../shared/models/record';
 
 @Component({
    selector: 'app-idle',

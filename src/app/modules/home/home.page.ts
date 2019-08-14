@@ -7,11 +7,7 @@ import { APP_STATUS, AppState } from '../../shared/store/reducers/app.reducer';
 import { APP_STATE_KEY, STORE_STATE } from '../../shared/store/store';
 import { STORAGE_EFFECT } from '../../shared/store/effects/storage.effect';
 import { DestroyComponent } from '../../shared/components/destroy/destroy.component';
-
-export interface RecordInterface {
-   type: string;
-   description?: string;
-}
+import { RecordInterface } from '../../shared/models/record';
 
 @Component({
    selector: 'app-home',
