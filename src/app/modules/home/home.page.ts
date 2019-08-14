@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Actions, ofType } from '@ngrx/effects';
 import { map, startWith, takeUntil, tap } from 'rxjs/operators';
 
@@ -74,6 +74,15 @@ export class HomePage extends DestroyComponent implements OnInit {
       return !!this.activityTypes && this.activityTypes.length > 0
    }
 
+   public isInIdle(status: APP_STATUS): boolean {
+      return status === APP_STATUS.IDLE;
+   }
+
+   public isInPerform(status: APP_STATUS): boolean {
+      return status === APP_STATUS.PERFORM;
+   }
+
+   //encapsulated logic =================================================================
    private refreshActivityTypes(): Promise<void> {
       return this.storageService.getKeys().then((types: string[]) => {
          if (!types) {

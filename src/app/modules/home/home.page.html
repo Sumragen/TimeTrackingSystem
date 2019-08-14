@@ -11,8 +11,8 @@
 
 <ion-content>
 
-    <div>idle</div>
-    <div>performing</div>
+    <div *ngIf="isInIdle((state$ | async).status)">idle</div>
+    <div *ngIf="isInPerform((state$ | async).status)">performing</div>
 <!--    <ion-list>-->
 <!--        <ion-radio-group [(ngModel)]="type">-->
 <!--            <ion-list-header *ngIf="isActivityTypeExist()">-->
