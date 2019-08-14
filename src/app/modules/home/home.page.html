@@ -10,42 +10,45 @@
 </ion-header>
 
 <ion-content>
-    <ion-list>
-        <ion-radio-group [(ngModel)]="type">
-            <ion-list-header *ngIf="isActivityTypeExist()">
-                <ion-label>Chose type of your activity</ion-label>
-            </ion-list-header>
 
-            <ion-item *ngFor="let activity of activityTypes">
-                <ion-label>{{activity}}</ion-label>
-                <ion-radio slot="end" [value]="activity" (ionSelect)="unselectCustomType()"></ion-radio>
-            </ion-item>
+    <div>idle</div>
+    <div>performing</div>
+<!--    <ion-list>-->
+<!--        <ion-radio-group [(ngModel)]="type">-->
+<!--            <ion-list-header *ngIf="isActivityTypeExist()">-->
+<!--                <ion-label>Chose type of your activity</ion-label>-->
+<!--            </ion-list-header>-->
 
-            <ion-item>
-                <ion-input
-                        class="custom-type-input"
-                        clear-input="true"
-                        placeholder="Put new activity type"
-                        [(ngModel)]="customType"
-                        (ionFocus)="selectNewActivityInput()"></ion-input>
-                <ion-radio
-                        *ngIf="isActivityTypeExist()"
-                        slot="end"
-                        [value]="customType"
-                        [checked]="customTypeChecked">
-                </ion-radio>
-            </ion-item>
+<!--            <ion-item *ngFor="let activity of activityTypes">-->
+<!--                <ion-label>{{activity}}</ion-label>-->
+<!--                <ion-radio slot="end" [value]="activity" (ionSelect)="unselectCustomType()"></ion-radio>-->
+<!--            </ion-item>-->
 
-        </ion-radio-group>
-    </ion-list>
+<!--            <ion-item>-->
+<!--                <ion-input-->
+<!--                        class="custom-type-input"-->
+<!--                        clear-input="true"-->
+<!--                        placeholder="Put new activity type"-->
+<!--                        [(ngModel)]="customType"-->
+<!--                        (ionFocus)="selectNewActivityInput()"></ion-input>-->
+<!--                <ion-radio-->
+<!--                        *ngIf="isActivityTypeExist()"-->
+<!--                        slot="end"-->
+<!--                        [value]="customType"-->
+<!--                        [checked]="customTypeChecked">-->
+<!--                </ion-radio>-->
+<!--            </ion-item>-->
 
-    <ion-item>
-        <ion-textarea
-                [(ngModel)]="description"
-                placeholder="What we plan to do?"
-                clearOnEdit="true">
-        </ion-textarea>
-    </ion-item>
+<!--        </ion-radio-group>-->
+<!--    </ion-list>-->
+
+<!--    <ion-item>-->
+<!--        <ion-textarea-->
+<!--                [(ngModel)]="description"-->
+<!--                placeholder="What we plan to do?"-->
+<!--                clearOnEdit="true">-->
+<!--        </ion-textarea>-->
+<!--    </ion-item>-->
 
 </ion-content>
 
