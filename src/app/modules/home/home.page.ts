@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { Actions, ofType } from '@ngrx/effects';
-import { map, takeUntil, tap } from 'rxjs/operators';
+import { map, startWith, takeUntil, tap } from 'rxjs/operators';
 
 import { APP_STATUS, AppState } from '../../shared/store/reducers/app.reducer';
 import { APP_STATE_KEY, STORE_STATE } from '../../shared/store/store';
@@ -42,23 +42,12 @@ export class HomePage extends DestroyComponent implements OnInit {
    }
 
    public ngOnInit() {
-      this.state$ = this.store.pipe(select(APP_STATE_KEY));
+      this.state$ = this.setupStateObs();
+      this.isInProgress$ = this.setupInProgressObs();
 
-      this.isInProgress$ = this.state$.pipe(
-         map((appState: AppState) => appState.status === APP_STATUS.PERFORMING)
-      );
-
-      this.setupActivityTypes();
-      this.actions.pipe(
-         ofType(APP_STATUS.PERFORMING),
-         takeUntil(this.dispose$),
-         tap(() => {
-            this.setupActivityTypes();
-            this.unselectCustomType();
-            this.customType = null;
-         })
-      ).subscribe();
+      this.watchPerformAction();
    }
+
 
    public buttonClick(target: APP_STATUS) {
       this.store.dispatch({
@@ -76,21 +65,57 @@ export class HomePage extends DestroyComponent implements OnInit {
       this.cdr.detectChanges();
    }
 
-   public unselectCustomType(): void {
+   public cleanCustomTypeRadio(): void {
       this.customTypeChecked = false;
+      this.customType = null;
    }
 
    public isActivityTypeExist(): boolean {
       return !!this.activityTypes && this.activityTypes.length > 0
    }
 
-   private setupActivityTypes(): void {
-      this.storageService.getKeys().then((types: string[]) => {
+   private refreshActivityTypes(): Promise<void> {
+      return this.storageService.getKeys().then((types: string[]) => {
          if (!types) {
             return;
          }
          this.activityTypes = types;
-         this.type = types[0];
       });
+   }
+
+
+   private setupStateObs(): Observable<AppState> {
+      return this.store.pipe(select(APP_STATE_KEY));
+   }
+
+   private setupInProgressObs(): Observable<boolean> {
+      return this.state$.pipe(
+         map((appState: AppState) => appState.status === APP_STATUS.PERFORMING)
+      );
+   }
+
+   private watchPerformAction(): void {
+      const performAction$ = this.setupPerformActionSub();
+      performAction$.pipe(
+         startWith(null),
+         takeUntil(this.dispose$),
+         tap(async () => {
+            await this.refreshActivityTypes();
+            this.setMostPopularActivityType();
+            this.cleanCustomTypeRadio();
+         })
+      ).subscribe();
+   }
+
+   private setupPerformActionSub(): Observable<void> {
+      return this.actions.pipe(
+         ofType(APP_STATUS.PERFORMING)
+      );
+   }
+
+   private setMostPopularActivityType(): void {
+      if (!!this.activityTypes && this.activityTypes.length > 0) {
+         this.type = this.activityTypes[0];
+      }
    }
 }
