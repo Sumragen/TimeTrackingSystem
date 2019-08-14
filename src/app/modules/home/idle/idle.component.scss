@@ -1,3 +1,9 @@
-.custom-type-input {
-  z-index: 10;
+.idle-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  .custom-type-input {
+    z-index: 10;
+  }
 }
