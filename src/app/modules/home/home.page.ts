@@ -15,9 +15,7 @@ import { RecordInterface } from '../../shared/models/record';
    styleUrls: ['home.page.scss'],
 })
 export class HomePage extends DestroyComponent implements OnInit {
-   public record: RecordInterface = {
-      type: null
-   };
+   public record: RecordInterface;
    public state$: Observable<AppState>;
    public isInProgress$: Observable<boolean>;
 
@@ -30,15 +28,22 @@ export class HomePage extends DestroyComponent implements OnInit {
    public ngOnInit() {
       this.state$ = this.setupStateObs();
       this.isInProgress$ = this.setupInProgressObs();
+
+      this.cleanRecord();
    }
 
-
    public buttonClick(target: APP_STATUS) {
+      const payload = {...this.record};
+
+      if (target === APP_STATUS.PERFORM) {
+         this.cleanRecord();
+      }
+
       this.store.dispatch({
          type: STORAGE_EFFECT.RECORD,
          payload: {
             target,
-            ...this.record
+            ...payload
          }
       });
    }
@@ -60,5 +65,12 @@ export class HomePage extends DestroyComponent implements OnInit {
       return this.state$.pipe(
          map((appState: AppState) => appState.status === APP_STATUS.PERFORM)
       );
+   }
+
+   private cleanRecord(): void {
+      this.record = {
+         type: null,
+         description: null
+      };
    }
 }
