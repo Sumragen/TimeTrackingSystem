@@ -2,7 +2,7 @@ import { Action } from '@ngrx/store';
 
 export enum APP_STATUS {
    IDLE = 'IDLE',
-   PERFORMING = 'PERFORMING'
+   PERFORM = 'PERFORM'
 }
 
 export interface AppState {
@@ -15,7 +15,7 @@ const initialState: AppState = {
 
 function startTime(): AppState {
    return {
-      status: APP_STATUS.PERFORMING
+      status: APP_STATUS.PERFORM
    };
 }
 
@@ -29,7 +29,7 @@ export function appReducer(state: AppState = initialState, action: Action): AppS
    switch (action.type) {
       case APP_STATUS.IDLE:
          return startTime();
-      case APP_STATUS.PERFORMING:
+      case APP_STATUS.PERFORM:
          return stopTime();
       default:
          return state;

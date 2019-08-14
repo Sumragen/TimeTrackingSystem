@@ -13,7 +13,7 @@ export class TimeService {
       let performedTime: number;
       let lastLoggedTime: number = this.loggedTime;
 
-      if (actionType === APP_STATUS.PERFORMING) {
+      if (actionType === APP_STATUS.PERFORM) {
          this.loggedTime = null;
       } else {
          this.loggedTime = now;

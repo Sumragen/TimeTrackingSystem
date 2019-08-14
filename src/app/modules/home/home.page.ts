@@ -90,7 +90,7 @@ export class HomePage extends DestroyComponent implements OnInit {
 
    private setupInProgressObs(): Observable<boolean> {
       return this.state$.pipe(
-         map((appState: AppState) => appState.status === APP_STATUS.PERFORMING)
+         map((appState: AppState) => appState.status === APP_STATUS.PERFORM)
       );
    }
 
@@ -109,7 +109,7 @@ export class HomePage extends DestroyComponent implements OnInit {
 
    private setupPerformActionSub(): Observable<void> {
       return this.actions.pipe(
-         ofType(APP_STATUS.PERFORMING)
+         ofType(APP_STATUS.PERFORM)
       );
    }
 
