@@ -16,6 +16,7 @@ import { appReducer } from './shared/store/reducers/app.reducer';
 import { StorageEffect } from './shared/store/effects/storage.effect';
 import { TimeService } from './shared/services/time/time.service';
 import { SharedModule } from './shared/shared.module';
+import { StatisticResolver } from './modules/statistic/statistic.resolver';
 
 @NgModule({
    declarations: [AppComponent],
@@ -34,6 +35,7 @@ import { SharedModule } from './shared/shared.module';
       NativeStorage,
       Device,
       TimeService,
+      StatisticResolver,
       {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
    ],
    bootstrap: [AppComponent]

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { StorageService } from '../../shared/services/storage/storage.service';
 
@@ -13,11 +14,14 @@ export class StatisticPage implements OnInit {
    public doughnutChartData: number[] = [];
    public doughnutChartType: string = 'doughnut';
 
-   constructor(private storageService: StorageService) {
+   constructor(private storageService: StorageService,
+               private route: ActivatedRoute) {
+      const chartData = this.route.snapshot.data.chart;
+      this.doughnutChartLabels = chartData.labels;
+      this.doughnutChartData = chartData.data;
    }
 
    ngOnInit() {
-      this.calculateStorageData();
    }
 
    public chartClicked(e: any): void {
@@ -26,22 +30,5 @@ export class StatisticPage implements OnInit {
 
    public chartHovered(e: any): void {
       console.log(e);
-   }
-
-   private calculateStorageData(): void {
-      this.storageService.getRecords().then(storage => {
-         if (!storage || Object.keys(storage).length === 0) {
-            return null; //todo: display error and navigate back;
-         }
-
-         this.doughnutChartLabels = Object.keys(storage);
-
-         this.doughnutChartData = this.doughnutChartLabels.map(label => {
-            const records = storage[label];
-            return records.reduce((acc, record) => {
-               return acc + record.performedTime;
-            }, 0);
-         })
-      });
    }
 }
