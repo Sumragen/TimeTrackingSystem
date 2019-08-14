@@ -1,43 +1,35 @@
 import { Action } from '@ngrx/store';
 
-export const SWITCH = 'SWITCH';
-export const START = 'START';
-export const STOP = 'STOP';
-
-export interface ButtonState {
-   type: BUTTON_TYPE,
-   target: string
+export enum APP_STATUS {
+   IDLE = 'IDLE',
+   PERFORMING = 'PERFORMING'
 }
 
-export enum BUTTON_TYPE {
-   START = 'start',
-   STOP = 'stop'
+export interface AppState {
+   status: APP_STATUS,
 }
 
-const initialState: ButtonState = {
-   type: BUTTON_TYPE.START,
-   target: START
+const initialState: AppState = {
+   status: APP_STATUS.IDLE
 };
 
-function startTime(): ButtonState {
+function startTime(): AppState {
    return {
-      type: BUTTON_TYPE.STOP,
-      target: STOP
+      status: APP_STATUS.PERFORMING
    };
 }
 
-function stopTime(): ButtonState {
+function stopTime(): AppState {
    return {
-      type: BUTTON_TYPE.START,
-      target: START
+      status: APP_STATUS.IDLE
    };
 }
 
-export function buttonReducer(state: ButtonState = initialState, action: Action): ButtonState {
+export function appReducer(state: AppState = initialState, action: Action): AppState {
    switch (action.type) {
-      case START:
+      case APP_STATUS.IDLE:
          return startTime();
-      case STOP:
+      case APP_STATUS.PERFORMING:
          return stopTime();
       default:
          return state;

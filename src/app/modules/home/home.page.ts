@@ -4,9 +4,17 @@ import { Observable, Subject } from 'rxjs';
 import { Actions, ofType } from '@ngrx/effects';
 import { map, takeUntil, tap } from 'rxjs/operators';
 
-import { BUTTON_TYPE, ButtonState, STOP } from '../../shared/store/reducers/app.reducer';
-import { BUTTON_STATE_KEY, STORE_STATE } from '../../shared/store/store';
+import { APP_STATUS, AppState } from '../../shared/store/reducers/app.reducer';
+import { APP_STATE_KEY, STORE_STATE } from '../../shared/store/store';
 import { StorageService } from '../../shared/services/storage/storage.service';
+
+// TODO: Temporary it will live there, but in future it will go to the separate component
+// but
+// need to clarify is't nice solution to move button and loading indicator to the separate component
+export enum BUTTON_TYPE {
+   START = 'start',
+   STOP = 'stop'
+}
 
 @Component({
    selector: 'app-home',
@@ -19,7 +27,7 @@ export class HomePage implements OnInit, OnDestroy {
    public customType: string;
    public customTypeChecked: boolean = false;
    public activityTypes: string[];
-   public button$: Observable<ButtonState>;
+   public state$: Observable<AppState>;
    public isInProgress$: Observable<boolean>;
    private destroyed$ = new Subject<boolean>();
 
@@ -31,18 +39,18 @@ export class HomePage implements OnInit, OnDestroy {
    ) {}
 
    public ngOnInit() {
-      this.button$ = this.store.pipe(
+      this.state$ = this.store.pipe(
          takeUntil(this.destroyed$),
-         select(BUTTON_STATE_KEY)
+         select(APP_STATE_KEY)
       );
 
-      this.isInProgress$ = this.button$.pipe(
-         map((button: ButtonState) => button.type === BUTTON_TYPE.STOP)
+      this.isInProgress$ = this.state$.pipe(
+         map((appState: AppState) => appState.status === APP_STATUS.PERFORMING)
       );
 
       this.setupActivityTypes();
       this.actions.pipe(
-         ofType(STOP),
+         ofType(APP_STATUS.PERFORMING),
          takeUntil(this.destroyed$),
          tap(() => {
             this.setupActivityTypes();
@@ -57,7 +65,7 @@ export class HomePage implements OnInit, OnDestroy {
       this.destroyed$.complete();
    }
 
-   public buttonClick(target) {
+   public buttonClick(target: APP_STATUS) {
       this.store.dispatch({
          type: 'record',
          payload: {

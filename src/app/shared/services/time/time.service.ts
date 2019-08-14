@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-
-import { STOP } from '../../store/reducers/app.reducer';
+import { APP_STATUS } from '../../store/reducers/app.reducer';
 
 @Injectable()
 export class TimeService {
@@ -14,7 +13,7 @@ export class TimeService {
       let performedTime: number;
       let lastLoggedTime: number = this.loggedTime;
 
-      if (actionType === STOP) {
+      if (actionType === APP_STATUS.PERFORMING) {
          this.loggedTime = null;
       } else {
          this.loggedTime = now;

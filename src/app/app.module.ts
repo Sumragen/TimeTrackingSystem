@@ -12,7 +12,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { buttonReducer } from './shared/store/reducers/app.reducer';
+import { appReducer } from './shared/store/reducers/app.reducer';
 import { StorageEffect } from './shared/store/effects/storage.effect';
 import { TimeService } from './shared/services/time/time.service';
 import { SharedModule } from './shared/shared.module';
@@ -25,7 +25,7 @@ import { SharedModule } from './shared/shared.module';
       IonicModule.forRoot(),
       AppRoutingModule,
       SharedModule,
-      StoreModule.forRoot({button: buttonReducer}),
+      StoreModule.forRoot({app: appReducer}),
       EffectsModule.forRoot([StorageEffect])
    ],
    providers: [

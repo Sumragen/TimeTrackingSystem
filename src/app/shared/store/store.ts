@@ -1,7 +1,7 @@
-import { ButtonState } from './reducers/app.reducer';
+import { AppState } from './reducers/app.reducer';
 
-export const BUTTON_STATE_KEY: string = 'button';
+export const APP_STATE_KEY: string = 'app';
 
 export interface STORE_STATE {
-   button: ButtonState
+   app: AppState
 }
