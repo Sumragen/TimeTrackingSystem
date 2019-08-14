@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import { IdleComponent } from './idle/idle.component';
+import { PerformComponent } from './perform/perform.component';
 
 @NgModule({
    imports: [
@@ -21,7 +22,8 @@ import { IdleComponent } from './idle/idle.component';
    ],
    declarations: [
       HomePage,
-      IdleComponent
+      IdleComponent,
+      PerformComponent
    ]
 })
 export class HomePageModule {}

@@ -13,7 +13,7 @@
     <app-idle
             *ngIf="isInIdle((state$ | async).status)"
             [record]="record"></app-idle>
-    <div *ngIf="isInPerform((state$ | async).status)">performing</div>
+    <app-perform *ngIf="isInPerform((state$ | async).status)"></app-perform>
 <!--    <ion-list>-->
 <!--        <ion-radio-group [(ngModel)]="type">-->
 <!--            <ion-list-header *ngIf="isActivityTypeExist()">-->
