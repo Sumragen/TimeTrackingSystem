@@ -6,6 +6,10 @@ import { fromPromise } from 'rxjs/internal/observable/fromPromise';
 import { TimeService } from '../../services/time/time.service';
 import { StorageService } from '../../services/storage/storage.service';
 
+export enum STORAGE_EFFECT {
+   RECORD = 'RECORD'
+}
+
 @Injectable()
 export class StorageEffect {
    constructor(private actions$: Actions,
@@ -15,7 +19,7 @@ export class StorageEffect {
 
    record$ =
       createEffect(() => this.actions$.pipe(
-         ofType('record'),
+         ofType(STORAGE_EFFECT.RECORD),
          exhaustMap((action) => fromPromise(
             Promise.resolve(action).then(async (action: any) => {
                const time = this.timeService.performCalculation(action.payload.target);

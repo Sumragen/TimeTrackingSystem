@@ -7,6 +7,7 @@ import { map, takeUntil, tap } from 'rxjs/operators';
 import { APP_STATUS, AppState } from '../../shared/store/reducers/app.reducer';
 import { APP_STATE_KEY, STORE_STATE } from '../../shared/store/store';
 import { StorageService } from '../../shared/services/storage/storage.service';
+import { STORAGE_EFFECT } from '../../shared/store/effects/storage.effect';
 
 // TODO: Temporary it will live there, but in future it will go to the separate component
 // but
@@ -67,7 +68,7 @@ export class HomePage implements OnInit, OnDestroy {
 
    public buttonClick(target: APP_STATUS) {
       this.store.dispatch({
-         type: 'record',
+         type: STORAGE_EFFECT.RECORD,
          payload: {
             target,
             description: this.description,
