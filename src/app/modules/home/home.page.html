@@ -27,6 +27,7 @@
                 color="dark"
                 fill="solid"
                 expand="full"
+                [disabled]="!record.type"
                 (click)="buttonClick(state.status)">
             {{ state.status }}
         </ion-button>
