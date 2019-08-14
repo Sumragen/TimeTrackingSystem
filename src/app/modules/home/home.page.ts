@@ -1,12 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Actions, ofType } from '@ngrx/effects';
-import { map, startWith, takeUntil, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { APP_STATUS, AppState } from '../../shared/store/reducers/app.reducer';
 import { APP_STATE_KEY, STORE_STATE } from '../../shared/store/store';
-import { StorageService } from '../../shared/services/storage/storage.service';
 import { STORAGE_EFFECT } from '../../shared/store/effects/storage.effect';
 import { DestroyComponent } from '../../shared/components/destroy/destroy.component';
 
@@ -29,21 +27,14 @@ export interface RecordInterface {
    styleUrls: ['home.page.scss'],
 })
 export class HomePage extends DestroyComponent implements OnInit {
-   public description: string;
-   public type: string;
    public record: RecordInterface = {
       type: null
    };
-   public customTypeChecked: boolean = false;
-   public activityTypes: string[];
    public state$: Observable<AppState>;
    public isInProgress$: Observable<boolean>;
 
    constructor(
-      private store: Store<STORE_STATE>,
-      private cdr: ChangeDetectorRef,
-      private storageService: StorageService,
-      private actions: Actions
+      private store: Store<STORE_STATE>
    ) {
       super();
    }
@@ -51,8 +42,6 @@ export class HomePage extends DestroyComponent implements OnInit {
    public ngOnInit() {
       this.state$ = this.setupStateObs();
       this.isInProgress$ = this.setupInProgressObs();
-
-      this.watchPerformAction();
    }
 
 
@@ -66,19 +55,6 @@ export class HomePage extends DestroyComponent implements OnInit {
       });
    }
 
-   public selectNewActivityInput(): void {
-      this.customTypeChecked = true;
-      this.cdr.detectChanges();
-   }
-
-   public cleanCustomTypeRadio(): void {
-      this.customTypeChecked = false;
-   }
-
-   public isActivityTypeExist(): boolean {
-      return !!this.activityTypes && this.activityTypes.length > 0
-   }
-
    public isInIdle(status: APP_STATUS): boolean {
       return status === APP_STATUS.IDLE;
    }
@@ -88,16 +64,6 @@ export class HomePage extends DestroyComponent implements OnInit {
    }
 
    //encapsulated logic =================================================================
-   private refreshActivityTypes(): Promise<void> {
-      return this.storageService.getKeys().then((types: string[]) => {
-         if (!types) {
-            return;
-         }
-         this.activityTypes = types;
-      });
-   }
-
-
    private setupStateObs(): Observable<AppState> {
       return this.store.pipe(select(APP_STATE_KEY));
    }
@@ -106,30 +72,5 @@ export class HomePage extends DestroyComponent implements OnInit {
       return this.state$.pipe(
          map((appState: AppState) => appState.status === APP_STATUS.PERFORM)
       );
-   }
-
-   private watchPerformAction(): void {
-      const performAction$ = this.setupPerformActionSub();
-      performAction$.pipe(
-         startWith(null),
-         takeUntil(this.dispose$),
-         tap(async () => {
-            await this.refreshActivityTypes();
-            // this.setMostPopularActivityType();
-            this.cleanCustomTypeRadio();
-         })
-      ).subscribe();
-   }
-
-   private setupPerformActionSub(): Observable<void> {
-      return this.actions.pipe(
-         ofType(APP_STATUS.PERFORM)
-      );
-   }
-
-   private setMostPopularActivityType(): void {
-      if (!!this.activityTypes && this.activityTypes.length > 0) {
-         this.type = this.activityTypes[0];
-      }
    }
 }
