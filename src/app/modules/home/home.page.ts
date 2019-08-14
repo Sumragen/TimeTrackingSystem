@@ -31,7 +31,6 @@ export class HomePage extends DestroyComponent implements OnInit {
    public activityTypes: string[];
    public state$: Observable<AppState>;
    public isInProgress$: Observable<boolean>;
-   private destroyed$ = new Subject<boolean>();
 
    constructor(
       private store: Store<STORE_STATE>,
