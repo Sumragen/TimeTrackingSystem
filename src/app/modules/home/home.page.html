@@ -10,8 +10,9 @@
 </ion-header>
 
 <ion-content>
-
-    <div *ngIf="isInIdle((state$ | async).status)">idle</div>
+    <app-idle
+            *ngIf="isInIdle((state$ | async).status)"
+            [record]="record"></app-idle>
     <div *ngIf="isInPerform((state$ | async).status)">performing</div>
 <!--    <ion-list>-->
 <!--        <ion-radio-group [(ngModel)]="type">-->

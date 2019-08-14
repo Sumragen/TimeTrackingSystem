@@ -18,6 +18,10 @@ export enum BUTTON_TYPE {
    STOP = 'stop'
 }
 
+export interface RecordInterface {
+   type: string;
+}
+
 @Component({
    selector: 'app-home',
    templateUrl: 'home.page.html',
@@ -26,7 +30,9 @@ export enum BUTTON_TYPE {
 export class HomePage extends DestroyComponent implements OnInit {
    public description: string;
    public type: string;
-   public customType: string;
+   public record: RecordInterface = {
+      type: null
+   };
    public customTypeChecked: boolean = false;
    public activityTypes: string[];
    public state$: Observable<AppState>;
@@ -55,7 +61,7 @@ export class HomePage extends DestroyComponent implements OnInit {
          payload: {
             target,
             description: this.description,
-            type: this.type || this.customType
+            type: this.record.type
          }
       });
    }
@@ -67,7 +73,6 @@ export class HomePage extends DestroyComponent implements OnInit {
 
    public cleanCustomTypeRadio(): void {
       this.customTypeChecked = false;
-      this.customType = null;
    }
 
    public isActivityTypeExist(): boolean {
@@ -110,7 +115,7 @@ export class HomePage extends DestroyComponent implements OnInit {
          takeUntil(this.dispose$),
          tap(async () => {
             await this.refreshActivityTypes();
-            this.setMostPopularActivityType();
+            // this.setMostPopularActivityType();
             this.cleanCustomTypeRadio();
          })
       ).subscribe();
