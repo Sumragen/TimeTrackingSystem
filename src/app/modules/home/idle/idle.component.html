@@ -4,3 +4,4 @@
     placeholder="Put new activity type"
     [(ngModel)]="record.type">
 </ion-input>
+<ion-button *ngFor="let type of types">{{type}}</ion-button>

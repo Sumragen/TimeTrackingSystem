@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RecordInterface } from '../../../shared/models/record';
+import { StorageService } from '../../../shared/services/storage/storage.service';
 
 @Component({
    selector: 'app-idle',
@@ -8,9 +9,17 @@ import { RecordInterface } from '../../../shared/models/record';
 })
 export class IdleComponent implements OnInit {
    @Input() public record: RecordInterface;
+   public types: string[] = [];
 
-   constructor() { }
+   constructor(private storageService: StorageService) { }
 
-   ngOnInit() {}
+   ngOnInit() {
+      this.storageService.getKeys().then((types: string[]) => {
+         if (!types) {
+            return;
+         }
+         this.types = types.splice(0, 4); // todo: that should be complexity calculation of popular types
+      });
+   }
 
 }
