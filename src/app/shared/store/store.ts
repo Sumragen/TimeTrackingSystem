@@ -1,4 +1,4 @@
-import { ButtonState } from './reducers';
+import { ButtonState } from './reducers/app.reducer';
 
 export const BUTTON_STATE_KEY: string = 'button';
 

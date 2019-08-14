@@ -12,9 +12,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { buttonReducer } from './shared/store/reducers';
-import { StorageEffects } from './shared/effects/storage.effects';
-import { TimeService } from './shared/time/time.service';
+import { buttonReducer } from './shared/store/reducers/app.reducer';
+import { StorageEffect } from './shared/store/effects/storage.effect';
+import { TimeService } from './shared/services/time/time.service';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -26,7 +26,7 @@ import { SharedModule } from './shared/shared.module';
       AppRoutingModule,
       SharedModule,
       StoreModule.forRoot({button: buttonReducer}),
-      EffectsModule.forRoot([StorageEffects])
+      EffectsModule.forRoot([StorageEffect])
    ],
    providers: [
       StatusBar,

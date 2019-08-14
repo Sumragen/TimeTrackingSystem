@@ -4,9 +4,9 @@ import { Observable, Subject } from 'rxjs';
 import { Actions, ofType } from '@ngrx/effects';
 import { map, takeUntil, tap } from 'rxjs/operators';
 
-import { BUTTON_TYPE, ButtonState, STOP } from '../shared/store/reducers';
-import { BUTTON_STATE_KEY, STORE_STATE } from '../shared/store/store';
-import { StorageService } from '../shared/services/storage/storage.service';
+import { BUTTON_TYPE, ButtonState, STOP } from '../../shared/store/reducers/app.reducer';
+import { BUTTON_STATE_KEY, STORE_STATE } from '../../shared/store/store';
+import { StorageService } from '../../shared/services/storage/storage.service';
 
 @Component({
    selector: 'app-home',

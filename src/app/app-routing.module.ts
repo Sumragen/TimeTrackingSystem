@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
-import { HomePageModule } from './home/home.module';
-import { StatisticPageModule } from './statistic/statistic.module';
+import { HomePageModule } from './modules/home/home.module';
+import { StatisticPageModule } from './modules/statistic/statistic.module';
 
 const routes: Routes = [
    {path: '', redirectTo: 'home', pathMatch: 'full'},

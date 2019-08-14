@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { STOP } from '../store/reducers';
+import { STOP } from '../../store/reducers/app.reducer';
 
 @Injectable()
 export class TimeService {

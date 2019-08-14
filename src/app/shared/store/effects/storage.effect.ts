@@ -3,11 +3,11 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { exhaustMap, map } from 'rxjs/internal/operators';
 import { fromPromise } from 'rxjs/internal/observable/fromPromise';
 
-import { TimeService } from '../time/time.service';
-import { StorageService } from '../services/storage/storage.service';
+import { TimeService } from '../../services/time/time.service';
+import { StorageService } from '../../services/storage/storage.service';
 
 @Injectable()
-export class StorageEffects {
+export class StorageEffect {
    constructor(private actions$: Actions,
                private storageService: StorageService,
                private timeService: TimeService) {
