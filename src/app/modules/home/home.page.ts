@@ -16,7 +16,6 @@ import { RecordInterface } from '../../shared/models/record';
 })
 export class HomePage extends DestroyComponent implements OnInit {
    public record: RecordInterface;
-   public state$: Observable<AppState>;
    public isInProgress$: Observable<boolean>;
 
    constructor(
@@ -26,7 +25,6 @@ export class HomePage extends DestroyComponent implements OnInit {
    }
 
    public ngOnInit() {
-      this.state$ = this.setupStateObs();
       this.isInProgress$ = this.setupInProgressObs();
 
       this.cleanRecord();
@@ -56,13 +54,13 @@ export class HomePage extends DestroyComponent implements OnInit {
       return status === APP_STATUS.PERFORM;
    }
 
-   //encapsulated logic =================================================================
-   private setupStateObs(): Observable<AppState> {
+   public getState$(): Observable<AppState> {
       return this.store.pipe(select(APP_STATE_KEY));
    }
 
+   //encapsulated logic =================================================================
    private setupInProgressObs(): Observable<boolean> {
-      return this.state$.pipe(
+      return this.getState$().pipe(
          map((appState: AppState) => appState.status === APP_STATUS.PERFORM)
       );
    }

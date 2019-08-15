@@ -9,7 +9,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="state$ | async as state">
+<ion-content *ngIf="getState$() | async as state">
     <app-idle
             *ngIf="isInIdle(state.status)"
             [record]="record"
@@ -24,7 +24,7 @@
 <ion-footer>
     <ion-toolbar>
         <ion-button
-                *ngIf="(state$ | async) as state"
+                *ngIf="(getState$() | async) as state"
                 color="dark"
                 fill="solid"
                 expand="full"
