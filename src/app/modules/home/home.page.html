@@ -22,9 +22,8 @@
 </ion-content>
 
 <ion-footer>
-    <ion-toolbar>
+    <ion-toolbar *ngIf="getState$() | async as state">
         <ion-button
-                *ngIf="(getState$() | async) as state"
                 color="dark"
                 fill="solid"
                 expand="full"
@@ -32,6 +31,6 @@
                 (click)="buttonClick(state.status)">
             {{ isInIdle(state.status) ? 'start' : 'stop' }}
         </ion-button>
-        <ion-progress-bar *ngIf="isInProgress$ | async" type="indeterminate"></ion-progress-bar>
+        <ion-progress-bar *ngIf="isInPerform(state.status)" type="indeterminate"></ion-progress-bar>
     </ion-toolbar>
 </ion-footer>
