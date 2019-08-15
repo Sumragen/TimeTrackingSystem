@@ -17,6 +17,7 @@ import { StorageEffect } from './shared/store/effects/storage.effect';
 import { TimeService } from './shared/services/time/time.service';
 import { SharedModule } from './shared/shared.module';
 import { StatisticResolver } from './modules/statistic/statistic.resolver';
+import { reducers } from './shared/store/store';
 
 @NgModule({
    declarations: [AppComponent],
@@ -26,7 +27,7 @@ import { StatisticResolver } from './modules/statistic/statistic.resolver';
       IonicModule.forRoot(),
       AppRoutingModule,
       SharedModule,
-      StoreModule.forRoot({app: appReducer}),
+      StoreModule.forRoot(reducers),
       EffectsModule.forRoot([StorageEffect])
    ],
    providers: [

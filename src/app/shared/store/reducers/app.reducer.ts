@@ -1,37 +1,44 @@
-import { Action } from '@ngrx/store';
+import { createAction, createReducer, on } from '@ngrx/store';
 
 export enum APP_STATUS {
    IDLE = 'IDLE',
-   PERFORM = 'PERFORM'
+   PERFORM = 'PERFORM',
+   COMPLETE = 'COMPLETE'
 }
 
-export interface AppState {
-   status: APP_STATUS,
+export interface ActivityState {
+   status: APP_STATUS
 }
 
-const initialState: AppState = {
+const initialState: ActivityState = {
    status: APP_STATUS.IDLE
 };
 
-function startTime(): AppState {
+function startTime(): ActivityState {
    return {
       status: APP_STATUS.PERFORM
    };
 }
 
-function stopTime(): AppState {
+function stopTime(): ActivityState {
    return {
       status: APP_STATUS.IDLE
    };
 }
 
-export function appReducer(state: AppState = initialState, action: Action): AppState {
-   switch (action.type) {
-      case APP_STATUS.IDLE:
-         return startTime();
-      case APP_STATUS.PERFORM:
-         return stopTime();
-      default:
-         return state;
-   }
+export enum ActivityActionsKeys {
+   IDLE = 'IDLE',
+   PERFORM = 'PERFORM',
+   COMPLETE = 'COMPLETE'
 }
+
+export const ActivityActions = {
+   [ActivityActionsKeys.IDLE]: createAction(ActivityActionsKeys.IDLE),
+   [ActivityActionsKeys.PERFORM]: createAction(ActivityActionsKeys.PERFORM),
+   [ActivityActionsKeys.COMPLETE]: createAction(ActivityActionsKeys.COMPLETE)
+};
+
+export const appReducer = createReducer(initialState,
+   on(ActivityActions.IDLE, startTime),
+   on(ActivityActions.PERFORM, stopTime)
+);

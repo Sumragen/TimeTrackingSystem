@@ -12,6 +12,7 @@ export class IdleComponent implements OnInit {
    public types: string[] = [];
    @Input() public record: RecordInterface;
    @Output() public predefinedType: EventEmitter<string> = new EventEmitter();
+
    constructor(private storageService: StorageService) { }
 
    ngOnInit() {

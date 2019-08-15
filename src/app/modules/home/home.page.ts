@@ -3,11 +3,12 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { APP_STATUS, AppState } from '../../shared/store/reducers/app.reducer';
+import { APP_STATUS, ActivityState } from '../../shared/store/reducers/app.reducer';
 import { APP_STATE_KEY, STORE_STATE } from '../../shared/store/store';
 import { STORAGE_EFFECT } from '../../shared/store/effects/storage.effect';
 import { DestroyComponent } from '../../shared/components/destroy/destroy.component';
 import { RecordInterface } from '../../shared/models/record';
+import { dispatch } from 'rxjs/internal/observable/pairs';
 
 @Component({
    selector: 'app-home',
@@ -51,7 +52,7 @@ export class HomePage extends DestroyComponent implements OnInit {
       return status === APP_STATUS.PERFORM;
    }
 
-   public getState$(): Observable<AppState> {
+   public getState$(): Observable<ActivityState> {
       return this.store.pipe(select(APP_STATE_KEY));
    }
 
