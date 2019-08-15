@@ -12,7 +12,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { appReducer } from './shared/store/reducers/app.reducer';
+import { activityReducer } from './shared/store/reducers/activity.reducer';
 import { StorageEffect } from './shared/store/effects/storage.effect';
 import { TimeService } from './shared/services/time/time.service';
 import { SharedModule } from './shared/shared.module';
