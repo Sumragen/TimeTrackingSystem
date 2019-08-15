@@ -55,7 +55,6 @@ export class HomePage extends DestroyComponent implements OnInit {
       return this.store.pipe(select(APP_STATE_KEY));
    }
 
-   //encapsulated logic =================================================================
    private cleanRecord(): void {
       this.record = {
          type: null,
