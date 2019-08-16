@@ -28,7 +28,7 @@ import { getMetaReducers } from './shared/store/meta/meta.reducers';
       AppRoutingModule,
       SharedModule,
       StoreModule.forRoot(reducers),
-      EffectsModule.forRoot([StorageEffect])
+      EffectsModule.forRoot([])
    ],
    providers: [
       StatusBar,

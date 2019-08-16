@@ -1,4 +1,4 @@
-<ion-content *ngIf="getState$() | async as state">
+<div *ngIf="getState$() | async as state">
     <ion-item>
         <ion-textarea
                 placeholder="What we plan to do?"
@@ -7,7 +7,7 @@
         (ionChange)="updateDescription($event.target.value)">
         </ion-textarea>
     </ion-item>
-</ion-content>
+</div>
 
 <ion-footer>
     <ion-toolbar>
