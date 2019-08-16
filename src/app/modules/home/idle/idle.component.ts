@@ -15,8 +15,6 @@ import { STORAGE_EFFECT } from '../../../shared/store/effects/storage.effect';
 export class IdleComponent implements OnInit {
    public types: string[] = [];
 
-   @Output() public predefinedType: EventEmitter<string> = new EventEmitter();
-
    constructor(private storageService: StorageService,
                private store: Store<STORE_STATE>) { }
 
@@ -38,10 +36,6 @@ export class IdleComponent implements OnInit {
       })
    }
 
-   public selectType(type: string): void {
-      //todo: save applied type value
-      this.predefinedType.emit(type);
-   }
    public getState$(): Observable<ActivityState> {
       return this.store.pipe(select(APP_STATE_KEY));
    }

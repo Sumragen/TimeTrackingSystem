@@ -1,13 +1,14 @@
 <ion-content>
-    <div class="idle-container">
+    <div class="idle-container" *ngIf="getState$() | async as state">
         <ion-input
                 class="custom-type-input"
                 clear-input="true"
                 placeholder="Enter new activity type"
+                [value]="state.type"
                 (ionChange)="updateTypeValue($event.target.value)">
         </ion-input>
         <ion-button *ngFor="let type of types"
-                    (click)="selectType(type)">
+                    (click)="applyActivityType(state.status, type)">
             {{type}}
         </ion-button>
     </div>
