@@ -1,7 +1,6 @@
-import { Action, ActionCreator, ActionReducerMap } from '@ngrx/store';
+import { Action, ActionReducerMap } from '@ngrx/store';
 
 import { Activity, ActivityState } from './reducers/activity.reducer';
-import { TypedAction } from '@ngrx/store/src/models';
 
 export const ACTIVITY_STATE_KEY: string = 'activity'; // TODO find way how to remove it
 
@@ -21,5 +20,4 @@ export interface PayloadAction<T> extends Action {
    payload: T;
 }
 
-export const reducers: ActionReducerMap<STORE_STATE, Action> = {
-};
+export const reducers: ActionReducerMap<STORE_STATE, Action> = {};
