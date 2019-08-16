@@ -9,16 +9,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="getState$() | async as state">
-    <app-idle
-            *ngIf="isInIdle(state.status)"
-            (predefinedType)="applyActivityType(state.status, $event)">
-    </app-idle>
-    <app-perform
-            *ngIf="isInPerform(state.status)">
-    </app-perform>
-</ion-content>
-
+<ion-router-outlet></ion-router-outlet>
 <ion-footer>
     <ion-toolbar *ngIf="getState$() | async as state">
         <ion-button

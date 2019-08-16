@@ -1,13 +1,14 @@
-<div class="idle-container">
-    <ion-input
-            class="custom-type-input"
-            clear-input="true"
-            placeholder="Enter new activity type"
-            (ionChange)="updateTypeValue($event.target.value)">
-    </ion-input>
-    <ion-button *ngFor="let type of types"
-                (click)="predefinedTypeClick(type)">
-        {{type}}
-    </ion-button>
-
-</div>
+<ion-content>
+    <div class="idle-container">
+        <ion-input
+                class="custom-type-input"
+                clear-input="true"
+                placeholder="Enter new activity type"
+                (ionChange)="updateTypeValue($event.target.value)">
+        </ion-input>
+        <ion-button *ngFor="let type of types"
+                    (click)="predefinedTypeClick(type)">
+            {{type}}
+        </ion-button>
+    </div>
+</ion-content>

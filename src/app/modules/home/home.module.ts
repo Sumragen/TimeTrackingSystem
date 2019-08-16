@@ -7,18 +7,14 @@ import { RouterModule } from '@angular/router';
 import { HomePage } from './home.page';
 import { IdleComponent } from './idle/idle.component';
 import { PerformComponent } from './perform/perform.component';
+import { HomeRoutingModule } from './home-routing.module';
 
 @NgModule({
    imports: [
       CommonModule,
       FormsModule,
       IonicModule,
-      RouterModule.forChild([
-         {
-            path: '',
-            component: HomePage
-         }
-      ])
+      HomeRoutingModule,
    ],
    declarations: [
       HomePage,
