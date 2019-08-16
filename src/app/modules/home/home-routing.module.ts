@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { HomePage } from './home.page';
 import { IdleComponent } from './idle/idle.component';
 import { PerformComponent } from './perform/perform.component';
+import { ActivityStatusGuard } from '../../shared/guard/activity-status.guard';
 
 const routes: Routes = [
    {
@@ -16,7 +17,8 @@ const routes: Routes = [
          },
          {
             path: 'idle',
-            component: IdleComponent
+            component: IdleComponent,
+            canActivate: [ActivityStatusGuard]
          },
          {
             path: 'perform',
