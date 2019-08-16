@@ -12,12 +12,10 @@
 <ion-content *ngIf="getState$() | async as state">
     <app-idle
             *ngIf="isInIdle(state.status)"
-            [record]="record"
-            (predefinedType)="buttonClick(state.status)">
+            (predefinedType)="applyActivityType(state.status, $event)">
     </app-idle>
     <app-perform
-            *ngIf="isInPerform(state.status)"
-            [record]="record">
+            *ngIf="isInPerform(state.status)">
     </app-perform>
 </ion-content>
 
@@ -27,8 +25,8 @@
                 color="dark"
                 fill="solid"
                 expand="full"
-                [disabled]="!record.type && isInIdle(state.status)"
-                (click)="buttonClick(state.status)">
+                [disabled]="!state.type && isInIdle(state.status)"
+                (click)="applyActivityType(state.status)">
             {{ isInIdle(state.status) ? 'start' : 'stop' }}
         </ion-button>
         <ion-progress-bar *ngIf="isInPerform(state.status)" type="indeterminate"></ion-progress-bar>

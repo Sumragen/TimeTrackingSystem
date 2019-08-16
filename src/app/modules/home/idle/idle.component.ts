@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
-import { RecordInterface } from '../../../shared/models/record';
 import { StorageService } from '../../../shared/services/storage/storage.service';
+import { Store } from '@ngrx/store';
+import { STORE_STATE } from '../../../shared/store/store';
+import { ActivityActionsKey } from '../../../shared/store/reducers/activity.reducer';
 
 @Component({
    selector: 'app-idle',
@@ -10,10 +12,11 @@ import { StorageService } from '../../../shared/services/storage/storage.service
 })
 export class IdleComponent implements OnInit {
    public types: string[] = [];
-   @Input() public record: RecordInterface;
+
    @Output() public predefinedType: EventEmitter<string> = new EventEmitter();
 
-   constructor(private storageService: StorageService) { }
+   constructor(private storageService: StorageService,
+               private store: Store<STORE_STATE>) { }
 
    ngOnInit() {
       this.storageService.getKeys().then((types: string[]) => {
@@ -24,9 +27,17 @@ export class IdleComponent implements OnInit {
       });
    }
 
-   public predefinedTypeClick(type: string): void {
-      this.record.type = type;
-      this.predefinedType.emit(type);
+   public updateTypeValue(type: string): void {
+      this.store.dispatch({
+         type: ActivityActionsKey.SET_TYPE,
+         payload: {
+            type
+         }
+      })
    }
 
+   public predefinedTypeClick(type: string): void {
+      //todo: save applied type value
+      this.predefinedType.emit(type);
+   }
 }

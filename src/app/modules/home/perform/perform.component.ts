@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { RecordInterface } from '../../../shared/models/record';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-perform',
@@ -7,7 +6,7 @@ import { RecordInterface } from '../../../shared/models/record';
   styleUrls: ['./perform.component.scss'],
 })
 export class PerformComponent implements OnInit {
-  @Input() record: RecordInterface;
+
   constructor() { }
 
   ngOnInit() {}

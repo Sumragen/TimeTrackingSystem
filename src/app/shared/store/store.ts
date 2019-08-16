@@ -8,8 +8,10 @@ export interface STORE_STATE {
    activity: ActivityState,
 }
 
-export interface StoreAction extends ActionCreator {
-   payload: STORE_STATE
+export interface StoreAction extends PayloadAction<STORE_STATE> {}
+
+export interface PayloadAction<T> extends ActionCreator {
+   payload: T;
 }
 
 export const reducers: ActionReducerMap<STORE_STATE, Action> = {

@@ -1,6 +1,5 @@
-import { ActionCreator, createAction, createReducer, on } from '@ngrx/store';
-import { StoreAction } from '../store';
-import { ActionType } from '@ngrx/store/src/models';
+import { createAction, createReducer, on } from '@ngrx/store';
+import { PayloadAction, StoreAction } from '../store';
 
 export enum ACTIVITY_STATUS {
    IDLE = 'IDLE',
@@ -22,13 +21,14 @@ const initialState: ActivityState = {
    status: ACTIVITY_STATUS.IDLE
 };
 
-function startTime(): ActivityState {
+function perform(state: ActivityState, action: PayloadAction<{type: string}>): ActivityState {
    return {
-      status: ACTIVITY_STATUS.PERFORM
+      status: ACTIVITY_STATUS.PERFORM,
+      type: action.payload.type
    };
 }
 
-function stopTime(): ActivityState {
+function complete(): ActivityState {
    return {
       status: ACTIVITY_STATUS.IDLE
    };
@@ -42,22 +42,43 @@ function initialize(state: ActivityState, action: StoreAction): ActivityState {
    }
 }
 
+function setType(state: ActivityState, action: PayloadAction<{ type: string }>): ActivityState {
+   return {
+      ...state,
+      type: action.payload.type
+   };
+}
+
+function setDescription(state: ActivityState, action: PayloadAction<{ description: string }>): ActivityState {
+   return {
+      ...state,
+      type: action.payload.description
+   };
+}
+
 export const ActivityActionsKey = {
    IDLE: 'IDLE',
    PERFORM: 'PERFORM',
    COMPLETE: 'COMPLETE',
-   INITIALIZE: 'INITIALIZE'
+   INITIALIZE: 'INITIALIZE',
+   SET_TYPE: 'SET_TYPE',
+   SET_DESCRIPTION: 'SET_DESCRIPTION'
 };
 
 export const ActivityActions = {
-   [ActivityActionsKey.IDLE]: createAction(ActivityActionsKey.IDLE),
-   [ActivityActionsKey.PERFORM]: createAction(ActivityActionsKey.PERFORM),
-   [ActivityActionsKey.COMPLETE]: createAction(ActivityActionsKey.COMPLETE),
-   [ActivityActionsKey.INITIALIZE]: createAction(ActivityActionsKey.INITIALIZE)
+   idle: createAction(ActivityActionsKey.IDLE),
+   perform: createAction(ActivityActionsKey.PERFORM),
+   complete: createAction(ActivityActionsKey.COMPLETE),
+   initialize: createAction(ActivityActionsKey.INITIALIZE),
+   setType: createAction(ActivityActionsKey.SET_TYPE),
+   setDescription: createAction(ActivityActionsKey.SET_DESCRIPTION)
 };
 
 export const activityReducer = createReducer<ActivityState>(initialState,
-   on(ActivityActions.IDLE, startTime),
-   on(ActivityActions.PERFORM, stopTime),
-   on(ActivityActions.INITIALIZE, initialize)
+   on(ActivityActions.idle, perform),
+   on(ActivityActions.perform, perform),
+   on(ActivityActions.complete, complete),
+   on(ActivityActions.initialize, initialize),
+   on(ActivityActions.setType, setType),
+   on(ActivityActions.setDescription, setDescription),
 );

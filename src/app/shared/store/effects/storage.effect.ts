@@ -45,8 +45,12 @@ export class StorageEffect {
             })
          )),
          map((action: any) => {
+            const target = action.payload.target;
+            delete action.payload.target;
+
             return {
-               type: action.payload.target
+               type: target,
+               payload: action.payload
             }
          })
       ))
