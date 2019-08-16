@@ -56,6 +56,7 @@ function setDescription(state: ActivityState, action: PayloadAction<{ descriptio
    };
 }
 
+//TODO remove those duplications (and also ACTIVITY_STATUS looks the same)
 export const ActivityActionsKey = {
    IDLE: 'IDLE',
    PERFORM: 'PERFORM',

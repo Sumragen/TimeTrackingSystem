@@ -1,14 +1,36 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ActivityActionsKey, ActivityState } from '../../../shared/store/reducers/activity.reducer';
+import { select, Store } from '@ngrx/store';
+import { ACTIVITY_STATE_KEY, STORE_STATE } from '../../../shared/store/store';
 
 @Component({
-  selector: 'app-perform',
-  templateUrl: './perform.component.html',
-  styleUrls: ['./perform.component.scss'],
+   selector: 'app-perform',
+   templateUrl: './perform.component.html',
+   styleUrls: ['./perform.component.scss'],
 })
 export class PerformComponent implements OnInit {
 
-  constructor() { }
+   constructor(private store: Store<STORE_STATE>) { }
 
-  ngOnInit() {}
+   ngOnInit() {}
 
+   public getState$(): Observable<ActivityState> {
+      return this.store.pipe(select(ACTIVITY_STATE_KEY));
+   }
+
+   public updateDescription(description: string): void {
+     this.store.dispatch({
+       type: ActivityActionsKey.SET_DESCRIPTION,
+       payload: {
+         description
+       }
+     })
+   }
+
+   public completeActivity(): void {
+      this.store.dispatch({
+         type: ActivityActionsKey.COMPLETE
+      })
+   }
 }

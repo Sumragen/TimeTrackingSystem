@@ -1,6 +1,23 @@
-<ion-item>
-    <ion-textarea
-            placeholder="What we plan to do?"
-            clearOnEdit="true">
-    </ion-textarea>
-</ion-item>
+<ion-content *ngIf="getState$() | async as state">
+    <ion-item>
+        <ion-textarea
+                placeholder="What we plan to do?"
+                clearOnEdit="true"
+        [value]="state.description"
+        (ionChange)="updateDescription($event.target.value)">
+        </ion-textarea>
+    </ion-item>
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-button
+                color="dark"
+                fill="solid"
+                expand="full"
+                (click)="completeActivity()">
+            Stop
+        </ion-button>
+        <ion-progress-bar type="indeterminate"></ion-progress-bar>
+    </ion-toolbar>
+</ion-footer>
