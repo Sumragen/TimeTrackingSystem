@@ -52,7 +52,7 @@ function setType(state: ActivityState, action: PayloadAction<{ type: string }>):
 function setDescription(state: ActivityState, action: PayloadAction<{ description: string }>): ActivityState {
    return {
       ...state,
-      type: action.payload.description
+      description: action.payload.description
    };
 }
 
