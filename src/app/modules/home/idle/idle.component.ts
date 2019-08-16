@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import { StorageService } from '../../../shared/services/storage/storage.service';
 import { select, Store } from '@ngrx/store';
-import { APP_STATE_KEY, STORE_STATE } from '../../../shared/store/store';
+import { ACTIVITY_STATE_KEY, STORE_STATE } from '../../../shared/store/store';
 import { ACTIVITY_STATUS, ActivityActionsKey, ActivityState } from '../../../shared/store/reducers/activity.reducer';
 import { Observable } from 'rxjs';
 import { STORAGE_EFFECT } from '../../../shared/store/effects/storage.effect';
@@ -37,7 +37,7 @@ export class IdleComponent implements OnInit {
    }
 
    public getState$(): Observable<ActivityState> {
-      return this.store.pipe(select(APP_STATE_KEY));
+      return this.store.pipe(select(ACTIVITY_STATE_KEY));
    }
 
    public applyActivityType(target: ACTIVITY_STATUS, type?: string) {

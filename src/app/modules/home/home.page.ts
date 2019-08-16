@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { ACTIVITY_STATUS, ActivityState } from '../../shared/store/reducers/activity.reducer';
-import { APP_STATE_KEY, STORE_STATE } from '../../shared/store/store';
+import { ACTIVITY_STATE_KEY, STORE_STATE } from '../../shared/store/store';
 import { STORAGE_EFFECT } from '../../shared/store/effects/storage.effect';
 
 @Component({
