@@ -40,11 +40,11 @@ export class IdleComponent implements OnInit {
       return this.store.pipe(select(ACTIVITY_STATE_KEY));
    }
 
-   public applyActivityType(target: ACTIVITY_STATUS, type?: string) {
+   public applyActivityType(type: string) {
       this.store.dispatch({
          type: STORAGE_EFFECT.RECORD,
          payload: {
-            target,
+            target: ACTIVITY_STATUS.PERFORM,
             type
          }
       });

@@ -7,7 +7,7 @@
             (ionChange)="updateType($event.target.value)">
     </ion-input>
     <ion-button *ngFor="let type of types"
-                (click)="applyActivityType(state.status, type)">
+                (click)="applyActivityType(type)">
         {{type}}
     </ion-button>
 </div>
@@ -19,7 +19,7 @@
                 fill="solid"
                 expand="full"
                 [disabled]="!state.type"
-                (click)="applyActivityType(state.status)">
+                (click)="applyActivityType(state.type)">
             Start
         </ion-button>
     </ion-toolbar>
