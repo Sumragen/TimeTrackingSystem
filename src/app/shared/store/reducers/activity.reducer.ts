@@ -21,10 +21,10 @@ const initialState: ActivityState = {
    status: ACTIVITY_STATUS.IDLE
 };
 
-function perform(state: ActivityState, action: PayloadAction<{type: string}>): ActivityState {
+function perform(state: ActivityState, action: PayloadAction<{type?: string}>): ActivityState {
    return {
       status: ACTIVITY_STATUS.PERFORM,
-      type: action.payload.type
+      type: action.payload.type || state.type
    };
 }
 
