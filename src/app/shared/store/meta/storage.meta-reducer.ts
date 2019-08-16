@@ -1,4 +1,4 @@
-import { Action, ActionReducer, INIT } from '@ngrx/store';
+import { Action, ActionReducer, INIT, UPDATE } from '@ngrx/store';
 import { ROOT_EFFECTS_INIT } from '@ngrx/effects';
 
 import { StorageService } from '../../services/storage/storage.service';
@@ -8,7 +8,7 @@ export function storageMetaReducer<S, A extends Action = Action>(storageService:
       return function (state: S, action: A): S {
          const nextState = reducer(state, action);
 
-         if (action.type !== INIT && action.type !== ROOT_EFFECTS_INIT) {
+         if ([INIT, ROOT_EFFECTS_INIT, UPDATE].indexOf(action.type) === -1) {
             storageService.setSavedState(nextState);
          }
 
