@@ -13,11 +13,11 @@ export interface ActivityTime {
 }
 
 export interface Activity extends Partial<ActivityTime> {
-   type?: string,
+   type: string,
    description?: string
 }
 
-export interface ActivityState extends Activity {
+export interface ActivityState extends Partial<Activity> {
    status: ACTIVITY_STATUS
 }
 

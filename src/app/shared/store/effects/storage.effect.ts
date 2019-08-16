@@ -27,7 +27,7 @@ export class StorageEffect {
       createEffect(() => this.actions$.pipe(
          ofType(STORAGE_EFFECT.LOG_TIME),
          tap(() => this.timeService.logTime),
-         map(this.switchActionToTarget)
+         map((action: ActivityAction) => action.payload.target)
       ));
 
    complete$ =
@@ -40,7 +40,8 @@ export class StorageEffect {
 
                const activity: Activity = {
                   ...time,
-                  ...state
+                  ...state,
+                  type: state.type
                };
 
                const storage: ActivityStorage = await this.storageService.getStorage() || {};
@@ -55,19 +56,8 @@ export class StorageEffect {
 
                await this.storageService.setStorage(storage);
 
-               return action;
+               return action.payload.target;
             })
-         )),
-         map(this.switchActionToTarget)
+         ))
       ));
-
-   private switchActionToTarget(action: PayloadAction<any>): any {
-      const target = action.payload.target;
-      delete action.payload.target;
-
-      return {
-         type: target,
-         payload: action.payload
-      };
-   }
 }

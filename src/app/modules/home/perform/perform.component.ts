@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ActivityActionsKey, ActivityState } from '../../../shared/store/reducers/activity.reducer';
 import { select, Store } from '@ngrx/store';
+
+import { ActivityActionsKey, ActivityState } from '../../../shared/store/reducers/activity.reducer';
 import { ACTIVITY_STATE_KEY, STORE_STATE } from '../../../shared/store/store';
 import { STORAGE_EFFECT } from '../../../shared/store/effects/storage.effect';
 
@@ -21,19 +22,21 @@ export class PerformComponent implements OnInit {
    }
 
    public updateDescription(description: string): void {
-     this.store.dispatch({
-       type: ActivityActionsKey.SET_DESCRIPTION,
-       payload: {
-         description
-       }
-     })
+      this.store.dispatch({
+         type: ActivityActionsKey.SET_DESCRIPTION,
+         payload: {
+            description
+         }
+      })
    }
 
    public completeActivity(): void {
       this.store.dispatch({
          type: STORAGE_EFFECT.COMPLETE,
          payload: {
-            target: ActivityActionsKey.COMPLETE
+            target: {
+               type: ActivityActionsKey.COMPLETE
+            }
          }
       })
    }
