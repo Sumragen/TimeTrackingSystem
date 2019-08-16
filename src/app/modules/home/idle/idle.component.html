@@ -12,3 +12,16 @@
         </ion-button>
     </div>
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar *ngIf="getState$() | async as state">
+        <ion-button
+                color="dark"
+                fill="solid"
+                expand="full"
+                [disabled]="!state.type"
+                (click)="applyActivityType(state.status)">
+            Start
+        </ion-button>
+    </ion-toolbar>
+</ion-footer>

@@ -1,9 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import { StorageService } from '../../../shared/services/storage/storage.service';
-import { Store } from '@ngrx/store';
-import { STORE_STATE } from '../../../shared/store/store';
-import { ActivityActionsKey } from '../../../shared/store/reducers/activity.reducer';
+import { select, Store } from '@ngrx/store';
+import { APP_STATE_KEY, STORE_STATE } from '../../../shared/store/store';
+import { ACTIVITY_STATUS, ActivityActionsKey, ActivityState } from '../../../shared/store/reducers/activity.reducer';
+import { Observable } from 'rxjs';
+import { STORAGE_EFFECT } from '../../../shared/store/effects/storage.effect';
 
 @Component({
    selector: 'app-idle',
@@ -39,5 +41,18 @@ export class IdleComponent implements OnInit {
    public predefinedTypeClick(type: string): void {
       //todo: save applied type value
       this.predefinedType.emit(type);
+   }
+   public getState$(): Observable<ActivityState> {
+      return this.store.pipe(select(APP_STATE_KEY));
+   }
+
+   public applyActivityType(target: ACTIVITY_STATUS, type?: string) {
+      this.store.dispatch({
+         type: STORAGE_EFFECT.RECORD,
+         payload: {
+            target,
+            type
+         }
+      });
    }
 }

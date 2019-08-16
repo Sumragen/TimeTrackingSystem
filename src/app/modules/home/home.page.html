@@ -10,16 +10,3 @@
 </ion-header>
 
 <ion-router-outlet></ion-router-outlet>
-<ion-footer>
-    <ion-toolbar *ngIf="getState$() | async as state">
-        <ion-button
-                color="dark"
-                fill="solid"
-                expand="full"
-                [disabled]="!state.type && isInIdle(state.status)"
-                (click)="applyActivityType(state.status)">
-            {{ isInIdle(state.status) ? 'start' : 'stop' }}
-        </ion-button>
-        <ion-progress-bar *ngIf="isInPerform(state.status)" type="indeterminate"></ion-progress-bar>
-    </ion-toolbar>
-</ion-footer>

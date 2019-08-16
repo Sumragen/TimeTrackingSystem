@@ -33,8 +33,4 @@ export class HomePage {
    public isInPerform(status: ACTIVITY_STATUS): boolean {
       return status === ACTIVITY_STATUS.PERFORM;
    }
-
-   public getState$(): Observable<ActivityState> {
-      return this.store.pipe(select(APP_STATE_KEY));
-   }
 }
