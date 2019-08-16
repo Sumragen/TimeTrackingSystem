@@ -27,7 +27,7 @@ export class IdleComponent implements OnInit {
       });
    }
 
-   public updateTypeValue(type: string): void {
+   public updateType(type: string): void {
       this.store.dispatch({
          type: ActivityActionsKey.SET_TYPE,
          payload: {

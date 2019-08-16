@@ -5,7 +5,7 @@
                 clear-input="true"
                 placeholder="Enter new activity type"
                 [value]="state.type"
-                (ionChange)="updateTypeValue($event.target.value)">
+                (ionChange)="updateType($event.target.value)">
         </ion-input>
         <ion-button *ngFor="let type of types"
                     (click)="applyActivityType(state.status, type)">
