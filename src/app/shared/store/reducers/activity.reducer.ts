@@ -7,10 +7,14 @@ export enum ACTIVITY_STATUS {
    COMPLETE = 'COMPLETE'
 }
 
-export interface Activity {
+export interface ActivityTime {
+   performedTime: number,
+   date: number
+}
+
+export interface Activity extends Partial<ActivityTime> {
    type?: string,
-   description?: string,
-   when?: number
+   description?: string
 }
 
 export interface ActivityState extends Activity {

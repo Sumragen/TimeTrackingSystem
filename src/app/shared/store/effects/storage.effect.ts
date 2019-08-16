@@ -1,57 +1,73 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { exhaustMap, map } from 'rxjs/internal/operators';
+import { Action, Store } from '@ngrx/store';
+import { exhaustMap, map, tap, withLatestFrom } from 'rxjs/internal/operators';
 import { fromPromise } from 'rxjs/internal/observable/fromPromise';
 
 import { TimeService } from '../../services/time/time.service';
-import { StorageService } from '../../services/storage/storage.service';
+import { ActivityStorage, StorageService } from '../../services/storage/storage.service';
+import { ACTIVITY_STATE_KEY, ActivityAction, PayloadAction, STORE_STATE } from '../store';
+import { Activity, ActivityState, ActivityTime } from '../reducers/activity.reducer';
+import { TypedAction } from '@ngrx/store/src/models';
 
 export enum STORAGE_EFFECT {
-   RECORD = 'RECORD'
+   LOG_TIME = 'E_LOG_ACTIVITY_TIME',
+   COMPLETE = 'E_ACTIVITY_COMPLETE'
 }
 
 @Injectable()
 export class StorageEffect {
    constructor(private actions$: Actions,
+               private store$: Store<STORE_STATE>,
                private storageService: StorageService,
                private timeService: TimeService) {
    }
 
-   record$ =
+   logTime$ =
       createEffect(() => this.actions$.pipe(
-         ofType(STORAGE_EFFECT.RECORD),
-         exhaustMap((action) => fromPromise(
-            Promise.resolve(action).then(async (action: any) => {
-               const time = this.timeService.performCalculation(action.payload.target);
+         ofType(STORAGE_EFFECT.LOG_TIME),
+         tap(() => this.timeService.logTime),
+         map(this.switchActionToTarget)
+      ));
 
-               if (!!time) {
-                  const value = {
-                     ...time,
-                     description: action.payload.description
-                  };
+   complete$ =
+      createEffect(() => this.actions$.pipe(
+         ofType(STORAGE_EFFECT.COMPLETE),
+         withLatestFrom(this.store$.select(ACTIVITY_STATE_KEY)),
+         exhaustMap(([action, state]: [ActivityAction, ActivityState]) => fromPromise(
+            Promise.resolve().then(async () => {
+               const time: ActivityTime = this.timeService.performCalculation();
 
-                  const storage: any = await this.storageService.getRecords() || {};
+               const activity: Activity = {
+                  ...time,
+                  ...state
+               };
 
-                  const type: string = action.payload.type;
-                  if (!storage[type]) {
-                     storage[type] = [];
-                  }
-                  storage[type].push(value);
+               const storage: ActivityStorage = await this.storageService.getStorage() || {};
 
-                  await this.storageService.setRecords(storage);
+               const type: string = activity.type;
+               delete activity.type;
+
+               if (!storage[type]) {
+                  storage[type] = [];
                }
+               storage[type].push(activity);
+
+               await this.storageService.setStorage(storage);
 
                return action;
             })
          )),
-         map((action: any) => {
-            const target = action.payload.target;
-            delete action.payload.target;
+         map(this.switchActionToTarget)
+      ));
 
-            return {
-               type: target,
-               payload: action.payload
-            }
-         })
-      ))
+   private switchActionToTarget(action: PayloadAction<any>): any {
+      const target = action.payload.target;
+      delete action.payload.target;
+
+      return {
+         type: target,
+         payload: action.payload
+      };
+   }
 }

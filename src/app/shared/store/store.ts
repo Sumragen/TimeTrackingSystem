@@ -10,6 +10,8 @@ export interface STORE_STATE {
 
 export interface StoreAction extends PayloadAction<STORE_STATE> {}
 
+export interface ActivityAction extends PayloadAction<ActivityState> {}
+
 export interface PayloadAction<T> extends ActionCreator {
    payload: T;
 }

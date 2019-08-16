@@ -42,8 +42,9 @@ export class IdleComponent implements OnInit {
 
    public applyActivityType(type: string) {
       this.store.dispatch({
-         type: ACTIVITY_STATUS.PERFORM,
+         type: STORAGE_EFFECT.LOG_TIME,
          payload: {
+            target: ActivityActionsKey.PERFORM,
             type
          }
       });

@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { ActivityActionsKey, ActivityState } from '../../../shared/store/reducers/activity.reducer';
 import { select, Store } from '@ngrx/store';
 import { ACTIVITY_STATE_KEY, STORE_STATE } from '../../../shared/store/store';
+import { STORAGE_EFFECT } from '../../../shared/store/effects/storage.effect';
 
 @Component({
    selector: 'app-perform',
@@ -30,7 +31,10 @@ export class PerformComponent implements OnInit {
 
    public completeActivity(): void {
       this.store.dispatch({
-         type: ActivityActionsKey.COMPLETE
+         type: STORAGE_EFFECT.COMPLETE,
+         payload: {
+            target: ActivityActionsKey.COMPLETE
+         }
       })
    }
 }

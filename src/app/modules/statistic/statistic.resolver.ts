@@ -6,7 +6,7 @@ export class StatisticResolver implements Resolve<any> {
    constructor(private storageService: StorageService) {}
 
    public resolve(route: ActivatedRouteSnapshot): Promise<any> {
-      return this.storageService.getRecords().then(storage => {
+      return this.storageService.getStorage().then(storage => {
          if (!storage || Object.keys(storage).length === 0) {
             return null; //todo: display error and navigate back;
          }

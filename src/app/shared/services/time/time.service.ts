@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-
-import { ACTIVITY_STATUS } from '../../store/reducers/activity.reducer';
+import { ActivityTime } from '../../store/reducers/activity.reducer';
 
 @Injectable()
 export class TimeService {
@@ -9,17 +8,12 @@ export class TimeService {
    constructor() {
    }
 
-   public performCalculation(actionType: string): any {
-      const now: number = Date.now();
+   public performCalculation(): ActivityTime {
       let performedTime: number;
-      let lastLoggedTime: number = this.loggedTime;
+      const now: number = Date.now();
+      const lastLoggedTime: number = this.loggedTime;
 
-      if (actionType === ACTIVITY_STATUS.PERFORM) {
-         this.loggedTime = null;
-      } else {
-         this.loggedTime = now;
-         return;
-      }
+      this.loggedTime = null;
 
       performedTime = now - lastLoggedTime;
 
@@ -27,5 +21,9 @@ export class TimeService {
          performedTime: performedTime,
          date: now
       };
+   }
+
+   public logTime(): void {
+      this.loggedTime = Date.now();
    }
 }

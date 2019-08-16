@@ -2,7 +2,13 @@ import { Injectable } from '@angular/core';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Platform } from '@ionic/angular';
 
-export const recordStorageKey: string = 'record_storage';
+import { Activity } from '../../store/reducers/activity.reducer';
+
+export const storageKey: string = 'record_storage';
+
+export interface ActivityStorage {
+   [key: string]: Activity[];
+}
 
 @Injectable({
    providedIn: 'root'
@@ -17,7 +23,7 @@ export class StorageService {
    }
 
    public async getKeys(): Promise<string[]> {
-      const storage = await this.getRecords();
+      const storage = await this.getStorage();
 
       if (!storage || Object.keys(storage).length === 0) {
          return;
@@ -25,12 +31,12 @@ export class StorageService {
       return Object.keys(storage);
    }
 
-   public getRecords(): Promise<any> {
-      return this.getItem(recordStorageKey);
+   public getStorage(): Promise<ActivityStorage> {
+      return this.getItem(storageKey);
    }
 
-   public setRecords(storage: any): Promise<any> {
-      return this.setItem(recordStorageKey, storage);
+   public setStorage(storage: ActivityStorage): Promise<void> {
+      return this.setItem(storageKey, storage);
    }
 
    public getSavedState(): Promise<any> {
