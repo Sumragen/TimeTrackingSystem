@@ -33,6 +33,14 @@ export class StorageService {
       return this.setItem(recordStorageKey, storage);
    }
 
+   public getSavedState(): Promise<any> {
+      return this.getItem('activity_state');
+   }
+
+   public setSavedState(state: any): Promise<any> {
+      return this.setItem('activity_state', state);
+   }
+
    public getItem<T>(key: string): Promise<T> {
       if (this.isBrowser()) {
          return Promise.resolve().then(() => JSON.parse(localStorage.getItem(key)));

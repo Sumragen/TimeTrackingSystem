@@ -1,4 +1,6 @@
-import { createAction, createReducer, on } from '@ngrx/store';
+import { ActionCreator, createAction, createReducer, on } from '@ngrx/store';
+import { StoreAction } from '../store';
+import { ActionType } from '@ngrx/store/src/models';
 
 export enum ACTIVITY_STATUS {
    IDLE = 'IDLE',
@@ -32,13 +34,30 @@ function stopTime(): ActivityState {
    };
 }
 
-export const ActivityActions = {
-   [ACTIVITY_STATUS.IDLE]: createAction(ACTIVITY_STATUS.IDLE),
-   [ACTIVITY_STATUS.PERFORM]: createAction(ACTIVITY_STATUS.PERFORM),
-   [ACTIVITY_STATUS.COMPLETE]: createAction(ACTIVITY_STATUS.COMPLETE)
+function initialize(state: ActivityState, action: StoreAction): ActivityState {
+   if (!!action.payload && action.payload.activity) {
+      return action.payload.activity;
+   } else {
+      return state;
+   }
+}
+
+export const ActivityActionsKey = {
+   IDLE: 'IDLE',
+   PERFORM: 'PERFORM',
+   COMPLETE: 'COMPLETE',
+   INITIALIZE: 'INITIALIZE'
 };
 
-export const activityReducer = createReducer(initialState,
+export const ActivityActions = {
+   [ActivityActionsKey.IDLE]: createAction(ActivityActionsKey.IDLE),
+   [ActivityActionsKey.PERFORM]: createAction(ActivityActionsKey.PERFORM),
+   [ActivityActionsKey.COMPLETE]: createAction(ActivityActionsKey.COMPLETE),
+   [ActivityActionsKey.INITIALIZE]: createAction(ActivityActionsKey.INITIALIZE)
+};
+
+export const activityReducer = createReducer<ActivityState>(initialState,
    on(ActivityActions.IDLE, startTime),
-   on(ActivityActions.PERFORM, stopTime)
+   on(ActivityActions.PERFORM, stopTime),
+   on(ActivityActions.INITIALIZE, initialize)
 );
