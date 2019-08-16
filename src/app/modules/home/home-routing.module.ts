@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+
 import { HomePage } from './home.page';
 import { IdleComponent } from './idle/idle.component';
 import { PerformComponent } from './perform/perform.component';
