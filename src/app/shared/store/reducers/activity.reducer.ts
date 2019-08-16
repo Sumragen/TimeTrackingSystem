@@ -21,7 +21,7 @@ const initialState: ActivityState = {
    status: ACTIVITY_STATUS.IDLE
 };
 
-function perform(state: ActivityState, action: PayloadAction<{type?: string}>): ActivityState {
+function perform(state: ActivityState, action: PayloadAction<{type: string}>): ActivityState {
    return {
       status: ACTIVITY_STATUS.PERFORM,
       type: action.payload.type || state.type
@@ -58,7 +58,6 @@ function setDescription(state: ActivityState, action: PayloadAction<{ descriptio
 
 //TODO remove those duplications (and also ACTIVITY_STATUS looks the same)
 export const ActivityActionsKey = {
-   IDLE: 'IDLE',
    PERFORM: 'PERFORM',
    COMPLETE: 'COMPLETE',
    INITIALIZE: 'INITIALIZE',
@@ -67,7 +66,6 @@ export const ActivityActionsKey = {
 };
 
 export const ActivityActions = {
-   idle: createAction(ActivityActionsKey.IDLE),
    perform: createAction(ActivityActionsKey.PERFORM),
    complete: createAction(ActivityActionsKey.COMPLETE),
    initialize: createAction(ActivityActionsKey.INITIALIZE),
@@ -76,10 +74,9 @@ export const ActivityActions = {
 };
 
 export const activityReducer = createReducer<ActivityState>(initialState,
-   on(ActivityActions.idle, perform),
+   on(ActivityActions.initialize, initialize),
    on(ActivityActions.perform, perform),
    on(ActivityActions.complete, complete),
-   on(ActivityActions.initialize, initialize),
    on(ActivityActions.setType, setType),
    on(ActivityActions.setDescription, setDescription),
 );
