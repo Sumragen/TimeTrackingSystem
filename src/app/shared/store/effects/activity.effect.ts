@@ -14,11 +14,11 @@ export class ActivityEffect {
       createEffect(() => this.actions$.pipe(
          ofType(ActivityActionsKey.PERFORM),
          tap(() => this.router.navigate(['/home/perform']))
-      ));
+      ), { dispatch: false });
 
    complete$ =
       createEffect(() => this.actions$.pipe(
          ofType(ActivityActionsKey.COMPLETE),
          tap(() => this.router.navigate(['/home/idle']))
-      ));
+      ), { dispatch: false });
 }
