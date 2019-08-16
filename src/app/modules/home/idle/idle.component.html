@@ -7,7 +7,7 @@
                 (ionChange)="updateTypeValue($event.target.value)">
         </ion-input>
         <ion-button *ngFor="let type of types"
-                    (click)="predefinedTypeClick(type)">
+                    (click)="selectType(type)">
             {{type}}
         </ion-button>
     </div>

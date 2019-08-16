@@ -38,7 +38,7 @@ export class IdleComponent implements OnInit {
       })
    }
 
-   public predefinedTypeClick(type: string): void {
+   public selectType(type: string): void {
       //todo: save applied type value
       this.predefinedType.emit(type);
    }
