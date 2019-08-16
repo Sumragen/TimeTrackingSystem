@@ -11,7 +11,6 @@ import { EffectsModule } from '@ngrx/effects';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { StorageEffect } from './shared/store/effects/storage.effect';
 import { TimeService } from './shared/services/time/time.service';
 import { SharedModule } from './shared/shared.module';
 import { StatisticResolver } from './modules/statistic/statistic.resolver';
