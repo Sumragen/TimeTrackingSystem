@@ -1,0 +1,13 @@
+<div class="type-input" *ngIf="getState$() | async as state">
+    <ion-input
+            class="custom-type-input"
+            clear-input="true"
+            placeholder="Enter new activity type"
+            [value]="state.type"
+            (ionChange)="updateType($event.target.value)">
+    </ion-input>
+    <ion-button *ngFor="let type of types"
+                (click)="selectType(type)">
+        {{type}}
+    </ion-button>
+</div>

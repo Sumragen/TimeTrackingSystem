@@ -5,14 +5,16 @@ import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { HomePage } from './home.page';
-import { IdleComponent } from './idle/idle.component';
-import { PerformComponent } from './perform/perform.component';
-import { HomeRoutingModule } from './home-routing.module';
 import { activityReducer } from '../../shared/store/reducers/activity.reducer';
 import { ACTIVITY_STATE_KEY } from '../../shared/store/store';
 import { StorageEffect } from '../../shared/store/effects/storage.effect';
 import { ActivityEffect } from '../../shared/store/effects/activity.effect';
+import { TypeInputComponent } from './type-input/type-input.component';
+
+import { HomePage } from './home.page';
+import { IdleComponent } from './idle/idle.component';
+import { PerformComponent } from './perform/perform.component';
+import { HomeRoutingModule } from './home-routing.module';
 
 @NgModule({
    imports: [
@@ -26,7 +28,8 @@ import { ActivityEffect } from '../../shared/store/effects/activity.effect';
    declarations: [
       HomePage,
       IdleComponent,
-      PerformComponent
+      PerformComponent,
+      TypeInputComponent
    ]
 })
 export class HomePageModule {}
