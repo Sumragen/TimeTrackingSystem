@@ -1,11 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-
-import { StorageService } from '../../../shared/services/storage/storage.service';
+import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { ACTIVITY_STATE_KEY, STORE_STATE } from '../../../shared/store/store';
-import { ACTIVITY_STATUS, ActivityActionsKey, ActivityState } from '../../../shared/store/reducers/activity.reducer';
 import { Observable } from 'rxjs';
+
+import { ACTIVITY_STATE_KEY, STORE_STATE } from '../../../shared/store/store';
+import { ActivityActionsKey, ActivityState } from '../../../shared/store/reducers/activity.reducer';
 import { STORAGE_EFFECT } from '../../../shared/store/effects/storage.effect';
+import { ActivityService } from '../../../shared/services/activity/activity.service';
 
 @Component({
    selector: 'app-idle',
@@ -15,15 +15,15 @@ import { STORAGE_EFFECT } from '../../../shared/store/effects/storage.effect';
 export class IdleComponent implements OnInit {
    public types: string[] = [];
 
-   constructor(private storageService: StorageService,
+   constructor(private activityService: ActivityService,
                private store: Store<STORE_STATE>) { }
 
    ngOnInit() {
-      this.storageService.getKeys().then((types: string[]) => {
+      this.activityService.getCurrentTypes().then((types: string[]) => {
          if (!types) {
             return;
          }
-         this.types = types.splice(0, 4); // todo: that should be complexity calculation of popular types
+         this.types = types;
       });
    }
 
