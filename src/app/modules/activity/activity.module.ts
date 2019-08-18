@@ -11,25 +11,25 @@ import { StorageEffect } from '../../shared/store/effects/storage.effect';
 import { ActivityEffect } from '../../shared/store/effects/activity.effect';
 import { TypeInputComponent } from './type-input/type-input.component';
 
-import { HomePage } from './home.page';
+import { ActivityPage } from './activity.page';
 import { IdleComponent } from './idle/idle.component';
 import { PerformComponent } from './perform/perform.component';
-import { HomeRoutingModule } from './home-routing.module';
+import { ActivityRoutingModule } from './activity-routing.module';
 
 @NgModule({
    imports: [
       CommonModule,
       FormsModule,
       IonicModule,
-      HomeRoutingModule,
+      ActivityRoutingModule,
       StoreModule.forFeature(ACTIVITY_STATE_KEY, activityReducer),
       EffectsModule.forFeature([StorageEffect, ActivityEffect])
    ],
    declarations: [
-      HomePage,
+      ActivityPage,
       IdleComponent,
       PerformComponent,
       TypeInputComponent
    ]
 })
-export class HomePageModule {}
+export class ActivityPageModule {}

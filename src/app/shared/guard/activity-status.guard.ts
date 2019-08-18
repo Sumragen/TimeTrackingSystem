@@ -19,7 +19,7 @@ export class ActivityStatusGuard implements CanActivate {
                const activityStatus: string = state.activity.status;
 
                if (activityStatus === ACTIVITY_STATUS.PERFORM) {
-                  return this.router.parseUrl('/home/perform'); // TODO: clarify is it nice way to map activity status to url; this.router.parseUrl(activity.status)
+                  return this.router.parseUrl('/activity/perform'); // TODO: clarify is it nice way to map activity status to url; this.router.parseUrl(activity.status)
                }
             }
             return true;

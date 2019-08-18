@@ -5,11 +5,11 @@ import { Store } from '@ngrx/store';
 import { STORE_STATE } from '../../shared/store/store';
 
 @Component({
-   selector: 'app-home',
-   templateUrl: 'home.page.html',
-   styleUrls: ['home.page.scss'],
+   selector: 'app-activity',
+   templateUrl: 'activity.page.html',
+   styleUrls: ['activity.page.scss'],
 })
-export class HomePage implements OnInit {
+export class ActivityPage implements OnInit {
    constructor(
       private storageService: StorageService,
       private store: Store<STORE_STATE>

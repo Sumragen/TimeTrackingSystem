@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomePage } from './home.page';
+import { ActivityPage } from './activity.page';
 import { IdleComponent } from './idle/idle.component';
 import { PerformComponent } from './perform/perform.component';
 import { ActivityStatusGuard } from '../../shared/guard/activity-status.guard';
@@ -9,7 +9,7 @@ import { ActivityStatusGuard } from '../../shared/guard/activity-status.guard';
 const routes: Routes = [
    {
       path: '',
-      component: HomePage,
+      component: ActivityPage,
       children: [
          {
             path: '',
@@ -35,4 +35,4 @@ const routes: Routes = [
    ],
    exports: [RouterModule]
 })
-export class HomeRoutingModule {}
+export class ActivityRoutingModule {}

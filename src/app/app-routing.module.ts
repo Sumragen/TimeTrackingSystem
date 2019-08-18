@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
-import { HomePageModule } from './modules/home/home.module';
+import { ActivityPageModule } from './modules/activity/activity.module';
 import { StatisticPageModule } from './modules/statistic/statistic.module';
 
 const routes: Routes = [
-   {path: '', redirectTo: 'home', pathMatch: 'full'},
-   {path: 'home', loadChildren: () => HomePageModule},
+   {path: '', redirectTo: 'activity', pathMatch: 'full'},
+   {path: 'activity', loadChildren: () => ActivityPageModule},
    {path: 'statistic', loadChildren: () => StatisticPageModule},
 ];
 
