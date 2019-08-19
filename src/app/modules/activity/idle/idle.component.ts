@@ -1,36 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { ACTIVITY_STATE_KEY, STORE_STATE } from '../../../shared/store/store';
+import { ACTIVITY_STATE_KEY } from '../../../shared/store/store';
 import { ActivityActionsKey, ActivityState } from '../../../shared/store/reducers/activity.reducer';
 import { STORAGE_EFFECT } from '../../../shared/store/effects/storage.effect';
-import { ActivityService } from '../../../shared/services/activity/activity.service';
 import { Select } from '../../../shared/store/decorators/select';
+import { Dispatch } from '../../../shared/store/decorators/dispatch';
 
 @Component({
    selector: 'app-idle',
    templateUrl: './idle.component.html',
    styleUrls: ['./idle.component.scss'],
 })
-export class IdleComponent implements OnInit {
-   public types: string[] = [];
+export class IdleComponent {
+
    @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
 
-   constructor(private activityService: ActivityService,
-               private store: Store<STORE_STATE>) { }
+   constructor() { }
 
-   ngOnInit() {
-      this.activityService.getCurrentTypes().then((types: string[]) => {
-         if (!types) {
-            return;
-         }
-         this.types = types;
-      });
-   }
-
+   @Dispatch()
    public applyActivityType(type: string) {
-      this.store.dispatch({
+      return {
          type: STORAGE_EFFECT.LOG_TIME,
          payload: {
             target: {
@@ -40,6 +30,6 @@ export class IdleComponent implements OnInit {
                }
             }
          }
-      });
+      }
    }
 }

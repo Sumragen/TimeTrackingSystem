@@ -1,12 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { ActivityService } from '../../../shared/services/activity/activity.service';
-import { ACTIVITY_STATE_KEY, STORE_STATE } from '../../../shared/store/store';
+import { ACTIVITY_STATE_KEY } from '../../../shared/store/store';
 import { ActivityActionsKey, ActivityState } from '../../../shared/store/reducers/activity.reducer';
-import { STORAGE_EFFECT } from '../../../shared/store/effects/storage.effect';
 import { Select } from '../../../shared/store/decorators/select';
+import { Dispatch } from '../../../shared/store/decorators/dispatch';
 
 @Component({
    selector: 'app-type-input',
@@ -20,8 +19,7 @@ export class TypeInputComponent implements OnInit {
 
    @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
 
-   constructor(private activityService: ActivityService,
-               private store: Store<STORE_STATE>) { }
+   constructor(private activityService: ActivityService) { }
 
    ngOnInit() {
       this.activityService.getCurrentTypes().then((types: string[]) => {
@@ -32,15 +30,15 @@ export class TypeInputComponent implements OnInit {
       });
    }
 
-   public updateType(type: string): void {
-      this.store.dispatch({
+   @Dispatch()
+   public updateType(type: string) {
+      return {
          type: ActivityActionsKey.SET_TYPE,
          payload: {
             type
          }
-      })
+      }
    }
-
 
    public selectType(type: string) {
       this.onTypeSelect.emit(type);
