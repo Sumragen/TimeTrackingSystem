@@ -1,4 +1,5 @@
 import { InjectableStore } from './injectable-store/injectable-store';
+import { STORE_ERRORS } from '../errors';
 
 export function Select(
    selector: string
@@ -11,7 +12,7 @@ export function Select(
                const store = InjectableStore.instance;
 
                if (store === null) {
-                  throw new Error('Not connected to store!');
+                  throw new Error(STORE_ERRORS.INJECTION);
                }
 
                return store.select(selector);
