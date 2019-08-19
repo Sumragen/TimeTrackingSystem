@@ -1,7 +1,7 @@
 <app-type-input (onTypeSelect)="applyActivityType($event)"></app-type-input>
 
 <ion-footer>
-    <ion-toolbar *ngIf="getState$() | async as state">
+    <ion-toolbar *ngIf="state$ | async as state">
         <ion-button
                 color="dark"
                 fill="solid"

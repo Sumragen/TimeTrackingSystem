@@ -6,6 +6,7 @@ import { ACTIVITY_STATE_KEY, STORE_STATE } from '../../../shared/store/store';
 import { ActivityActionsKey, ActivityState } from '../../../shared/store/reducers/activity.reducer';
 import { STORAGE_EFFECT } from '../../../shared/store/effects/storage.effect';
 import { ActivityService } from '../../../shared/services/activity/activity.service';
+import { Select } from '../../../shared/store/decorators/select';
 
 @Component({
    selector: 'app-idle',
@@ -14,6 +15,7 @@ import { ActivityService } from '../../../shared/services/activity/activity.serv
 })
 export class IdleComponent implements OnInit {
    public types: string[] = [];
+   @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
 
    constructor(private activityService: ActivityService,
                private store: Store<STORE_STATE>) { }
@@ -25,10 +27,6 @@ export class IdleComponent implements OnInit {
          }
          this.types = types;
       });
-   }
-
-   public getState$(): Observable<ActivityState> {
-      return this.store.pipe(select(ACTIVITY_STATE_KEY));
    }
 
    public applyActivityType(type: string) {
