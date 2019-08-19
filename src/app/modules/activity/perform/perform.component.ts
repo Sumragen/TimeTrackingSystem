@@ -14,7 +14,7 @@ import { Select } from '../../../shared/store/decorators/select';
 })
 export class PerformComponent {
 
-   @Select(ACTIVITY_STATE_KEY) public state$: any;
+   @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
 
    constructor(private store: Store<STORE_STATE>) { }
 
