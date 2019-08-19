@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ActivityActionsKey, ActivityState } from '../../shared/store/reducers/activity.reducer';
 import { StorageService } from '../../shared/services/storage/storage.service';
-import { Store } from '@ngrx/store';
-import { STORE_STATE } from '../../shared/store/store';
 import { Dispatch } from '../../shared/store/decorators/dispatch';
 
 @Component({
@@ -11,10 +10,7 @@ import { Dispatch } from '../../shared/store/decorators/dispatch';
    styleUrls: ['activity.page.scss'],
 })
 export class ActivityPage implements OnInit {
-   constructor(
-      private storageService: StorageService,
-      private store: Store<STORE_STATE>
-   ) {}
+   constructor(private storageService: StorageService) {}
 
    ngOnInit(): void {
       this.setupInitialStoreState();
