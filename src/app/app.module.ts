@@ -17,6 +17,7 @@ import { StatisticResolver } from './modules/statistic/statistic.resolver';
 import { reducers } from './shared/store/store';
 import { StorageService } from './shared/services/storage/storage.service';
 import { getMetaReducers } from './shared/store/meta/meta.reducers';
+import { InjectableStoreModule } from './shared/store/decorators/injectable-store/injectable-store.module';
 
 @NgModule({
    declarations: [AppComponent],
@@ -27,7 +28,8 @@ import { getMetaReducers } from './shared/store/meta/meta.reducers';
       AppRoutingModule,
       SharedModule,
       StoreModule.forRoot(reducers),
-      EffectsModule.forRoot([])
+      EffectsModule.forRoot([]),
+      InjectableStoreModule
    ],
    providers: [
       StatusBar,
