@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Action, Store } from '@ngrx/store';
-import { exhaustMap, map, tap, withLatestFrom } from 'rxjs/internal/operators';
+import { Store } from '@ngrx/store';
+import { exhaustMap, map, withLatestFrom } from 'rxjs/internal/operators';
 import { fromPromise } from 'rxjs/internal/observable/fromPromise';
 
 import { TimeService } from '../../services/time/time.service';
 import { ActivityStorage, StorageService } from '../../services/storage/storage.service';
-import { ACTIVITY_STATE_KEY, ActivityAction, PayloadAction, STORE_STATE } from '../store';
-import { Activity, ActivityState, ActivityTime } from '../reducers/activity.reducer';
-import { TypedAction } from '@ngrx/store/src/models';
+import { ACTIVITY_STATE_KEY, ActivityAction, PayloadAction, STORE_STATE, TargetAction } from '../store';
+import { Activity, ActivityState } from '../reducers/activity.reducer';
 
 export enum STORAGE_EFFECT {
    LOG_TIME = 'E_LOG_ACTIVITY_TIME',
@@ -26,8 +25,16 @@ export class StorageEffect {
    logTime$ =
       createEffect(() => this.actions$.pipe(
          ofType(STORAGE_EFFECT.LOG_TIME),
-         tap(() => this.timeService.logTime),
-         map((action: ActivityAction) => action.payload.target)
+         map((action: PayloadAction<TargetAction<PayloadAction<Activity>>>): PayloadAction<Activity> => {
+            const target: PayloadAction<Activity> = action.payload.target;
+            return {
+               type: target.type,
+               payload: {
+                  ...target.payload,
+                  date: this.timeService.now()
+               }
+            };
+         })
       ));
 
    complete$ =
@@ -36,12 +43,12 @@ export class StorageEffect {
          withLatestFrom(this.store$.select(ACTIVITY_STATE_KEY)),
          exhaustMap(([action, state]: [ActivityAction, ActivityState]) => fromPromise(
             Promise.resolve().then(async () => {
-               const time: ActivityTime = this.timeService.performCalculation();
+               const time: number = this.timeService.rangeBetweenNowAnd(state.date);
 
                const activity: Activity = {
-                  ...time,
                   ...state,
-                  type: state.type
+                  type: state.type,
+                  performedTime: time
                };
 
                const storage: ActivityStorage = await this.storageService.getStorage() || {};

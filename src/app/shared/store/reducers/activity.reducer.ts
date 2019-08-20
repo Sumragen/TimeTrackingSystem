@@ -1,4 +1,5 @@
 import { createAction, createReducer, on } from '@ngrx/store';
+
 import { PayloadAction, StoreAction } from '../store';
 
 export enum ACTIVITY_STATUS {
@@ -25,10 +26,10 @@ const initialState: ActivityState = {
    status: ACTIVITY_STATUS.IDLE
 };
 
-function perform(state: ActivityState, action: PayloadAction<{type: string}>): ActivityState {
+function perform(state: ActivityState, action: PayloadAction<Activity>): ActivityState {
    return {
-      status: ACTIVITY_STATUS.PERFORM,
-      type: action.payload.type || state.type
+      ...action.payload,
+      status: ACTIVITY_STATUS.PERFORM
    };
 }
 
