@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { StorageService } from '../../shared/services/storage/storage.service';
-import { ChartOptions, ChartType } from 'chart.js';
+import { ChartOptions, ChartTooltipItem, ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import { TimeService } from '../../shared/services/time/time.service';
 
 export interface ChartData {
    labels: string[],
@@ -30,6 +31,21 @@ export class StatisticPage implements OnInit {
                return label;
             },
          },
+      },
+      tooltips: {
+         callbacks: {
+            label: (tooltipItem: ChartTooltipItem, data: any) => {
+               const dataset = data.datasets[tooltipItem.datasetIndex];
+               const value = dataset.data[tooltipItem.index];
+               const spentTime: number = Math.floor(value / 1000);
+
+               const minutes = Math.floor(spentTime / 60);
+               const seconds = spentTime - minutes * 60;
+
+               // adapt to plural and singular
+               return `${TimeService.twoDigitNumber(minutes)} minutes ${TimeService.twoDigitNumber(seconds)} seconds`;
+            }
+         }
       }
    };
    // activity type array
