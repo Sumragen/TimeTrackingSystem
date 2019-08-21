@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ActivityStorage, StorageService } from '../storage/storage.service';
+import { ActivityCategoryStorage, ActivityStorage, StorageService } from '../storage/storage.service';
 import { Activity } from '../../store/reducers/activity.reducer';
 
 @Injectable({
@@ -13,11 +13,15 @@ export class ActivityService {
    public getCurrentTypes(): Promise<string[]> {
       return this.storageService.getStorage()
          .then((storage: ActivityStorage) => {
+            if (!storage) {
+               return [];
+            }
+
             const now: number = Date.now();
             const minDateRange: number = now - this.days(7);
 
-            return Object.entries(storage).map(([key, activities]: [string, Activity[]]) => {
-               const currentActivities: Activity[] = activities.filter((activity: Activity) => {
+            return Object.entries(storage).map(([key, activities]: [string, ActivityCategoryStorage]) => {
+               const currentActivities: Activity[] = activities.data.filter((activity: Activity) => {
                   return activity.date > minDateRange;
                });
 
@@ -34,6 +38,13 @@ export class ActivityService {
                })
                .map(([key]: [string, number]) => key);
          });
+   }
+
+   public static getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = 'AAAAAA';
+      color = color.split('').map(() => letters[Math.floor(Math.random() * 16)]).join('');
+      return `#${color}`;
    }
 
    private keysOf(object: Object): string[] {

@@ -1,12 +1,13 @@
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 
-import { StorageService } from '../../shared/services/storage/storage.service';
+import { ActivityStorage, StorageService } from '../../shared/services/storage/storage.service';
+import { ChartData } from './statistic.page';
 
-export class StatisticResolver implements Resolve<any> {
+export class StatisticResolver implements Resolve<ChartData> {
    constructor(private storageService: StorageService) {}
 
-   public resolve(route: ActivatedRouteSnapshot): Promise<any> {
-      return this.storageService.getStorage().then(storage => {
+   public resolve(route: ActivatedRouteSnapshot): Promise<ChartData> {
+      return this.storageService.getStorage().then((storage: ActivityStorage) => {
          if (!storage || Object.keys(storage).length === 0) {
             return null; //todo: display error and navigate back;
          }
@@ -14,7 +15,7 @@ export class StatisticResolver implements Resolve<any> {
          const labels = Object.keys(storage);
 
          const data = labels.map(label => {
-            const records = storage[label];
+            const records = storage[label].data;
             return records.reduce((acc, record) => {
                return acc + record.performedTime;
             }, 0);

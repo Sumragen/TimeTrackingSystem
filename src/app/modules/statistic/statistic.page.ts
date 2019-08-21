@@ -3,6 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 
 import { StorageService } from '../../shared/services/storage/storage.service';
 
+export interface ChartData {
+   labels: string[],
+   data: number[]
+}
+
 @Component({
    selector: 'app-statistic',
    templateUrl: './statistic.page.html',

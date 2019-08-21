@@ -8,6 +8,7 @@ import { TimeService } from '../../services/time/time.service';
 import { ActivityStorage, StorageService } from '../../services/storage/storage.service';
 import { ACTIVITY_STATE_KEY, ActivityAction, PayloadAction, STORE_STATE, TargetAction } from '../store';
 import { Activity, ActivityState } from '../reducers/activity.reducer';
+import { ActivityService } from '../../services/activity/activity.service';
 
 export enum STORAGE_EFFECT {
    LOG_TIME = 'E_LOG_ACTIVITY_TIME',
@@ -57,9 +58,12 @@ export class StorageEffect {
                delete activity.type;
 
                if (!storage[type]) {
-                  storage[type] = [];
+                  storage[type] = {
+                     color: ActivityService.getRandomColor(),
+                     data: []
+                  };
                }
-               storage[type].push(activity);
+               storage[type].data.push(activity);
 
                await this.storageService.setStorage(storage);
 

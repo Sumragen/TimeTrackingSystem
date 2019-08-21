@@ -7,7 +7,11 @@ import { Activity } from '../../store/reducers/activity.reducer';
 export const storageKey: string = 'record_storage';
 
 export interface ActivityStorage {
-   [key: string]: Activity[];
+   [key: string]: ActivityCategoryStorage;
+}
+export interface ActivityCategoryStorage {
+   color: string,
+   data: Activity[]
 }
 
 @Injectable({
