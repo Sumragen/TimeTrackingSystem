@@ -16,6 +16,7 @@ import { IdleComponent } from './idle/idle.component';
 import { PerformComponent } from './perform/perform.component';
 import { ActivityRoutingModule } from './activity-routing.module';
 import { StopwatchComponent } from './stopwatch/stopwatch.component';
+import { SecondsToClockFormatPipe } from '../../shared/pipes/time/seconds-to-clock-format.pipe';
 
 @NgModule({
    imports: [
@@ -31,7 +32,8 @@ import { StopwatchComponent } from './stopwatch/stopwatch.component';
       IdleComponent,
       PerformComponent,
       TypeInputComponent,
-      StopwatchComponent
+      StopwatchComponent,
+      SecondsToClockFormatPipe
    ]
 })
 export class ActivityPageModule {}
