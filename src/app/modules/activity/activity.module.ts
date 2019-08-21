@@ -15,6 +15,7 @@ import { ActivityPage } from './activity.page';
 import { IdleComponent } from './idle/idle.component';
 import { PerformComponent } from './perform/perform.component';
 import { ActivityRoutingModule } from './activity-routing.module';
+import { StopwatchComponent } from './stopwatch/stopwatch.component';
 
 @NgModule({
    imports: [
@@ -29,7 +30,8 @@ import { ActivityRoutingModule } from './activity-routing.module';
       ActivityPage,
       IdleComponent,
       PerformComponent,
-      TypeInputComponent
+      TypeInputComponent,
+      StopwatchComponent
    ]
 })
 export class ActivityPageModule {}
