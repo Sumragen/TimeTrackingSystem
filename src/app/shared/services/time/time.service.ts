@@ -13,4 +13,8 @@ export class TimeService {
    public now(): number {
       return Date.now();
    }
+
+   public static twoDigitNumber(value: number): string {
+      return ('0' + value).slice(-2);
+   }
 }
