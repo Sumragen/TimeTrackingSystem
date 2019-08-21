@@ -21,9 +21,12 @@ export class StatisticResolver implements Resolve<ChartData> {
             }, 0);
          });
 
+         const colors: string[] = labels.map((label: string) => storage[label].color);
+
          return {
             labels,
-            data
+            data,
+            colors
          }
       })
    }
