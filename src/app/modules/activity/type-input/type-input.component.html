@@ -6,8 +6,13 @@
             [value]="state.type"
             (ionChange)="updateType($event.target.value)">
     </ion-input>
-    <ion-button *ngFor="let type of types"
-                (click)="selectType(type)">
-        {{type}}
-    </ion-button>
+    <ion-toolbar *ngIf="!!types">
+        <ion-buttons slot="start">
+            <ion-button *ngFor="let type of types"
+                        [ngStyle]="{'background-color': type.color}"
+                        (click)="selectType(type.label)">
+                {{type.label}}
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </div>

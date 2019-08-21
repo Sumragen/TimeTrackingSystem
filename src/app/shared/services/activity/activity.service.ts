@@ -3,6 +3,11 @@ import { Injectable } from '@angular/core';
 import { ActivityCategoryStorage, ActivityStorage, StorageService } from '../storage/storage.service';
 import { Activity } from '../../store/reducers/activity.reducer';
 
+export interface ActivityTypeButton {
+   color: string,
+   label: string
+}
+
 @Injectable({
    providedIn: 'root'
 })
@@ -10,11 +15,11 @@ export class ActivityService {
    constructor(private storageService: StorageService) {
    }
 
-   public getCurrentTypes(): Promise<string[]> {
+   public getCurrentTypes(): Promise<ActivityTypeButton[]> {
       return this.storageService.getStorage()
          .then((storage: ActivityStorage) => {
             if (!storage) {
-               return [];
+               return null;
             }
 
             const now: number = Date.now();
@@ -25,7 +30,7 @@ export class ActivityService {
                   return activity.date > minDateRange;
                });
 
-               return [key, currentActivities.length];
+               return [key, currentActivities.length, activities.color];
             })
                .sort(([, first]: [string, number], [, second]: [string, number]) => {
                   if (first < second) {
@@ -36,15 +41,19 @@ export class ActivityService {
                   }
                   return 0;
                })
-               .map(([key]: [string, number]) => key);
+               .map(([key, amount, color]: [string, number, string]) => {
+                  return {
+                     label: key,
+                     color
+                  }
+               });
          });
    }
 
-   public static getRandomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = 'AAAAAA';
-      color = color.split('').map(() => letters[Math.floor(Math.random() * 16)]).join('');
-      return `#${color}`;
+   public static getRandomRGBAColor() {
+      const color = [1, 1, 1];
+      const randomColor = color.map(() => Math.floor(Math.random() * 100) + 155).join();
+      return `rgba(${randomColor}, 1)`;
    }
 
    private keysOf(object: Object): string[] {

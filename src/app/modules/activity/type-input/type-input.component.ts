@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { ActivityService } from '../../../shared/services/activity/activity.service';
+import { ActivityService, ActivityTypeButton } from '../../../shared/services/activity/activity.service';
 import { ACTIVITY_STATE_KEY } from '../../../shared/store/store';
 import { ActivityActionsKey, ActivityState } from '../../../shared/store/reducers/activity.reducer';
 import { Select } from '../../../shared/store/decorators/select';
@@ -14,7 +14,7 @@ import { Dispatch } from '../../../shared/store/decorators/dispatch';
 })
 export class TypeInputComponent implements OnInit {
 
-   public types: string[];
+   public types: ActivityTypeButton[];
    @Output() public onTypeSelect: EventEmitter<string> = new EventEmitter<string>();
 
    @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
@@ -22,10 +22,11 @@ export class TypeInputComponent implements OnInit {
    constructor(private activityService: ActivityService) { }
 
    ngOnInit() {
-      this.activityService.getCurrentTypes().then((types: string[]) => {
+      this.activityService.getCurrentTypes().then((types: ActivityTypeButton[]) => {
          if (!types) {
             return;
          }
+
          this.types = types;
       });
    }

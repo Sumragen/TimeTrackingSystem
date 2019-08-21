@@ -59,7 +59,7 @@ export class StorageEffect {
 
                if (!storage[type]) {
                   storage[type] = {
-                     color: ActivityService.getRandomColor(),
+                     color: ActivityService.getRandomRGBAColor(),
                      data: []
                   };
                }
