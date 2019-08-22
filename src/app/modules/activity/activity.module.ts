@@ -9,14 +9,14 @@ import { activityReducer } from '../../shared/store/reducers/activity.reducer';
 import { ACTIVITY_STATE_KEY } from '../../shared/store/store';
 import { StorageEffect } from '../../shared/store/effects/storage.effect';
 import { ActivityEffect } from '../../shared/store/effects/activity.effect';
-import { TypeInputComponent } from './type-input/type-input.component';
+import { SecondsToClockFormatPipe } from '../../shared/pipes/time/seconds-to-clock-format.pipe';
 
 import { ActivityPage } from './activity.page';
 import { IdleComponent } from './idle/idle.component';
 import { PerformComponent } from './perform/perform.component';
 import { ActivityRoutingModule } from './activity-routing.module';
 import { StopwatchComponent } from './stopwatch/stopwatch.component';
-import { SecondsToClockFormatPipe } from '../../shared/pipes/time/seconds-to-clock-format.pipe';
+import { TypeInputComponent } from './type-input/type-input.component';
 
 @NgModule({
    imports: [
