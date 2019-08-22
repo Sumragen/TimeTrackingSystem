@@ -49,15 +49,15 @@ export class StatisticPage implements OnInit {
                let label: string = '';
 
                if (hours > 0) {
-                  label += `${TimeService.twoDigitNumber(hours)} hours `;
+                  label += `${TimeService.twoDigitNumber(hours)} hour${hours > 1 ? 's' : ''} `;
                }
 
                if (hours > 0 || minutes > 0) {
-                  label += `${TimeService.twoDigitNumber(minutes)} minutes`;
+                  label += `${TimeService.twoDigitNumber(minutes)} minute${minutes > 1 ? 's' : ''} `;
                }
 
                if (hours > 0 || minutes > 0 || seconds > 0) {
-                  label += `${TimeService.twoDigitNumber(seconds)} seconds`;
+                  label += `${TimeService.twoDigitNumber(seconds)} second${seconds > 1 ? 's' : ''}`;
                }
                // adapt to plural and singular
                return label;
