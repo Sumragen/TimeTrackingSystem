@@ -6,7 +6,7 @@ export const Select = (selector: string) => (
   target: any,
   propertyKey: string,
   descriptor?: PropertyDescriptor
-): any => {
+): void => {
   if (delete target[propertyKey]) {
     Object.defineProperty(target, propertyKey, {
       ...descriptor,
