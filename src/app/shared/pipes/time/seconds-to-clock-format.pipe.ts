@@ -14,6 +14,7 @@ export class SecondsToClockFormatPipe implements PipeTransform {
       const formattedMinutes: string = TimeService.twoDigitNumber(minutes);
       const formattedSeconds: string = TimeService.twoDigitNumber(seconds);
 
+      debugger;
       return `${formattedMinutes}:${formattedSeconds}`
    }
 
