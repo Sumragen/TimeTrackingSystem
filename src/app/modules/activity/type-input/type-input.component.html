@@ -6,7 +6,7 @@
             [value]="state.type"
             (ionChange)="updateType($event.target.value)">
     </ion-input>
-    <ion-toolbar *ngIf="!!types">
+    <ion-toolbar *ngIf="types$ | async as types">
         <ion-buttons slot="start">
             <ion-button *ngFor="let type of types"
                         [ngStyle]="{'background-color': type.color}"

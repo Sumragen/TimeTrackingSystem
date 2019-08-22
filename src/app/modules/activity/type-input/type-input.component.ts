@@ -14,7 +14,7 @@ import { Dispatch } from '../../../shared/store/decorators/dispatch';
 })
 export class TypeInputComponent implements OnInit {
 
-   public types: ActivityTypeButton[];
+   public types$: Observable<ActivityTypeButton[]>;
    @Output() public onTypeSelect: EventEmitter<string> = new EventEmitter<string>();
 
    @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
@@ -22,13 +22,7 @@ export class TypeInputComponent implements OnInit {
    constructor(private activityService: ActivityService) { }
 
    ngOnInit() {
-      this.activityService.getCurrentTypes().then((types: ActivityTypeButton[]) => {
-         if (!types) {
-            return;
-         }
-
-         this.types = types;
-      });
+      this.types$ = this.activityService.getCurrentTypes();
    }
 
    @Dispatch()
