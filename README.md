@@ -1,1 +1,4 @@
 # TimeTrackingSystem
+
+## todo
+- Install Prettier
