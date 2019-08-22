@@ -48,9 +48,15 @@ function initialize(state: ActivityState, action: StoreAction): ActivityState {
 }
 
 function setType(state: ActivityState, action: PayloadAction<{ type: string }>): ActivityState {
+   let type: string = action.payload.type;
+
+   if (type.length === 1) {
+      type = type.toUpperCase();
+   }
+
    return {
       ...state,
-      type: action.payload.type
+      type
    };
 }
 
