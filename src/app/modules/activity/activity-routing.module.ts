@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ActivityPage } from './activity.page';
+import { ActivityStatusGuard } from '../../shared/guard/activity-status.guard';
 import { IdleComponent } from './idle/idle.component';
 import { PerformComponent } from './perform/perform.component';
-import { ActivityStatusGuard } from '../../shared/guard/activity-status.guard';
+import { ActivityPage } from './activity.page';
 
 const routes: Routes = [
    {
