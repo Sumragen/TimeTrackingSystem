@@ -36,14 +36,31 @@ export class StatisticPage implements OnInit {
          callbacks: {
             label: (tooltipItem: ChartTooltipItem, data: any) => {
                const dataset = data.datasets[tooltipItem.datasetIndex];
-               const value = dataset.data[tooltipItem.index];
-               const spentTime: number = Math.floor(value / 1000);
+               const milliseconds = dataset.data[tooltipItem.index];
 
-               const minutes = Math.floor(spentTime / 60);
-               const seconds = spentTime - minutes * 60;
+               const inSeconds: number = Math.floor(milliseconds / 1000);
+               const inMinutes: number = Math.floor(inSeconds / 60);
+               const inHours: number = Math.floor(inMinutes / 60);
 
+               const hours = inHours;
+               const minutes = inMinutes - inHours * 60;
+               const seconds = inSeconds - minutes * 60;
+
+               let label: string = '';
+
+               if (hours > 0) {
+                  label += `${TimeService.twoDigitNumber(hours)} hours `;
+               }
+
+               if (hours > 0 || minutes > 0) {
+                  label += `${TimeService.twoDigitNumber(minutes)} minutes`;
+               }
+
+               if (hours > 0 || minutes > 0 || seconds > 0) {
+                  label += `${TimeService.twoDigitNumber(seconds)} seconds`;
+               }
                // adapt to plural and singular
-               return `${TimeService.twoDigitNumber(minutes)} minutes ${TimeService.twoDigitNumber(seconds)} seconds`;
+               return label;
             }
          }
       }
