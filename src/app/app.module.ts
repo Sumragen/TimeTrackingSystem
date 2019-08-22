@@ -9,15 +9,16 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { META_REDUCERS, StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
+import { StatisticResolver } from './modules/statistic/statistic.resolver';
 import { TimeService } from './shared/services/time/time.service';
 import { SharedModule } from './shared/shared.module';
-import { StatisticResolver } from './modules/statistic/statistic.resolver';
 import { reducers } from './shared/store/store';
 import { StorageService } from './shared/services/storage/storage.service';
 import { getMetaReducers } from './shared/store/meta/meta.reducers';
 import { InjectableStoreModule } from './shared/store/decorators/injectable-store/injectable-store.module';
+
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
    declarations: [AppComponent],
