@@ -21,33 +21,32 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
-   declarations: [AppComponent],
-   entryComponents: [],
-   imports: [
-      BrowserModule,
-      IonicModule.forRoot(),
-      AppRoutingModule,
-      SharedModule,
-      StoreModule.forRoot(reducers),
-      EffectsModule.forRoot([]),
-      InjectableStoreModule
-   ],
-   providers: [
-      StatusBar,
-      SplashScreen,
-      NativeStorage,
-      Device,
-      TimeService,
-      StatisticResolver,
-      {
-         provide: META_REDUCERS,
-         deps: [StorageService],
-         useFactory: getMetaReducers,
-         multi: true,
-      },
-      {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
-   ],
-   bootstrap: [AppComponent]
+  declarations: [AppComponent],
+  entryComponents: [],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    SharedModule,
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([]),
+    InjectableStoreModule
+  ],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    NativeStorage,
+    Device,
+    TimeService,
+    StatisticResolver,
+    {
+      provide: META_REDUCERS,
+      deps: [StorageService],
+      useFactory: getMetaReducers,
+      multi: true
+    },
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

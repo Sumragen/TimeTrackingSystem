@@ -6,69 +6,82 @@ import { fromPromise } from 'rxjs/internal/observable/fromPromise';
 
 import { TimeService } from '../../services/time/time.service';
 import { ActivityStorage, StorageService } from '../../services/storage/storage.service';
-import { ACTIVITY_STATE_KEY, ActivityAction, PayloadAction, STORE_STATE, TargetAction } from '../store';
+import {
+  ACTIVITY_STATE_KEY,
+  ActivityAction,
+  PayloadAction,
+  STORE_STATE,
+  TargetAction
+} from '../store';
 import { Activity, ActivityState } from '../reducers/activity.reducer';
 import { ActivityService } from '../../services/activity/activity.service';
 
 export enum STORAGE_EFFECT {
-   LOG_TIME = 'E_LOG_ACTIVITY_TIME',
-   COMPLETE = 'E_ACTIVITY_COMPLETE'
+  LOG_TIME = 'E_LOG_ACTIVITY_TIME',
+  COMPLETE = 'E_ACTIVITY_COMPLETE'
 }
 
 @Injectable()
 export class StorageEffect {
-   constructor(private actions$: Actions,
-               private store$: Store<STORE_STATE>,
-               private storageService: StorageService,
-               private timeService: TimeService) {
-   }
+  constructor(
+    private actions$: Actions,
+    private store$: Store<STORE_STATE>,
+    private storageService: StorageService,
+    private timeService: TimeService
+  ) {}
 
-   logTime$ =
-      createEffect(() => this.actions$.pipe(
-         ofType(STORAGE_EFFECT.LOG_TIME),
-         map((action: PayloadAction<TargetAction<PayloadAction<Activity>>>): PayloadAction<Activity> => {
-            const target: PayloadAction<Activity> = action.payload.target;
-            return {
-               type: target.type,
-               payload: {
-                  ...target.payload,
-                  date: this.timeService.now()
-               }
+  logTime$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(STORAGE_EFFECT.LOG_TIME),
+      map(
+        (action: PayloadAction<TargetAction<PayloadAction<Activity>>>): PayloadAction<Activity> => {
+          const target: PayloadAction<Activity> = action.payload.target;
+          return {
+            type: target.type,
+            payload: {
+              ...target.payload,
+              date: this.timeService.now()
+            }
+          };
+        }
+      )
+    )
+  );
+
+  complete$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(STORAGE_EFFECT.COMPLETE),
+      withLatestFrom(this.store$.select(ACTIVITY_STATE_KEY)),
+      exhaustMap(([action, state]: [ActivityAction, ActivityState]) =>
+        fromPromise(
+          Promise.resolve().then(async () => {
+            const time: number = this.timeService.rangeBetweenNowAnd(state.date);
+
+            const activity: Activity = {
+              ...state,
+              type: state.type,
+              performedTime: time
             };
-         })
-      ));
 
-   complete$ =
-      createEffect(() => this.actions$.pipe(
-         ofType(STORAGE_EFFECT.COMPLETE),
-         withLatestFrom(this.store$.select(ACTIVITY_STATE_KEY)),
-         exhaustMap(([action, state]: [ActivityAction, ActivityState]) => fromPromise(
-            Promise.resolve().then(async () => {
-               const time: number = this.timeService.rangeBetweenNowAnd(state.date);
+            const storage: ActivityStorage = (await this.storageService.getStorage()) || {};
 
-               const activity: Activity = {
-                  ...state,
-                  type: state.type,
-                  performedTime: time
-               };
+            const type: string = activity.type;
+            delete activity.type;
 
-               const storage: ActivityStorage = await this.storageService.getStorage() || {};
+            if (!storage[type]) {
+              storage[type] = {
+                color: ActivityService.getRandomRGBAColor(),
+                data: []
+              };
+            }
+            storage[type].data.push(activity);
 
-               const type: string = activity.type;
-               delete activity.type;
+            await this.storageService.setStorage(storage);
 
-               if (!storage[type]) {
-                  storage[type] = {
-                     color: ActivityService.getRandomRGBAColor(),
-                     data: []
-                  };
-               }
-               storage[type].data.push(activity);
-
-               await this.storageService.setStorage(storage);
-
-               return action.payload.target;
-            })
-         ))
-      ));
+            return action.payload.target;
+          })
+        )
+      )
+    )
+  );
 }

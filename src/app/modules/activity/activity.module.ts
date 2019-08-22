@@ -19,21 +19,21 @@ import { StopwatchComponent } from './stopwatch/stopwatch.component';
 import { TypeInputComponent } from './type-input/type-input.component';
 
 @NgModule({
-   imports: [
-      CommonModule,
-      FormsModule,
-      IonicModule,
-      ActivityRoutingModule,
-      StoreModule.forFeature(ACTIVITY_STATE_KEY, activityReducer),
-      EffectsModule.forFeature([StorageEffect, ActivityEffect])
-   ],
-   declarations: [
-      ActivityPage,
-      IdleComponent,
-      PerformComponent,
-      TypeInputComponent,
-      StopwatchComponent,
-      SecondsToClockFormatPipe
-   ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    ActivityRoutingModule,
+    StoreModule.forFeature(ACTIVITY_STATE_KEY, activityReducer),
+    EffectsModule.forFeature([StorageEffect, ActivityEffect])
+  ],
+  declarations: [
+    ActivityPage,
+    IdleComponent,
+    PerformComponent,
+    TypeInputComponent,
+    StopwatchComponent,
+    SecondsToClockFormatPipe
+  ]
 })
 export class ActivityPageModule {}

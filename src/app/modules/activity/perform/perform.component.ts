@@ -9,35 +9,34 @@ import { Dispatch } from '../../../shared/store/decorators/dispatch';
 import { TimeService } from '../../../shared/services/time/time.service';
 
 @Component({
-   selector: 'app-perform',
-   templateUrl: './perform.component.html',
-   styleUrls: ['./perform.component.scss'],
+  selector: 'app-perform',
+  templateUrl: './perform.component.html',
+  styleUrls: ['./perform.component.scss']
 })
 export class PerformComponent {
+  @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
 
-   @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
+  constructor() {}
 
-   constructor() { }
-
-   @Dispatch()
-   public updateDescription(description: string) {
-      return {
-         type: ActivityActionsKey.SET_DESCRIPTION,
-         payload: {
-            description
-         }
+  @Dispatch()
+  public updateDescription(description: string) {
+    return {
+      type: ActivityActionsKey.SET_DESCRIPTION,
+      payload: {
+        description
       }
-   }
+    };
+  }
 
-   @Dispatch()
-   public completeActivity() {
-      return {
-         type: STORAGE_EFFECT.COMPLETE,
-         payload: {
-            target: {
-               type: ActivityActionsKey.COMPLETE
-            }
-         }
+  @Dispatch()
+  public completeActivity() {
+    return {
+      type: STORAGE_EFFECT.COMPLETE,
+      payload: {
+        target: {
+          type: ActivityActionsKey.COMPLETE
+        }
       }
-   }
+    };
+  }
 }

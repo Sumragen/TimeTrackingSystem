@@ -3,23 +3,23 @@ import { InjectableStore } from './injectable-store/injectable-store';
 import { STORE_ERRORS } from '../errors';
 
 export function Dispatch<V extends Action, S>() {
-   return function (target: any, propertyKey: string, descriptor?: PropertyDescriptor) {
-      const method = descriptor.value;
+  return function(target: any, propertyKey: string, descriptor?: PropertyDescriptor) {
+    const method = descriptor.value;
 
-      descriptor.value = function (...args: any[]) {
-         const store: Store<S> = InjectableStore.instance;
+    descriptor.value = function(...args: any[]) {
+      const store: Store<S> = InjectableStore.instance;
 
-         if (!store) {
-            throw new Error(STORE_ERRORS.INJECTION)
-         }
+      if (!store) {
+        throw new Error(STORE_ERRORS.INJECTION);
+      }
 
-         const action: V = method.apply(this, args);
+      const action: V = method.apply(this, args);
 
-         InjectableStore.instance.dispatch(action);
+      InjectableStore.instance.dispatch(action);
 
-         return action;
-      };
+      return action;
+    };
 
-      return descriptor;
-   }
+    return descriptor;
+  };
 }

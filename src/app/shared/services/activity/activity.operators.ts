@@ -9,7 +9,12 @@ export const getLatestActivityTypes = ([type, activities]: [string, ActivityCate
   const now: number = Date.now();
   const minDateRange: number = now - days(7);
 
-  const currentActivities: Activity[] = activities.data.filter(pipe(prop('date'), gt(minDateRange)));
+  const currentActivities: Activity[] = activities.data.filter(
+    pipe(
+      prop('date'),
+      gt(minDateRange)
+    )
+  );
 
   return {
     type,
@@ -18,4 +23,4 @@ export const getLatestActivityTypes = ([type, activities]: [string, ActivityCate
   };
 };
 
-export const createActivityTypeButton = ({type, color}) => ({label: type, color});
+export const createActivityTypeButton = ({ type, color }) => ({ label: type, color });

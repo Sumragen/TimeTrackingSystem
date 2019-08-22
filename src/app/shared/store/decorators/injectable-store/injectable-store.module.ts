@@ -5,12 +5,9 @@ import { InjectableStore } from './injectable-store';
 
 @NgModule()
 export class InjectableStoreModule {
-   constructor(
-      private store: Store<any>
-   ) {
-      if (!InjectableStore.instance) {
-         InjectableStore.initialize(store);
-      }
-   }
-
+  constructor(private store: Store<any>) {
+    if (!InjectableStore.instance) {
+      InjectableStore.initialize(store);
+    }
+  }
 }

@@ -9,24 +9,17 @@ import { StatisticPage } from './statistic.page';
 import { StatisticResolver } from './statistic.resolver';
 
 const routes: Routes = [
-   {
-      path: '',
-      component: StatisticPage,
-      resolve: {
-         chart: StatisticResolver
-      }
-   }
+  {
+    path: '',
+    component: StatisticPage,
+    resolve: {
+      chart: StatisticResolver
+    }
+  }
 ];
 
 @NgModule({
-   imports: [
-      CommonModule,
-      FormsModule,
-      IonicModule,
-      RouterModule.forChild(routes),
-      ChartsModule
-   ],
-   declarations: [StatisticPage]
+  imports: [CommonModule, FormsModule, IonicModule, RouterModule.forChild(routes), ChartsModule],
+  declarations: [StatisticPage]
 })
-export class StatisticPageModule {
-}
+export class StatisticPageModule {}

@@ -7,26 +7,30 @@ import { ActivityStorage, StorageService } from '../storage/storage.service';
 import { createActivityTypeButton, getLatestActivityTypes } from './activity.operators';
 
 export interface ActivityTypeButton {
-  color: string,
-  label: string
+  color: string;
+  label: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class ActivityService {
-  constructor(private storageService: StorageService) {
-  }
+  constructor(private storageService: StorageService) {}
 
   public getCurrentTypes(): Observable<ActivityTypeButton[] | null> {
-    return fromPromise(this.storageService.getStorage()
-      .then((storage: ActivityStorage) => storage ? storage : null)
-      .then(pipe(
-        toPairs,
-        map(getLatestActivityTypes),
-        sortBy('activityCount'),
-        map(createActivityTypeButton)
-      )));
+    return fromPromise(
+      this.storageService
+        .getStorage()
+        .then((storage: ActivityStorage) => (storage ? storage : null))
+        .then(
+          pipe(
+            toPairs,
+            map(getLatestActivityTypes),
+            sortBy('activityCount'),
+            map(createActivityTypeButton)
+          )
+        )
+    );
   }
 
   public static getRandomRGBAColor() {

@@ -6,19 +6,23 @@ import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class ActivityEffect {
-   constructor(private actions$: Actions,
-               private router: Router) {
-   }
+  constructor(private actions$: Actions, private router: Router) {}
 
-   perform$ =
-      createEffect(() => this.actions$.pipe(
-         ofType(ActivityActionsKey.PERFORM),
-         tap(() => this.router.navigate(['/activity/perform']))
-      ), { dispatch: false });
+  perform$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ActivityActionsKey.PERFORM),
+        tap(() => this.router.navigate(['/activity/perform']))
+      ),
+    { dispatch: false }
+  );
 
-   complete$ =
-      createEffect(() => this.actions$.pipe(
-         ofType(ActivityActionsKey.COMPLETE),
-         tap(() => this.router.navigate(['/activity/idle']))
-      ), { dispatch: false });
+  complete$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ActivityActionsKey.COMPLETE),
+        tap(() => this.router.navigate(['/activity/idle']))
+      ),
+    { dispatch: false }
+  );
 }

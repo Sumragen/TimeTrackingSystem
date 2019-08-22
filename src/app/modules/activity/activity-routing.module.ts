@@ -7,32 +7,30 @@ import { PerformComponent } from './perform/perform.component';
 import { ActivityPage } from './activity.page';
 
 const routes: Routes = [
-   {
-      path: '',
-      component: ActivityPage,
-      children: [
-         {
-            path: '',
-            redirectTo: 'idle',
-            pathMatch: 'full'
-         },
-         {
-            path: 'idle',
-            component: IdleComponent,
-            canActivate: [ActivityStatusGuard]
-         },
-         {
-            path: 'perform',
-            component: PerformComponent
-         },
-      ]
-   },
+  {
+    path: '',
+    component: ActivityPage,
+    children: [
+      {
+        path: '',
+        redirectTo: 'idle',
+        pathMatch: 'full'
+      },
+      {
+        path: 'idle',
+        component: IdleComponent,
+        canActivate: [ActivityStatusGuard]
+      },
+      {
+        path: 'perform',
+        component: PerformComponent
+      }
+    ]
+  }
 ];
 
 @NgModule({
-   imports: [
-      RouterModule.forChild(routes),
-   ],
-   exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class ActivityRoutingModule {}
