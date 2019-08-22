@@ -17,6 +17,12 @@ export interface ActivityTypeButton {
 export class ActivityService {
   constructor(private storageService: StorageService) {}
 
+  public static getRandomRGBAColor() {
+    const color = [1, 1, 1];
+    const randomColor = color.map(() => Math.floor(Math.random() * 100) + 155).join();
+    return `rgba(${randomColor}, 1)`;
+  }
+
   public getCurrentTypes(): Observable<ActivityTypeButton[] | null> {
     return fromPromise(
       this.storageService
@@ -31,11 +37,5 @@ export class ActivityService {
           )
         )
     );
-  }
-
-  public static getRandomRGBAColor() {
-    const color = [1, 1, 1];
-    const randomColor = color.map(() => Math.floor(Math.random() * 100) + 155).join();
-    return `rgba(${randomColor}, 1)`;
   }
 }

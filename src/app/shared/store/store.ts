@@ -2,13 +2,17 @@ import { Action, ActionReducerMap } from '@ngrx/store';
 
 import { Activity, ActivityState } from './reducers/activity.reducer';
 
-export const ACTIVITY_STATE_KEY: string = 'activity'; // TODO find way how to remove it
+export const ACTIVITY_STATE_KEY = 'activity'; // TODO find way how to remove it
 
-export interface STORE_STATE {
+export interface StoreState {
   activity?: ActivityState;
 }
 
-export interface StoreAction extends PayloadAction<STORE_STATE> {}
+export interface PayloadAction<T> extends Action {
+  payload: T;
+}
+
+export interface StoreAction extends PayloadAction<StoreState> {}
 
 export interface ActivityAction extends PayloadAction<TargetAction<Activity>> {}
 
@@ -16,8 +20,4 @@ export interface TargetAction<T> {
   target: T;
 }
 
-export interface PayloadAction<T> extends Action {
-  payload: T;
-}
-
-export const reducers: ActionReducerMap<STORE_STATE, Action> = {};
+export const reducers: ActionReducerMap<StoreState, Action> = {};

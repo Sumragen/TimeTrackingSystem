@@ -3,7 +3,7 @@ import { InjectableStore } from './injectable-store/injectable-store';
 import { STORE_ERRORS } from '../errors';
 
 export function Dispatch<V extends Action, S>() {
-  return function(target: any, propertyKey: string, descriptor?: PropertyDescriptor) {
+  return (target: any, propertyKey: string, descriptor?: PropertyDescriptor) => {
     const method = descriptor.value;
 
     descriptor.value = function(...args: any[]) {

@@ -10,7 +10,7 @@ import {
   ACTIVITY_STATE_KEY,
   ActivityAction,
   PayloadAction,
-  STORE_STATE,
+  StoreState,
   TargetAction
 } from '../store';
 import { Activity, ActivityState } from '../reducers/activity.reducer';
@@ -25,7 +25,7 @@ export enum STORAGE_EFFECT {
 export class StorageEffect {
   constructor(
     private actions$: Actions,
-    private store$: Store<STORE_STATE>,
+    private store$: Store<StoreState>,
     private storageService: StorageService,
     private timeService: TimeService
   ) {}

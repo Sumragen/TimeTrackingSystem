@@ -70,7 +70,7 @@ function setDescription(
   };
 }
 
-//TODO remove those duplications (and also ACTIVITY_STATUS looks the same)
+// TODO remove those duplications (and also ACTIVITY_STATUS looks the same)
 export const ActivityActionsKey = {
   PERFORM: 'PERFORM',
   COMPLETE: 'COMPLETE',

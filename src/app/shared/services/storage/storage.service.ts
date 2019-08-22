@@ -4,7 +4,7 @@ import { Platform } from '@ionic/angular';
 
 import { Activity } from '../../store/reducers/activity.reducer';
 
-export const storageKey: string = 'record_storage';
+export const storageKey = 'record_storage';
 
 export interface ActivityStorage {
   [key: string]: ActivityCategoryStorage;

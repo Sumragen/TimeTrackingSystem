@@ -11,7 +11,7 @@ import { TimeService } from '../../../shared/services/time/time.service';
 export class StopwatchComponent implements OnInit {
   public time$: Observable<number>;
 
-  @Input() initialDate: number = 0;
+  @Input() initialDate = 0;
 
   constructor(private timeService: TimeService) {}
 

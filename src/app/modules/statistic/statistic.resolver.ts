@@ -9,7 +9,7 @@ export class StatisticResolver implements Resolve<ChartData> {
   public resolve(route: ActivatedRouteSnapshot): Promise<ChartData> {
     return this.storageService.getStorage().then((storage: ActivityStorage) => {
       if (!storage || Object.keys(storage).length === 0) {
-        return null; //todo: display error and navigate back;
+        return null; // todo: display error and navigate back;
       }
 
       const labels = Object.keys(storage);

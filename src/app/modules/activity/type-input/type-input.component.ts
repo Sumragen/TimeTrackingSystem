@@ -17,7 +17,7 @@ import { Dispatch } from '../../../shared/store/decorators/dispatch';
 })
 export class TypeInputComponent implements OnInit {
   public types$: Observable<ActivityTypeButton[]>;
-  @Output() public onTypeSelect: EventEmitter<string> = new EventEmitter<string>();
+  @Output() public typeSelect: EventEmitter<string> = new EventEmitter<string>();
 
   @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
 
@@ -38,6 +38,6 @@ export class TypeInputComponent implements OnInit {
   }
 
   public selectType(type: string) {
-    this.onTypeSelect.emit(type);
+    this.typeSelect.emit(type);
   }
 }

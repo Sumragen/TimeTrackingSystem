@@ -46,7 +46,7 @@ export class StatisticPage implements OnInit {
           const minutes = inMinutes - inHours * 60;
           const seconds = inSeconds - minutes * 60;
 
-          let label: string = '';
+          let label = '';
 
           if (hours > 0) {
             label += `${hours} hour${hours > 1 ? 's' : ''} `;

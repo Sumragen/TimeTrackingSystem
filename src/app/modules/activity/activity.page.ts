@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivityActionsKey, ActivityState } from '../../shared/store/reducers/activity.reducer';
 import { StorageService } from '../../shared/services/storage/storage.service';
 import { Dispatch } from '../../shared/store/decorators/dispatch';
+import { StoreState, StoreAction } from '../../shared/store/store';
 
 @Component({
   selector: 'app-activity',
@@ -17,7 +18,7 @@ export class ActivityPage implements OnInit {
   }
 
   private setupInitialStoreState(): void {
-    this.storageService.getSavedState().then((state: ActivityState) => {
+    this.storageService.getSavedState().then((state: StoreState) => {
       if (!!state) {
         this.initialize(state);
       }
@@ -25,7 +26,7 @@ export class ActivityPage implements OnInit {
   }
 
   @Dispatch()
-  private initialize(state: ActivityState) {
+  private initialize(state: StoreState): StoreAction {
     return {
       type: ActivityActionsKey.INITIALIZE,
       payload: state
