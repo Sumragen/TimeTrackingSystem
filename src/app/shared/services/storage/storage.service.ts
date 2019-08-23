@@ -2,18 +2,6 @@ import { Injectable } from '@angular/core';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { Platform } from '@ionic/angular';
 
-import { Activity } from '../../store/reducers/activity.reducer';
-
-export const storageKey = 'record_storage';
-
-export interface ActivityStorage {
-  [key: string]: ActivityCategoryStorage;
-}
-export interface ActivityCategoryStorage {
-  color: string;
-  data: Activity[];
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -22,31 +10,6 @@ export class StorageService {
 
   public isBrowser(): boolean {
     return this.platform.is('mobileweb');
-  }
-
-  public async getKeys(): Promise<string[]> {
-    const storage = await this.getStorage();
-
-    if (!storage || Object.keys(storage).length === 0) {
-      return;
-    }
-    return Object.keys(storage);
-  }
-
-  public getStorage(): Promise<ActivityStorage> {
-    return this.getItem(storageKey);
-  }
-
-  public setStorage(storage: ActivityStorage): Promise<void> {
-    return this.setItem(storageKey, storage);
-  }
-
-  public getSavedState(): Promise<any> {
-    return this.getItem('activity_state');
-  }
-
-  public setSavedState(state: any): Promise<any> {
-    return this.setItem('activity_state', state);
   }
 
   public getItem<T>(key: string): Promise<T> {

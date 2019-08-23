@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { map, pipe, sortBy, toPairs } from 'lodash/fp';
-
-import { ActivityStorage, StorageService } from '../../../shared/services/storage/storage.service';
 import { createActivityTypeButton, getLatestActivityTypes } from './activity.operators';
+import { ActivityStorage } from './activity-storage.types';
+import { ActivityStorageService } from './activity-storage.service';
 
 export interface ActivityTypeButton {
   color: string;
@@ -14,7 +14,7 @@ export interface ActivityTypeButton {
 
 @Injectable()
 export class ActivityService {
-  constructor(private storageService: StorageService) {}
+  constructor(private storageService: ActivityStorageService) {}
 
   public static getRandomRGBAColor() {
     const color = [1, 1, 1];

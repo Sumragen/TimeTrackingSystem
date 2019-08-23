@@ -1,10 +1,11 @@
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 
-import { ActivityStorage, StorageService } from '../../shared/services/storage/storage.service';
 import { ChartData } from './statistic.page';
+import { ActivityStorageService } from '../activity/services/activity-storage.service';
+import { ActivityStorage } from '../activity/services/activity-storage.types';
 
 export class StatisticResolver implements Resolve<ChartData> {
-  constructor(private storageService: StorageService) {}
+  constructor(private storageService: ActivityStorageService) {}
 
   public resolve(route: ActivatedRouteSnapshot): Promise<ChartData> {
     return this.storageService.getStorage().then((storage: ActivityStorage) => {

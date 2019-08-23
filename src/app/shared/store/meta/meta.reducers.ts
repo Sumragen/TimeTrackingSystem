@@ -1,9 +1,9 @@
 import { MetaReducer } from '@ngrx/store';
 
+import { ActivityStorageService } from '../../../modules/activity/services/activity-storage.service';
+
 import { storageMetaReducer } from './storage.meta-reducer';
 
-import { StorageService } from '../../services/storage/storage.service';
-
-export function getMetaReducers(storageService: StorageService): MetaReducer<any> {
+export function getMetaReducers(storageService: ActivityStorageService): MetaReducer<any> {
   return storageMetaReducer(storageService);
 }

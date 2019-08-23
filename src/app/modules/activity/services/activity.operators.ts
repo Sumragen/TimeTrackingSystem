@@ -1,6 +1,7 @@
-import { ActivityCategoryStorage } from '../../../shared/services/storage/storage.service';
-import { Activity } from '../../../shared/store/reducers/activity.reducer';
 import { gt, pipe, prop } from 'lodash/fp';
+
+import { Activity } from '../../../shared/store/reducers/activity.reducer';
+import { ActivityCategoryStorage } from './activity-storage.types';
 
 const hours = (amount: number): number => amount * 60 * 60 * 1000;
 const days = (amount: number): number => amount * hours(24);

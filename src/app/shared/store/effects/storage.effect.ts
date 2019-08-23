@@ -5,7 +5,6 @@ import { exhaustMap, map, withLatestFrom } from 'rxjs/internal/operators';
 import { fromPromise } from 'rxjs/internal/observable/fromPromise';
 
 import { TimeService } from '../../services/time/time.service';
-import { ActivityStorage, StorageService } from '../../services/storage/storage.service';
 import {
   ACTIVITY_STATE_KEY,
   ActivityAction,
@@ -15,6 +14,8 @@ import {
 } from '../store';
 import { Activity, ActivityState } from '../reducers/activity.reducer';
 import { ActivityService } from '../../../modules/activity/services/activity.service';
+import { ActivityStorageService } from '../../../modules/activity/services/activity-storage.service';
+import { ActivityStorage } from '../../../modules/activity/services/activity-storage.types';
 
 export enum STORAGE_EFFECT {
   LOG_TIME = 'E_LOG_ACTIVITY_TIME',
@@ -26,7 +27,7 @@ export class StorageEffect {
   constructor(
     private actions$: Actions,
     private store$: Store<StoreState>,
-    private storageService: StorageService,
+    private storageService: ActivityStorageService,
     private timeService: TimeService
   ) {}
 

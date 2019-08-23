@@ -13,12 +13,12 @@ import { StatisticResolver } from './modules/statistic/statistic.resolver';
 import { TimeService } from './shared/services/time/time.service';
 import { SharedModule } from './shared/shared.module';
 import { reducers } from './shared/store/store';
-import { StorageService } from './shared/services/storage/storage.service';
 import { getMetaReducers } from './shared/store/meta/meta.reducers';
 import { InjectableStoreModule } from './shared/store/decorators/injectable-store/injectable-store.module';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ActivityStorageService } from './modules/activity/services/activity-storage.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,7 +41,7 @@ import { AppRoutingModule } from './app-routing.module';
     StatisticResolver,
     {
       provide: META_REDUCERS,
-      deps: [StorageService],
+      deps: [ActivityStorageService],
       useFactory: getMetaReducers,
       multi: true
     },

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ActivityActionsKey, ActivityState } from '../../shared/store/reducers/activity.reducer';
-import { StorageService } from '../../shared/services/storage/storage.service';
+import { ActivityActionsKey } from '../../shared/store/reducers/activity.reducer';
 import { Dispatch } from '../../shared/store/decorators/dispatch';
-import { StoreState, StoreAction } from '../../shared/store/store';
+import { StoreAction, StoreState } from '../../shared/store/store';
+import { ActivityStorageService } from './services/activity-storage.service';
 
 @Component({
   selector: 'app-activity',
@@ -11,7 +11,7 @@ import { StoreState, StoreAction } from '../../shared/store/store';
   styleUrls: ['activity.page.scss']
 })
 export class ActivityPage implements OnInit {
-  constructor(private storageService: StorageService) {}
+  constructor(private storageService: ActivityStorageService) {}
 
   ngOnInit(): void {
     this.setupInitialStoreState();
