@@ -39,9 +39,9 @@ function complete(): ActivityState {
   };
 }
 
-function initialize(state: ActivityState, action: StoreAction): ActivityState {
-  if (!!action.payload && action.payload.activity) {
-    return action.payload.activity;
+function initialize(state: ActivityState, action: PayloadAction<ActivityState>): ActivityState {
+  if (!!action.payload) {
+    return action.payload;
   } else {
     return state;
   }

@@ -19,7 +19,6 @@ import { StopwatchComponent } from './components/perform/stopwatch/stopwatch.com
 import { TypeInputComponent } from './components/type-input/type-input.component';
 import { ActivityStatusGuard } from './activity-status.guard';
 import { ActivityService } from './services/activity.service';
-import { ActivityStorageService } from './services/activity-storage.service';
 
 @NgModule({
   imports: [
@@ -38,6 +37,6 @@ import { ActivityStorageService } from './services/activity-storage.service';
     StopwatchComponent,
     SecondsToClockFormatPipe
   ],
-  providers: [ActivityStatusGuard, ActivityService, ActivityStorageService]
+  providers: [ActivityStatusGuard, ActivityService]
 })
 export class ActivityPageModule {}

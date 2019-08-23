@@ -80,7 +80,7 @@ export class StorageEffect {
 
             return storage;
           }),
-          tap(this.storageService.setStorage),
+          tap((storage: ActivityStorage) => this.storageService.setStorage(storage)),
           map(() => action.payload.target)
         )
       )

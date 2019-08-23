@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { StorageService } from '../../../shared/services/storage/storage.service';
+import { ActivityState } from '../../../shared/store/reducers/activity.reducer';
+
 import {
   ACTIVITY_STATE_KEY,
   ACTIVITY_STORAGE_KEY,
   ActivityStorage
 } from './activity-storage.types';
-import { Observable } from 'rxjs';
-import { ActivityState } from '../../../shared/store/reducers/activity.reducer';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ActivityStorageService {
   constructor(private storageService: StorageService) {}
 

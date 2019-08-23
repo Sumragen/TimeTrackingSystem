@@ -6,19 +6,17 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { Device } from '@ionic-native/device/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { META_REDUCERS, StoreModule } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { StatisticResolver } from './modules/statistic/statistic.resolver';
 import { TimeService } from './shared/services/time/time.service';
 import { SharedModule } from './shared/shared.module';
 import { reducers } from './shared/store/store';
-import { getMetaReducers } from './shared/store/meta/meta.reducers';
 import { InjectableStoreModule } from './shared/store/decorators/injectable-store/injectable-store.module';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ActivityStorageService } from './modules/activity/services/activity-storage.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,12 +37,6 @@ import { ActivityStorageService } from './modules/activity/services/activity-sto
     Device,
     TimeService,
     StatisticResolver,
-    {
-      provide: META_REDUCERS,
-      deps: [ActivityStorageService],
-      useFactory: getMetaReducers,
-      multi: true
-    },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

@@ -4,7 +4,6 @@ import { map as mapO } from 'rxjs/operators';
 import { map, pipe, sortBy, toPairs } from 'lodash/fp';
 
 import { createActivityTypeButton, getLatestActivityTypes } from './activity.operators';
-import { ActivityStorage } from './activity-storage.types';
 import { ActivityStorageService } from './activity-storage.service';
 
 export interface ActivityTypeButton {

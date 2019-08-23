@@ -4,6 +4,7 @@ import { ActivityActionsKey } from '../../shared/store/reducers/activity.reducer
 import { Dispatch } from '../../shared/store/decorators/dispatch';
 import { StoreAction, StoreState } from '../../shared/store/store';
 import { ActivityStorageService } from './services/activity-storage.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-activity',
@@ -18,11 +19,9 @@ export class ActivityPage implements OnInit {
   }
 
   private setupInitialStoreState(): void {
-    this.storageService.getSavedState().then((state: StoreState) => {
-      if (!!state) {
-        this.initialize(state);
-      }
-    });
+    this.storageService.getSavedState().pipe(
+       tap(this.initialize)
+    ).subscribe();
   }
 
   @Dispatch()
