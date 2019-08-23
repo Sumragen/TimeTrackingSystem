@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { MenuComponent } from './components/menu/menu.component';
+import { InnerButtonStylesDirective } from './directives/inner-button-styles.directive';
 
 @NgModule({
   declarations: [MenuComponent],

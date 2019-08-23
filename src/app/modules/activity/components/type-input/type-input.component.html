@@ -1,18 +1,19 @@
 <div class="type-input" *ngIf="state$ | async as state">
-    <ion-input
-            class="custom-type-input"
-            clear-input="true"
-            placeholder="Enter new activity type"
-            [value]="state.type"
-            (ionChange)="updateType($event.target.value)">
-    </ion-input>
-    <ion-toolbar *ngIf="types$ | async as types">
-        <ion-buttons slot="start">
-            <ion-button *ngFor="let type of types"
-                        [ngStyle]="{'background-color': type.color}"
-                        (click)="selectType(type.label)">
-                {{type.label}}
-            </ion-button>
-        </ion-buttons>
-    </ion-toolbar>
+  <ion-input
+    class="custom-type-input"
+    clear-input="true"
+    placeholder="Enter new activity type"
+    [value]="state.type"
+    (ionChange)="updateType($event.target.value)"
+  >
+  </ion-input>
+  <ion-toolbar *ngIf="types$ | async as types">
+    <ion-button
+      *ngFor="let type of types"
+      [appInnerButtonStyles]="type.color"
+      (click)="selectType(type.label)"
+    >
+      {{ type.label }}
+    </ion-button>
+  </ion-toolbar>
 </div>
