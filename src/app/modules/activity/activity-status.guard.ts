@@ -6,10 +6,11 @@ import {
   UrlTree
 } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { iif, Observable, of, throwError } from 'rxjs';
-import { catchError, pluck, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { cond, pipe, propEq, T } from 'ramda';
 
-import { ACTIVITY_STATUS } from '../../shared/store/reducers/activity.reducer';
+import { ACTIVITY_STATUS, ActivityState } from '../../shared/store/reducers/activity.reducer';
 
 import { ActivityStorageService } from './services/activity-storage.service';
 
@@ -21,22 +22,20 @@ export class ActivityStatusGuard implements CanActivate {
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> {
-    return this.storageService.getSavedState().pipe(
-      throwOnEmpty(),
-      pluck('activity'),
-      throwOnEmpty(),
-      pluck('status'),
-      switchMap((activityStatus: string) =>
-        iif(
-          () => activityStatus === ACTIVITY_STATUS.PERFORM,
-          of(this.router.parseUrl('/activity/perform')),
-          throwError(false)
+    return this.storageService
+      .getSavedState()
+      .pipe(
+        map(
+          pipe(
+            cond<ActivityState, UrlTree | boolean>([
+              [
+                propEq('status', ACTIVITY_STATUS.PERFORM),
+                () => this.router.parseUrl('/activity/perform')
+              ],
+              [T, () => true]
+            ])
+          )
         )
-      ),
-      catchError((err: boolean) => of(!err))
-    );
+      );
   }
 }
-
-export const throwOnEmpty = <T>() =>
-  switchMap((value: T) => iif(() => !!value, of(value), throwError(false)));
