@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-
 import { Observable } from 'rxjs';
-import { fromPromise } from 'rxjs/internal-compatibility';
+import { map as mapO } from 'rxjs/operators';
 import { map, pipe, sortBy, toPairs } from 'lodash/fp';
+
 import { createActivityTypeButton, getLatestActivityTypes } from './activity.operators';
 import { ActivityStorage } from './activity-storage.types';
 import { ActivityStorageService } from './activity-storage.service';
@@ -23,11 +23,10 @@ export class ActivityService {
   }
 
   public getCurrentTypes(): Observable<ActivityTypeButton[] | null> {
-    return fromPromise(
-      this.storageService
-        .getStorage()
-        .then((storage: ActivityStorage) => (storage ? storage : null))
-        .then(
+    return this.storageService
+      .getStorage()
+      .pipe(
+        mapO(
           pipe(
             toPairs,
             map(getLatestActivityTypes),
@@ -35,6 +34,6 @@ export class ActivityService {
             map(createActivityTypeButton)
           )
         )
-    );
+      );
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { exhaustMap, map, withLatestFrom } from 'rxjs/internal/operators';
+import { exhaustMap, map, tap, withLatestFrom } from 'rxjs/internal/operators';
 import { fromPromise } from 'rxjs/internal/observable/fromPromise';
 
 import { TimeService } from '../../services/time/time.service';
@@ -54,8 +54,10 @@ export class StorageEffect {
       ofType(STORAGE_EFFECT.COMPLETE),
       withLatestFrom(this.store$.select(ACTIVITY_STATE_KEY)),
       exhaustMap(([action, state]: [ActivityAction, ActivityState]) =>
-        fromPromise(
-          Promise.resolve().then(async () => {
+        this.storageService.getStorage().pipe(
+          map((storage: ActivityStorage) => {
+            // --------------------------------------------------------------------
+            // TODO it's looks like something that could be written in FP style
             const time: number = this.timeService.rangeBetweenNowAnd(state.date);
 
             const activity: Activity = {
@@ -64,10 +66,9 @@ export class StorageEffect {
               performedTime: time
             };
 
-            const storage: ActivityStorage = (await this.storageService.getStorage()) || {};
-
             const type: string = activity.type;
             delete activity.type;
+            // --------------------------------------------------------------------
 
             if (!storage[type]) {
               storage[type] = {
@@ -77,10 +78,10 @@ export class StorageEffect {
             }
             storage[type].data.push(activity);
 
-            await this.storageService.setStorage(storage);
-
-            return action.payload.target;
-          })
+            return storage;
+          }),
+          tap(this.storageService.setStorage),
+          map(() => action.payload.target)
         )
       )
     )
