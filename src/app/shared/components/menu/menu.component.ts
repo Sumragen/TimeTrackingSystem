@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 
@@ -7,10 +7,8 @@ import { MenuController } from '@ionic/angular';
   templateUrl: 'menu.component.html',
   styleUrls: ['menu.component.scss']
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent {
   constructor(private router: Router, private menuController: MenuController) {}
-
-  ngOnInit() {}
 
   public handleStatisticClick(): void {
     this.router.navigate(['statistic']).then(() => this.menuController.close());
