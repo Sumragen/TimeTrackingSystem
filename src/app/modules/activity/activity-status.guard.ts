@@ -7,13 +7,11 @@ import {
 } from '@angular/router';
 import { Injectable } from '@angular/core';
 
-import { StoreState } from '../store/store';
-import { ACTIVITY_STATUS } from '../store/reducers/activity.reducer';
-import { StorageService } from '../services/storage/storage.service';
+import { StoreState } from '../../shared/store/store';
+import { ACTIVITY_STATUS } from '../../shared/store/reducers/activity.reducer';
+import { StorageService } from '../../shared/services/storage/storage.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ActivityStatusGuard implements CanActivate {
   constructor(private router: Router, private storageService: StorageService) {}
 

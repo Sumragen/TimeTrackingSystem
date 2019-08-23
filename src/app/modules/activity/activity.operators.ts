@@ -1,5 +1,5 @@
-import { ActivityCategoryStorage } from '../storage/storage.service';
-import { Activity } from '../../store/reducers/activity.reducer';
+import { ActivityCategoryStorage } from '../../shared/services/storage/storage.service';
+import { Activity } from '../../shared/store/reducers/activity.reducer';
 import { gt, pipe, prop } from 'lodash/fp';
 
 const hours = (amount: number): number => amount * 60 * 60 * 1000;

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import {
   ActivityService,
   ActivityTypeButton
-} from '../../../shared/services/activity/activity.service';
+} from '../activity.service';
 import { ACTIVITY_STATE_KEY } from '../../../shared/store/store';
 import { ActivityActionsKey, ActivityState } from '../../../shared/store/reducers/activity.reducer';
 import { Select } from '../../../shared/store/decorators/select';

@@ -17,6 +17,8 @@ import { PerformComponent } from './perform/perform.component';
 import { ActivityRoutingModule } from './activity-routing.module';
 import { StopwatchComponent } from './stopwatch/stopwatch.component';
 import { TypeInputComponent } from './type-input/type-input.component';
+import { ActivityStatusGuard } from './activity-status.guard';
+import { ActivityService } from './activity.service';
 
 @NgModule({
   imports: [
@@ -34,6 +36,7 @@ import { TypeInputComponent } from './type-input/type-input.component';
     TypeInputComponent,
     StopwatchComponent,
     SecondsToClockFormatPipe
-  ]
+  ],
+  providers: [ActivityStatusGuard, ActivityService]
 })
 export class ActivityPageModule {}
