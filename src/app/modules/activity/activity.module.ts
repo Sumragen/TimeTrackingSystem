@@ -19,6 +19,7 @@ import { StopwatchComponent } from './components/perform/stopwatch/stopwatch.com
 import { TypeInputComponent } from './components/type-input/type-input.component';
 import { ActivityStatusGuard } from './activity-status.guard';
 import { ActivityService } from './services/activity.service';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { ActivityService } from './services/activity.service';
     IonicModule,
     ActivityRoutingModule,
     StoreModule.forFeature(ACTIVITY_STATE_KEY, activityReducer),
-    EffectsModule.forFeature([StorageEffect, ActivityEffect])
+    EffectsModule.forFeature([StorageEffect, ActivityEffect]),
+    SharedModule
   ],
   declarations: [
     ActivityPage,
