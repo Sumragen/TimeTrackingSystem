@@ -3,13 +3,13 @@ import { Observable } from 'rxjs';
 
 import { ACTIVITY_STATE_KEY, PayloadAction, TargetAction } from '../../../../shared/store/store';
 import {
-  Activity,
   ActivityActionsKey,
   ActivityState
-} from '../../../../shared/store/reducers/activity.reducer';
+} from '../../store/activity.reducer';
 import { STORAGE_EFFECT } from '../../../../shared/store/effects/storage.effect';
 import { Select } from '../../../../shared/store/decorators/select';
 import { Dispatch } from '../../../../shared/store/decorators/dispatch';
+import { Activity } from '../../models/activity.types';
 
 @Component({
   selector: 'app-idle',

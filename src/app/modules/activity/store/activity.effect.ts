@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
-import { ActivityActionsKey, ActivityState } from '../reducers/activity.reducer';
 import { switchMap, tap } from 'rxjs/operators';
-import { ACTIVITY_STATE_KEY, StoreState } from '../store';
 import { Store } from '@ngrx/store';
-import { ActivityStorageService } from '../../../modules/activity/services/activity-storage.service';
+
+import { ActivityActionsKey, ActivityState } from './activity.reducer';
+import { ACTIVITY_STATE_KEY, StoreState } from '../../../shared/store/store';
+import { ActivityStorageService } from '../services/activity-storage.service';
 
 @Injectable()
 export class ActivityEffect {

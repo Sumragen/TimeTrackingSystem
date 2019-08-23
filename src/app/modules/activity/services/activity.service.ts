@@ -5,11 +5,7 @@ import { map, pipe, sortBy, toPairs } from 'lodash/fp';
 
 import { createActivityTypeButton, getLatestActivityTypes } from './activity.operators';
 import { ActivityStorageService } from './activity-storage.service';
-
-export interface ActivityTypeButton {
-  color: string;
-  label: string;
-}
+import { ActivityTypeButton } from '../models/activity.types';
 
 @Injectable()
 export class ActivityService {
@@ -22,17 +18,15 @@ export class ActivityService {
   }
 
   public getCurrentTypes(): Observable<ActivityTypeButton[] | null> {
-    return this.storageService
-      .getStorage()
-      .pipe(
-        mapO(
-          pipe(
-            toPairs,
-            map(getLatestActivityTypes),
-            sortBy('activityCount'),
-            map(createActivityTypeButton)
-          )
+    return this.storageService.getStorage().pipe(
+      mapO(
+        pipe(
+          toPairs,
+          map(getLatestActivityTypes),
+          sortBy('activityCount'),
+          map(createActivityTypeButton)
         )
-      );
+      )
+    );
   }
 }

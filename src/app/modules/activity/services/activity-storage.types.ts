@@ -1,4 +1,4 @@
-import { Activity } from '../../../shared/store/reducers/activity.reducer';
+import { Activity } from '../models/activity.types';
 
 export interface ActivityStorage {
   [key: string]: ActivityCategoryStorage;
@@ -9,5 +9,10 @@ export interface ActivityCategoryStorage {
   data: Activity[];
 }
 
-export const ACTIVITY_STATE_KEY = 'activity_state';
-export const ACTIVITY_STORAGE_KEY = 'record_storage';
+export type ActivityStorageEntities = [string, ActivityCategoryStorage];
+
+export interface ConciseActivityStorageData {
+  type: string;
+  activitiesCount: number;
+  color: string;
+}

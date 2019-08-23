@@ -1,22 +1,7 @@
 import { createAction, createReducer, on } from '@ngrx/store';
 
-import { PayloadAction, StoreAction } from '../store';
-
-export enum ACTIVITY_STATUS {
-  IDLE = 'IDLE',
-  PERFORM = 'PERFORM',
-  COMPLETE = 'COMPLETE'
-}
-
-export interface ActivityTime {
-  performedTime: number;
-  date: number;
-}
-
-export interface Activity extends Partial<ActivityTime> {
-  type: string;
-  description?: string;
-}
+import { PayloadAction } from '../../../shared/store/store';
+import { Activity, ACTIVITY_STATUS } from '../models/activity.types';
 
 export interface ActivityState extends Partial<Activity> {
   status: ACTIVITY_STATUS;

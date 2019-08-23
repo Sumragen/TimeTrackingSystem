@@ -1,6 +1,7 @@
 import { Action, ActionReducerMap } from '@ngrx/store';
 
-import { Activity, ActivityState } from './reducers/activity.reducer';
+import { ActivityState } from '../../modules/activity/store/activity.reducer';
+import { Activity } from '../../modules/activity/models/activity.types';
 
 export const ACTIVITY_STATE_KEY = 'activity'; // TODO find way how to remove it
 

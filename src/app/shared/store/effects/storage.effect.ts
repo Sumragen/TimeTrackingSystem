@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { exhaustMap, map, tap, withLatestFrom } from 'rxjs/internal/operators';
-import { fromPromise } from 'rxjs/internal/observable/fromPromise';
 
 import { TimeService } from '../../services/time/time.service';
 import {
@@ -12,10 +11,11 @@ import {
   StoreState,
   TargetAction
 } from '../store';
-import { Activity, ActivityState } from '../reducers/activity.reducer';
+import { ActivityState } from '../../../modules/activity/store/activity.reducer';
 import { ActivityService } from '../../../modules/activity/services/activity.service';
 import { ActivityStorageService } from '../../../modules/activity/services/activity-storage.service';
 import { ActivityStorage } from '../../../modules/activity/services/activity-storage.types';
+import { Activity } from '../../../modules/activity/models/activity.types';
 
 export enum STORAGE_EFFECT {
   LOG_TIME = 'E_LOG_ACTIVITY_TIME',

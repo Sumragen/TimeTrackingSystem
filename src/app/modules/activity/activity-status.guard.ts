@@ -10,9 +10,10 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { cond, pipe, propEq, T } from 'ramda';
 
-import { ACTIVITY_STATUS, ActivityState } from '../../shared/store/reducers/activity.reducer';
+import { ActivityState } from './store/activity.reducer';
 
 import { ActivityStorageService } from './services/activity-storage.service';
+import { ACTIVITY_STATUS } from './models/activity.types';
 
 @Injectable()
 export class ActivityStatusGuard implements CanActivate {

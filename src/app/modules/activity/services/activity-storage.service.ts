@@ -2,13 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { StorageService } from '../../../shared/services/storage/storage.service';
-import { ActivityState } from '../../../shared/store/reducers/activity.reducer';
-
+import { ActivityState } from '../store/activity.reducer';
 import {
-  ACTIVITY_STATE_KEY,
-  ACTIVITY_STORAGE_KEY,
   ActivityStorage
 } from './activity-storage.types';
+import { ACTIVITY_STATE_STORAGE_KEY, ACTIVITY_STORAGE_KEY } from './storage.keys';
 
 @Injectable({
   providedIn: 'root'
@@ -25,10 +23,10 @@ export class ActivityStorageService {
   }
 
   public getSavedState(): Observable<any> {
-    return this.storageService.getItem(ACTIVITY_STATE_KEY);
+    return this.storageService.getItem(ACTIVITY_STATE_STORAGE_KEY);
   }
 
   public setSavedState(state: ActivityState): Observable<void> {
-    return this.storageService.setItem<ActivityState>(ACTIVITY_STATE_KEY, state);
+    return this.storageService.setItem<ActivityState>(ACTIVITY_STATE_STORAGE_KEY, state);
   }
 }

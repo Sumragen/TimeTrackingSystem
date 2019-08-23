@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ActivityActionsKey } from '../../shared/store/reducers/activity.reducer';
+import { ActivityActionsKey } from './store/activity.reducer';
 import { Dispatch } from '../../shared/store/decorators/dispatch';
 import { StoreAction, StoreState } from '../../shared/store/store';
 import { ActivityStorageService } from './services/activity-storage.service';

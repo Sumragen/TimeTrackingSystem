@@ -5,10 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { activityReducer } from '../../shared/store/reducers/activity.reducer';
+import { activityReducer } from './store/activity.reducer';
 import { ACTIVITY_STATE_KEY } from '../../shared/store/store';
 import { StorageEffect } from '../../shared/store/effects/storage.effect';
-import { ActivityEffect } from '../../shared/store/effects/activity.effect';
+import { ActivityEffect } from './store/activity.effect';
 import { SecondsToClockFormatPipe } from '../../shared/pipes/time/seconds-to-clock-format.pipe';
 
 import { ActivityPage } from './activity.page';

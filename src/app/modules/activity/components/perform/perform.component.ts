@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { ActivityActionsKey, ActivityState } from '../../../../shared/store/reducers/activity.reducer';
+import { ActivityActionsKey, ActivityState } from '../../store/activity.reducer';
 import { ACTIVITY_STATE_KEY } from '../../../../shared/store/store';
 import { STORAGE_EFFECT } from '../../../../shared/store/effects/storage.effect';
 import { Select } from '../../../../shared/store/decorators/select';
