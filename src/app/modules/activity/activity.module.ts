@@ -12,13 +12,13 @@ import { ActivityEffect } from '../../shared/store/effects/activity.effect';
 import { SecondsToClockFormatPipe } from '../../shared/pipes/time/seconds-to-clock-format.pipe';
 
 import { ActivityPage } from './activity.page';
-import { IdleComponent } from './idle/idle.component';
-import { PerformComponent } from './perform/perform.component';
+import { IdleComponent } from './components/idle/idle.component';
+import { PerformComponent } from './components/perform/perform.component';
 import { ActivityRoutingModule } from './activity-routing.module';
-import { StopwatchComponent } from './stopwatch/stopwatch.component';
-import { TypeInputComponent } from './type-input/type-input.component';
+import { StopwatchComponent } from './components/perform/stopwatch/stopwatch.component';
+import { TypeInputComponent } from './components/type-input/type-input.component';
 import { ActivityStatusGuard } from './activity-status.guard';
-import { ActivityService } from './activity.service';
+import { ActivityService } from './services/activity.service';
 
 @NgModule({
   imports: [

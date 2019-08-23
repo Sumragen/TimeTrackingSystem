@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { ActivityActionsKey, ActivityState } from '../../../shared/store/reducers/activity.reducer';
-import { ACTIVITY_STATE_KEY } from '../../../shared/store/store';
-import { STORAGE_EFFECT } from '../../../shared/store/effects/storage.effect';
-import { Select } from '../../../shared/store/decorators/select';
-import { Dispatch } from '../../../shared/store/decorators/dispatch';
-import { TimeService } from '../../../shared/services/time/time.service';
+import { ActivityActionsKey, ActivityState } from '../../../../shared/store/reducers/activity.reducer';
+import { ACTIVITY_STATE_KEY } from '../../../../shared/store/store';
+import { STORAGE_EFFECT } from '../../../../shared/store/effects/storage.effect';
+import { Select } from '../../../../shared/store/decorators/select';
+import { Dispatch } from '../../../../shared/store/decorators/dispatch';
+import { TimeService } from '../../../../shared/services/time/time.service';
 
 @Component({
   selector: 'app-perform',

@@ -14,7 +14,7 @@ import {
   TargetAction
 } from '../store';
 import { Activity, ActivityState } from '../reducers/activity.reducer';
-import { ActivityService } from '../../../modules/activity/activity.service';
+import { ActivityService } from '../../../modules/activity/services/activity.service';
 
 export enum STORAGE_EFFECT {
   LOG_TIME = 'E_LOG_ACTIVITY_TIME',

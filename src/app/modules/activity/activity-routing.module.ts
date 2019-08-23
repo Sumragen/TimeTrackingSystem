@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ActivityStatusGuard } from './activity-status.guard';
-import { IdleComponent } from './idle/idle.component';
-import { PerformComponent } from './perform/perform.component';
+import { IdleComponent } from './components/idle/idle.component';
+import { PerformComponent } from './components/perform/perform.component';
 import { ActivityPage } from './activity.page';
 
 const routes: Routes = [

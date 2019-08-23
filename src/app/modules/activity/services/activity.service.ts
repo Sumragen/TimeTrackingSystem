@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { fromPromise } from 'rxjs/internal-compatibility';
 import { map, pipe, sortBy, toPairs } from 'lodash/fp';
-import { ActivityStorage, StorageService } from '../../shared/services/storage/storage.service';
+
+import { ActivityStorage, StorageService } from '../../../shared/services/storage/storage.service';
 import { createActivityTypeButton, getLatestActivityTypes } from './activity.operators';
 
 export interface ActivityTypeButton {

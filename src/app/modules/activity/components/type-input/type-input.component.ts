@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import {
   ActivityService,
   ActivityTypeButton
-} from '../activity.service';
-import { ACTIVITY_STATE_KEY } from '../../../shared/store/store';
-import { ActivityActionsKey, ActivityState } from '../../../shared/store/reducers/activity.reducer';
-import { Select } from '../../../shared/store/decorators/select';
-import { Dispatch } from '../../../shared/store/decorators/dispatch';
+} from '../../services/activity.service';
+import { ACTIVITY_STATE_KEY } from '../../../../shared/store/store';
+import { ActivityActionsKey, ActivityState } from '../../../../shared/store/reducers/activity.reducer';
+import { Select } from '../../../../shared/store/decorators/select';
+import { Dispatch } from '../../../../shared/store/decorators/dispatch';
 
 @Component({
   selector: 'app-type-input',

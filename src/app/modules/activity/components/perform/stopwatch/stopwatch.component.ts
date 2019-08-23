@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { interval, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { TimeService } from '../../../shared/services/time/time.service';
+import { TimeService } from '../../../../../shared/services/time/time.service';
 
 @Component({
   selector: 'app-stopwatch',
