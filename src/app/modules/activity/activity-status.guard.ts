@@ -8,7 +8,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { cond, pipe, propEq, T } from 'ramda';
+import { both, complement, cond, isNil, pipe, propEq, T } from 'ramda';
 
 import { ActivityState } from './store/activity.reducer';
 
@@ -30,7 +30,7 @@ export class ActivityStatusGuard implements CanActivate {
           pipe(
             cond<ActivityState, UrlTree | boolean>([
               [
-                propEq('status', ACTIVITY_STATUS.PERFORM),
+                both(complement(isNil), propEq('status', ACTIVITY_STATUS.PERFORM)),
                 () => this.router.parseUrl('/activity/perform')
               ],
               [T, () => true]
