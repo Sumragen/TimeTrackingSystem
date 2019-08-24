@@ -1,3 +1,5 @@
+import { HLColor } from '../../../shared/models/colors.models';
+
 import { Activity } from '../models/activity.types';
 
 export interface ActivityStorage {
@@ -5,7 +7,7 @@ export interface ActivityStorage {
 }
 
 export interface ActivityCategoryStorage {
-  color: string;
+  color: HLColor;
   data: Activity[];
 }
 
@@ -14,5 +16,5 @@ export type ActivityStorageEntities = [string, ActivityCategoryStorage];
 export interface ConciseActivityStorageData {
   type: string;
   activitiesCount: number;
-  color: string;
+  color: HLColor;
 }

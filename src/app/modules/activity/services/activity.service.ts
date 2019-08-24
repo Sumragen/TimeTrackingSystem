@@ -3,19 +3,21 @@ import { Observable } from 'rxjs';
 import { map as mapO } from 'rxjs/operators';
 import { map, pipe, sortBy, toPairs } from 'lodash/fp';
 
-import { createActivityTypeButton, getLatestActivityTypes } from './activity.operators';
-import { ActivityStorageService } from './activity-storage.service';
+import { HLColor } from '../../../shared/models/colors.models';
 import { ActivityTypeButton } from '../models/activity.types';
+
+import { ActivityStorageService } from './activity-storage.service';
+import { createActivityTypeButton, getLatestActivityTypes } from './activity.operators';
 
 @Injectable()
 export class ActivityService {
   constructor(private storageService: ActivityStorageService) {}
 
-  public static getRandomRGBAColor() {
+  public static getRandomHLColor(): HLColor {
     const hue = Math.floor(Math.random() * 36) * 10;
     const luminance = Math.floor(Math.random() * 17) + 50;
 
-    return `hsla(${hue}, 100%, ${luminance}%, 1)`;
+    return { hue, luminance };
   }
 
   public getCurrentTypes(): Observable<ActivityTypeButton[] | null> {
