@@ -1,19 +1,31 @@
 <div class="type-input" *ngIf="state$ | async as state">
-  <ion-input
-    class="custom-type-input"
-    clear-input="true"
-    placeholder="Enter new activity type"
-    [value]="state.type"
-    (ionChange)="updateType($event.target.value)"
-  >
-  </ion-input>
-  <ion-toolbar *ngIf="types$ | async as types">
-    <ion-button
-      *ngFor="let type of types"
-      [appInnerButtonStyles]="type.color"
-      (click)="selectType(type.label)"
+  <div *ngIf="types$ | async as types">
+    <ion-input
+      *ngIf="types.length <= 4 || typeInputVisible"
+      class="custom-type-input"
+      clear-input="true"
+      placeholder="Enter new activity type"
+      [value]="state.type"
+      (ionChange)="updateType($event.target.value)"
     >
-      {{ type.label }}
-    </ion-button>
-  </ion-toolbar>
+    </ion-input>
+    <ion-toolbar *ngIf="types.length > 0">
+      <div [ngClass]="defineClass(types.length)">
+        <div class="type-button-container">
+          <ion-button
+            class="type-button"
+            *ngFor="let type of sliced(types)"
+            [appInnerButtonStyles]="type.color"
+            expand="full"
+            (click)="selectType(type.label)"
+          >
+            {{ type.label }}
+          </ion-button>
+        </div>
+        <ion-button class="type-input-toggle" *ngIf="types.length > 4" (click)="toggleInputView()">
+          <ion-icon name="create"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-toolbar>
+  </div>
 </div>

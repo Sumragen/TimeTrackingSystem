@@ -1,0 +1,31 @@
+.fullwidth-line-wrapper {
+  .type-button-container {
+    width: 100%;
+
+    .type-button {
+      width: calc(49% - 2px);
+    }
+  }
+}
+
+.overloaded-activities-wrapper {
+}
+
+.type-button-container {
+  padding: 1% 0 0 1%;
+  width: calc(100% - 50px);
+}
+
+.type-button {
+  width: 48%;
+  display: inline-block;
+  float: left;
+  padding: 0 2px 2px 0;
+}
+
+.type-input-toggle {
+  top: 7px;
+  position: absolute;
+  width: 50px;
+  height: 80px;
+}
