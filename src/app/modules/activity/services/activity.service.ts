@@ -13,7 +13,7 @@ export class ActivityService {
 
   public static getRandomRGBAColor() {
     const hue = Math.floor(Math.random() * 36) * 10;
-    const luminance = Math.floor(Math.random() * 7) + 60;
+    const luminance = Math.floor(Math.random() * 17) + 50;
 
     return `hsla(${hue}, 100%, ${luminance}%, 1)`;
   }
