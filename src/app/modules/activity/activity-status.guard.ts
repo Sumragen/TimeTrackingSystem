@@ -8,9 +8,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { both, complement, cond, isNil, pipe, propEq, T } from 'ramda';
-
-import { ActivityState } from './store/activity.reducer';
+import { both, complement, ifElse, isNil, propEq } from 'ramda';
 
 import { ActivityStorageService } from './services/activity-storage.service';
 import { ACTIVITY_STATUS } from './models/activity.types';
@@ -27,14 +25,10 @@ export class ActivityStatusGuard implements CanActivate {
       .getSavedState()
       .pipe(
         map(
-          pipe(
-            cond<ActivityState, UrlTree | boolean>([
-              [
-                both(complement(isNil), propEq('status', ACTIVITY_STATUS.PERFORM)),
-                () => this.router.parseUrl('/activity/perform')
-              ],
-              [T, () => true]
-            ])
+          ifElse(
+            both(complement(isNil), propEq('status', ACTIVITY_STATUS.PERFORM)),
+            () => this.router.parseUrl('/activity/perform'),
+            () => true
           )
         )
       );
