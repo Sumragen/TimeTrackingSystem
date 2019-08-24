@@ -12,9 +12,10 @@ export class ActivityService {
   constructor(private storageService: ActivityStorageService) {}
 
   public static getRandomRGBAColor() {
-    const color = [1, 1, 1];
-    const randomColor = color.map(() => Math.floor(Math.random() * 100) + 155).join();
-    return `rgba(${randomColor}, 1)`;
+    const hue = Math.floor(Math.random() * 36) * 10;
+    const luminance = Math.floor(Math.random() * 7) + 60;
+
+    return `hsla(${hue}, 100%, ${luminance}%, 1)`;
   }
 
   public getCurrentTypes(): Observable<ActivityTypeButton[] | null> {
