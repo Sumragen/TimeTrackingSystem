@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-import { StorageService } from '../../shared/services/storage/storage.service';
 import { ChartOptions, ChartTooltipItem, ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+
+import { StorageService } from '../../shared/services/storage/storage.service';
 import { TimeService } from '../../shared/services/time/time.service';
+import { HLColor } from '../../shared/models/colors.models';
 
 export interface ChartData {
   labels: string[];
   data: number[];
-  colors: string[];
+  colors: HLColor[];
 }
 
 @Component({
@@ -26,10 +27,7 @@ export class StatisticPage implements OnInit {
     },
     plugins: {
       datalabels: {
-        formatter: (value, ctx) => {
-          const label = ctx.chart.data.labels[ctx.dataIndex];
-          return label;
-        }
+        formatter: (value, ctx) => ctx.chart.data.labels[ctx.dataIndex]
       }
     },
     tooltips: {
@@ -85,15 +83,10 @@ export class StatisticPage implements OnInit {
     const chartData: ChartData = this.route.snapshot.data.chart;
     this.pieChartLabels = chartData.labels;
     this.pieChartData = chartData.data;
-    this.pieChartColors[0].backgroundColor = chartData.colors;
+    this.pieChartColors[0].backgroundColor = chartData.colors.map(
+      (color: HLColor) => `hsla(${color.hue}, 100%, ${color.luminance}%, 1)`
+    );
   }
 
   ngOnInit() {}
-
-  // we could modify data arrays dynamically
-  addSlice() {
-    this.pieChartLabels.push(['Line 1', 'Line 2', 'Line 3']);
-    this.pieChartData.push(400);
-    this.pieChartColors[0].backgroundColor.push('rgba(196,79,244,0.3)');
-  }
 }

@@ -5,6 +5,7 @@ import { ActivityStorageService } from '../activity/services/activity-storage.se
 import { ActivityStorage } from '../activity/services/activity-storage.types';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
+import { HLColor } from '../../shared/models/colors.models';
 
 export class StatisticResolver implements Resolve<ChartData> {
   constructor(private storageService: ActivityStorageService) {}
@@ -25,7 +26,7 @@ export class StatisticResolver implements Resolve<ChartData> {
           }, 0);
         });
 
-        const colors: string[] = labels.map((label: string) => storage[label].color);
+        const colors: HLColor[] = labels.map((label: string) => storage[label].color);
 
         return {
           labels,
