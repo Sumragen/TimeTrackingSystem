@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, Renderer, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -8,6 +8,7 @@ import { ActivityActionsKey, ActivityState } from '../../store/activity.reducer'
 import { Select } from '../../../../shared/store/decorators/select';
 import { Dispatch } from '../../../../shared/store/decorators/dispatch';
 import { ActivityTypeButton } from '../../models/activity.types';
+import { IonInput } from '@ionic/angular';
 
 @Component({
   selector: 'app-type-input',
@@ -21,8 +22,9 @@ export class TypeInputComponent implements OnInit {
   @Output() public typeSelect: EventEmitter<string> = new EventEmitter<string>();
 
   @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
+  @ViewChild('typeInput', { static: false }) public typeInputEl: IonInput;
 
-  constructor(private activityService: ActivityService) {}
+  constructor(private activityService: ActivityService, private renderer: Renderer) {}
 
   ngOnInit() {
     this.types$ = this.activityService
@@ -58,5 +60,10 @@ export class TypeInputComponent implements OnInit {
 
   public toggleInputView(): void {
     this.typeInputVisible = !this.typeInputVisible;
+    if (this.typeInputVisible) {
+      setTimeout(() => {
+        (this.typeInputEl as any).el.setFocus();
+      }, 0);
+    }
   }
 }

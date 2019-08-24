@@ -1,7 +1,8 @@
 <div class="type-input" *ngIf="state$ | async as state">
   <div *ngIf="types$ | async as types">
     <ion-input
-      *ngIf="types.length <= 4 || typeInputVisible"
+      #typeInput
+      [hidden]="!(types.length <= 4 || typeInputVisible)"
       class="custom-type-input"
       clear-input="true"
       placeholder="Enter new activity type"
