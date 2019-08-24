@@ -16,6 +16,7 @@ import { ActivityService } from '../../../modules/activity/services/activity.ser
 import { ActivityStorageService } from '../../../modules/activity/services/activity-storage.service';
 import { ActivityStorage } from '../../../modules/activity/services/activity-storage.types';
 import { Activity } from '../../../modules/activity/models/activity.types';
+import { defaultTo, pipe } from 'ramda';
 
 export enum STORAGE_EFFECT {
   LOG_TIME = 'E_LOG_ACTIVITY_TIME',
@@ -55,6 +56,7 @@ export class StorageEffect {
       withLatestFrom(this.store$.select(ACTIVITY_STATE_KEY)),
       exhaustMap(([action, state]: [ActivityAction, ActivityState]) =>
         this.storageService.getStorage().pipe(
+          map(pipe(defaultTo({}))),
           map((storage: ActivityStorage) => {
             // --------------------------------------------------------------------
             // TODO it's looks like something that could be written in FP style
