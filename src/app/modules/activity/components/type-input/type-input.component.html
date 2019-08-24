@@ -23,7 +23,12 @@
             {{ type.label }}
           </ion-button>
         </div>
-        <ion-button class="type-input-toggle" *ngIf="types.length > 4" (click)="toggleInputView()">
+        <ion-button
+          class="type-input-toggle"
+          *ngIf="types.length > 4"
+          color="dark"
+          (click)="toggleInputView()"
+        >
           <ion-icon name="create"></ion-icon>
         </ion-button>
       </div>
