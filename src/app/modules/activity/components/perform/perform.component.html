@@ -5,7 +5,7 @@
         </ion-label>
     </ion-item>
     <ion-item *ngIf="!!state.date">
-        <app-stopwatch [initialDate]="state.date"></app-stopwatch>
+        <app-stopwatch></app-stopwatch>
     </ion-item>
     <ion-item>
         <ion-textarea
@@ -15,6 +15,7 @@
         (ionChange)="updateDescription($event.target.value)">
         </ion-textarea>
     </ion-item>
+    <app-type-input (typeSelect)="switchActivity($event)"></app-type-input>
 </div>
 
 <ion-footer>

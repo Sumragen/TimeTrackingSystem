@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { interval, Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { TimeService } from '../../../../../shared/services/time/time.service';
+import { map, pluck, withLatestFrom } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { ACTIVITY_STATE_KEY, StoreState } from '../../../../../shared/store/store';
 
 @Component({
   selector: 'app-stopwatch',
@@ -11,19 +12,18 @@ import { TimeService } from '../../../../../shared/services/time/time.service';
 export class StopwatchComponent implements OnInit {
   public time$: Observable<number>;
 
-  @Input() initialDate = 0;
-
-  constructor(private timeService: TimeService) {}
+  constructor(private store: Store<StoreState>) {}
 
   ngOnInit() {
-    const offset = Math.floor((this.timeService.now() - this.initialDate) / 1000);
-    this.time$ = this.setupTimeInterval(offset);
+    this.time$ = this.setupTimeInterval();
   }
 
-  private setupTimeInterval(offset: number): Observable<number> {
+  private setupTimeInterval(): Observable<number> {
     return interval(1000).pipe(
-      map((seconds: number) => seconds + offset + 1),
-      startWith(offset)
+      withLatestFrom(this.store.select(ACTIVITY_STATE_KEY).pipe(pluck('date'))),
+      map(([, date]: [number, number]) => {
+        return Math.floor((Date.now() - date) / 1000);
+      })
     );
   }
 }

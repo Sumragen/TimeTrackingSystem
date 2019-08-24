@@ -38,4 +38,24 @@ export class PerformComponent {
       }
     };
   }
+
+  @Dispatch()
+  public switchActivity(activityType: string) {
+    return {
+      type: STORAGE_EFFECT.COMPLETE,
+      payload: {
+        target: {
+          type: STORAGE_EFFECT.LOG_TIME,
+          payload: {
+            target: {
+              type: ActivityActionsKey.PERFORM,
+              payload: {
+                type: activityType
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
