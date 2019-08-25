@@ -37,6 +37,7 @@
   <ion-toolbar *ngIf="state$ | async as state">
     <!-- TODO: temporary there will be input as in previous approach; in future it will be moved to the separate modal dialog-->
     <ion-input
+      #activityTypeInput
       *ngIf="isIdle(state.status) || activityTypeVisibility"
       [(ngModel)]="activityType"
       class="custom-type-input"

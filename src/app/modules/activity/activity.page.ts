@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { ActivityActionsKey, ActivityState } from './store/activity.reducer';
 import { Dispatch } from '../../shared/store/decorators/dispatch';
@@ -11,6 +11,7 @@ import { Activity, ACTIVITY_STATUS, ActivityTypeButton } from './models/activity
 import { STORAGE_EFFECT } from '../../shared/store/effects/storage.effect';
 import { ActivityService } from './services/activity.service';
 import { Actions, ofType } from '@ngrx/effects';
+import { IonInput } from '@ionic/angular';
 
 @Component({
   selector: 'app-activity',
@@ -19,6 +20,7 @@ import { Actions, ofType } from '@ngrx/effects';
 })
 export class ActivityPage implements OnInit {
   @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
+  @ViewChild('activityTypeInput', { static: false }) public activityTypeInputEl: IonInput;
   public types$: Observable<ActivityTypeButton[]>;
   public activityType = '';
   public activityTypeVisibility: boolean;
@@ -44,7 +46,10 @@ export class ActivityPage implements OnInit {
       .getSavedState()
       .pipe(
         tap(this.initialize),
-        tap((state: ActivityState) => (this.activityTypeVisibility = !state || !this.isPerform(state.status)))
+        tap(
+          (state: ActivityState) =>
+            (this.activityTypeVisibility = !state || !this.isPerform(state.status))
+        )
       )
       .subscribe();
   }
@@ -79,6 +84,9 @@ export class ActivityPage implements OnInit {
   public toggleTypeInputVisibility(): void {
     this.activityType = '';
     this.activityTypeVisibility = !this.activityTypeVisibility;
+    if (this.activityTypeVisibility) {
+      setTimeout(() => this.activityTypeInputEl.setFocus(), 0);
+    }
   }
 
   public getActionButtonText(status: ACTIVITY_STATUS): string {
