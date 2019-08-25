@@ -45,7 +45,7 @@ export class ActivityPage implements OnInit {
       .subscribe();
   }
 
-  public isActive(status: ACTIVITY_STATUS): boolean {
+  public isPerform(status: ACTIVITY_STATUS): boolean {
     return status === ACTIVITY_STATUS.PERFORM;
   }
 

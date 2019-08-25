@@ -9,8 +9,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div *ngIf="state$ | async as state">
+<ion-content *ngIf="state$ | async as state">
+  <!--  TODO: This content could be in separate component which relays to the perform activity-->
+  <div *ngIf="isPerform(state.status)">
     <ion-item>
       <ion-label>
         {{state.type}}
@@ -47,7 +48,7 @@
     </ion-input>
     <app-type-selector
       [types]="types$ | async"
-      (typeSelect)="isActive(state.status) ? switchActivity($event): applyActivityType($event)"
+      (typeSelect)="isPerform(state.status) ? switchActivity($event): applyActivityType($event)"
     ></app-type-selector>
 
     <div class="footer-btns-container">
@@ -56,10 +57,10 @@
         color="dark"
         fill="solid"
         expand="full"
-        [disabled]="!state.type && !isActive(state.status)"
-        (click)="isActive(state.status) ? completeActivity() : applyActivityType(state.type)"
+        [disabled]="!state.type && !isPerform(state.status)"
+        (click)="isPerform(state.status) ? completeActivity() : applyActivityType(state.type)"
       >
-        {{ isActive(state.status) ? 'Stop' : 'Start' }}
+        {{ isPerform(state.status) ? 'Stop' : 'Start' }}
       </ion-button>
       <ion-button class="activity-search-toggle" color="dark" expand="full">
         <ion-icon name="create"></ion-icon>
