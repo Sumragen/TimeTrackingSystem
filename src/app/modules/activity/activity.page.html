@@ -43,6 +43,7 @@
       class="custom-type-input"
       clear-input="true"
       placeholder="Enter new activity type"
+      (keyup.enter)="handleActivityButtonClick(state.status, activityType)"
     >
     </ion-input>
 
