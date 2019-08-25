@@ -25,6 +25,7 @@ import { ActivityService } from './services/activity.service';
 export class ActivityPage implements OnInit {
   @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
   public types$: Observable<ActivityTypeButton[]>;
+  public activityType = '';
   constructor(
     private storageService: ActivityStorageService,
     private activityService: ActivityService
@@ -49,6 +50,15 @@ export class ActivityPage implements OnInit {
     return status === ACTIVITY_STATUS.PERFORM;
   }
 
+  public isIdle(status: ACTIVITY_STATUS): boolean {
+    return status === ACTIVITY_STATUS.IDLE;
+  }
+
+  public handleActivityButtonClick(status: ACTIVITY_STATUS): void{
+    this.isPerform(status) ? this.completeActivity() : this.applyActivityType();
+    this.activityType = '';
+  }
+
   @Dispatch()
   private initialize(state: StoreState): StoreAction {
     return {
@@ -58,7 +68,8 @@ export class ActivityPage implements OnInit {
   }
 
   @Dispatch()
-  public applyActivityType(type: string): PayloadAction<TargetAction<PayloadAction<Activity>>> {
+  public applyActivityType(type?: string): PayloadAction<TargetAction<PayloadAction<Activity>>> {
+    type = type || this.activityType;
     return {
       type: STORAGE_EFFECT.LOG_TIME,
       payload: {
