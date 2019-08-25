@@ -2,6 +2,7 @@ import { gt, pipe, prop } from 'lodash/fp';
 
 import { Activity, ActivityTypeButton } from '../models/activity.types';
 import { ActivityStorageEntities, ConciseActivityStorageData } from './activity-storage.types';
+import { lt } from 'ramda';
 
 const hours = (amount: number): number => amount * 60 * 60 * 1000;
 const days = (amount: number): number => amount * hours(24);
@@ -16,7 +17,7 @@ export const getLatestActivityTypes = ([
   const currentActivities: Activity[] = activities.data.filter(
     pipe(
       prop('date'),
-      gt(minDateRange)
+      lt(minDateRange)
     )
   );
 

@@ -1,13 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map as mapO } from 'rxjs/operators';
-import { map, pipe, sortBy, toPairs } from 'lodash/fp';
 
 import { HLColor } from '../../../shared/models/colors.models';
 import { ActivityTypeButton } from '../models/activity.types';
 
 import { ActivityStorageService } from './activity-storage.service';
 import { createActivityTypeButton, getLatestActivityTypes } from './activity.operators';
+import {
+  compose,
+  descend,
+  map,
+  partial,
+  pipe,
+  prop,
+  reverse,
+  sort,
+  sortBy,
+  sortWith,
+  toPairs
+} from 'ramda';
+import { ActivityStorageEntities, ConciseActivityStorageData } from './activity-storage.types';
 
 @Injectable()
 export class ActivityService {
@@ -26,7 +39,9 @@ export class ActivityService {
         pipe(
           toPairs,
           map(getLatestActivityTypes),
-          sortBy('activitiesCount'),
+          // TODO: need to resolve typings issue
+          // @ts-ignore
+          sort(descend(prop('activitiesCount'))),
           map(createActivityTypeButton)
         )
       )
