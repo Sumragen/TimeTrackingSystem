@@ -20,7 +20,8 @@ function perform(state: ActivityState, action: PayloadAction<Activity>): Activit
 
 function complete(): ActivityState {
   return {
-    status: ACTIVITY_STATUS.IDLE
+    status: ACTIVITY_STATUS.IDLE,
+    type: ''
   };
 }
 
