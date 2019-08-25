@@ -26,7 +26,7 @@ export class ActivityService {
         pipe(
           toPairs,
           map(getLatestActivityTypes),
-          sortBy('activityCount'),
+          sortBy('activitiesCount'),
           map(createActivityTypeButton)
         )
       )
