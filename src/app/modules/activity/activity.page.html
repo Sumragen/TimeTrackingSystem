@@ -60,7 +60,7 @@
         [disabled]="!activityType && !isPerform(state.status)"
         (click)="handleActivityButtonClick(state.status)"
       >
-        {{ isPerform(state.status) ? 'Stop' : 'Start' }}
+        {{ getActionButtonText(state.status) }}
       </ion-button>
       <ion-button
         class="activity-search-toggle"

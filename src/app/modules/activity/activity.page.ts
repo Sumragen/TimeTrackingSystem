@@ -54,13 +54,39 @@ export class ActivityPage implements OnInit {
   }
 
   public handleActivityButtonClick(status: ACTIVITY_STATUS, type?: string): void {
-    this.isPerform(status) ? this.completeActivity() : this.applyActivityType(type);
+    if (this.isPerform(status)) {
+      if (type) {
+        this.switchActivity(type);
+      } else {
+        if (this.shouldSwitchActivity()) {
+          this.switchActivity(this.activityType);
+        } else {
+          this.completeActivity();
+        }
+      }
+    } else {
+      this.applyActivityType(type);
+    }
+
     this.activityType = '';
     this.activityTypeVisibility = false;
   }
 
   public toggleTypeInputVisibility(): void {
+    this.activityType = '';
     this.activityTypeVisibility = !this.activityTypeVisibility;
+  }
+
+  public getActionButtonText(status: ACTIVITY_STATUS): string {
+    if (this.isIdle(status)) {
+      return 'Start';
+    } else {
+      return this.shouldSwitchActivity() ? 'Switch' : 'Stop';
+    }
+  }
+
+  private shouldSwitchActivity(): boolean {
+    return this.activityType.length > 0 && this.activityTypeVisibility;
   }
 
   @Dispatch()
