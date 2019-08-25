@@ -52,6 +52,7 @@
     <div class="footer-btns-container">
       <ion-button
         class="activity-toggle"
+        [ngClass]="isIdle(state.status) ? 'fullwidth-activity-toggle' : ''"
         color="dark"
         fill="solid"
         expand="full"
@@ -60,7 +61,12 @@
       >
         {{ isPerform(state.status) ? 'Stop' : 'Start' }}
       </ion-button>
-      <ion-button class="activity-search-toggle" color="dark" expand="full">
+      <ion-button
+        class="activity-search-toggle"
+        *ngIf="isPerform(state.status)"
+        color="dark"
+        expand="full"
+      >
         <ion-icon name="create"></ion-icon>
       </ion-button>
     </div>

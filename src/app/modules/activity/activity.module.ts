@@ -17,7 +17,6 @@ import { PerformComponent } from './components/perform/perform.component';
 import { ActivityRoutingModule } from './activity-routing.module';
 import { StopwatchComponent } from './components/perform/stopwatch/stopwatch.component';
 import { TypeInputComponent } from './components/type-input/type-input.component';
-import { ActivityStatusGuard } from './activity-status.guard';
 import { ActivityService } from './services/activity.service';
 import { SharedModule } from '../../shared/shared.module';
 import { TypeSelectorComponent } from './components/type-selector/type-selector.component';
@@ -41,6 +40,6 @@ import { TypeSelectorComponent } from './components/type-selector/type-selector.
     SecondsToClockFormatPipe,
     TypeSelectorComponent
   ],
-  providers: [ActivityStatusGuard, ActivityService]
+  providers: [ActivityService]
 })
 export class ActivityPageModule {}

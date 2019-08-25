@@ -54,7 +54,7 @@ export class ActivityPage implements OnInit {
     return status === ACTIVITY_STATUS.IDLE;
   }
 
-  public handleActivityButtonClick(status: ACTIVITY_STATUS): void{
+  public handleActivityButtonClick(status: ACTIVITY_STATUS): void {
     this.isPerform(status) ? this.completeActivity() : this.applyActivityType();
     this.activityType = '';
   }
