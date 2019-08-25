@@ -1,0 +1,15 @@
+<!--      define only one class-->
+<div class="" *ngIf="types.length > 0">
+  <div class="type-button-container">
+    <ion-button
+      class="type-button"
+      *ngFor="let type of types"
+      [appInnerButtonStyles]="type.color"
+      expand="full"
+      fill="outline"
+      (click)="selectType(type.label)"
+    >
+      {{ type.label }}
+    </ion-button>
+  </div>
+</div>

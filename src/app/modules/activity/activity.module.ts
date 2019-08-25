@@ -20,6 +20,7 @@ import { TypeInputComponent } from './components/type-input/type-input.component
 import { ActivityStatusGuard } from './activity-status.guard';
 import { ActivityService } from './services/activity.service';
 import { SharedModule } from '../../shared/shared.module';
+import { TypeSelectorComponent } from './components/type-selector/type-selector.component';
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { SharedModule } from '../../shared/shared.module';
     PerformComponent,
     TypeInputComponent,
     StopwatchComponent,
-    SecondsToClockFormatPipe
+    SecondsToClockFormatPipe,
+    TypeSelectorComponent
   ],
   providers: [ActivityStatusGuard, ActivityService]
 })
