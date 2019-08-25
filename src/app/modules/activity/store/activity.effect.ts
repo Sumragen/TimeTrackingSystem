@@ -17,24 +17,6 @@ export class ActivityEffect {
     private storageService: ActivityStorageService
   ) {}
 
-  perform$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(ActivityActionsKey.PERFORM),
-        tap(() => this.router.navigate(['/activity/perform']))
-      ),
-    { dispatch: false }
-  );
-
-  complete$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(ActivityActionsKey.COMPLETE),
-        tap(() => this.router.navigate(['/activity/idle']))
-      ),
-    { dispatch: false }
-  );
-
   save$ = createEffect(
     () =>
       this.actions$.pipe(
