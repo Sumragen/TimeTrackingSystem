@@ -4,12 +4,13 @@ import { ActivityActionsKey, ActivityState } from './store/activity.reducer';
 import { Dispatch } from '../../shared/store/decorators/dispatch';
 import { ACTIVITY_STATE_KEY, PayloadAction, TargetAction } from '../../shared/store/store';
 import { ActivityStorageService } from './services/activity-storage.service';
-import { map, tap } from 'rxjs/operators';
+import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import { Select } from '../../shared/store/decorators/select';
 import { Observable } from 'rxjs';
 import { Activity, ACTIVITY_STATUS, ActivityTypeButton } from './models/activity.types';
 import { STORAGE_EFFECT } from '../../shared/store/effects/storage.effect';
 import { ActivityService } from './services/activity.service';
+import { Actions, ofType } from '@ngrx/effects';
 
 @Component({
   selector: 'app-activity',
@@ -24,15 +25,18 @@ export class ActivityPage implements OnInit {
 
   constructor(
     private storageService: ActivityStorageService,
-    private activityService: ActivityService
+    private activityService: ActivityService,
+    private actions$: Actions
   ) {}
 
   ngOnInit(): void {
     this.setupInitialStoreState();
-
-    this.types$ = this.activityService
-      .getCurrentTypes()
-      .pipe(map((types: ActivityTypeButton[]) => types.slice(0, 4)));
+    this.types$ = this.actions$.pipe(
+      ofType(ActivityActionsKey.PERFORM, ActivityActionsKey.COMPLETE),
+      startWith(null),
+      switchMap(() => this.activityService.getCurrentTypes()),
+      map((types: ActivityTypeButton[]) => types.slice(0, 4))
+    );
   }
 
   private setupInitialStoreState(): void {

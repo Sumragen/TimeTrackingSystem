@@ -7,20 +7,7 @@ import { ActivityTypeButton } from '../models/activity.types';
 
 import { ActivityStorageService } from './activity-storage.service';
 import { createActivityTypeButton, getLatestActivityTypes } from './activity.operators';
-import {
-  compose,
-  descend,
-  map,
-  partial,
-  pipe,
-  prop,
-  reverse,
-  sort,
-  sortBy,
-  sortWith,
-  toPairs
-} from 'ramda';
-import { ActivityStorageEntities, ConciseActivityStorageData } from './activity-storage.types';
+import { descend, map, pipe, prop, sort, toPairs } from 'ramda';
 
 @Injectable()
 export class ActivityService {
