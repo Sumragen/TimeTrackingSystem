@@ -44,7 +44,7 @@ export class ActivityPage implements OnInit {
       .getSavedState()
       .pipe(
         tap(this.initialize),
-        tap((state: ActivityState) => (this.activityTypeVisibility = !this.isPerform(state.status)))
+        tap((state: ActivityState) => (this.activityTypeVisibility = !state || !this.isPerform(state.status)))
       )
       .subscribe();
   }
