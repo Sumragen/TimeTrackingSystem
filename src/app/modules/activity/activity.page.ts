@@ -2,13 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ActivityActionsKey, ActivityState } from './store/activity.reducer';
 import { Dispatch } from '../../shared/store/decorators/dispatch';
-import {
-  ACTIVITY_STATE_KEY,
-  PayloadAction,
-  StoreAction,
-  StoreState,
-  TargetAction
-} from '../../shared/store/store';
+import { ACTIVITY_STATE_KEY, PayloadAction, TargetAction } from '../../shared/store/store';
 import { ActivityStorageService } from './services/activity-storage.service';
 import { map, tap } from 'rxjs/operators';
 import { Select } from '../../shared/store/decorators/select';
@@ -26,6 +20,8 @@ export class ActivityPage implements OnInit {
   @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
   public types$: Observable<ActivityTypeButton[]>;
   public activityType = '';
+  public activityTypeVisibility: boolean;
+
   constructor(
     private storageService: ActivityStorageService,
     private activityService: ActivityService
@@ -42,7 +38,10 @@ export class ActivityPage implements OnInit {
   private setupInitialStoreState(): void {
     this.storageService
       .getSavedState()
-      .pipe(tap(this.initialize))
+      .pipe(
+        tap(this.initialize),
+        tap((state: ActivityState) => (this.activityTypeVisibility = !this.isPerform(state.status)))
+      )
       .subscribe();
   }
 
@@ -54,13 +53,18 @@ export class ActivityPage implements OnInit {
     return status === ACTIVITY_STATUS.IDLE;
   }
 
-  public handleActivityButtonClick(status: ACTIVITY_STATUS): void {
-    this.isPerform(status) ? this.completeActivity() : this.applyActivityType();
+  public handleActivityButtonClick(status: ACTIVITY_STATUS, type?: string): void {
+    this.isPerform(status) ? this.completeActivity() : this.applyActivityType(type);
     this.activityType = '';
+    this.activityTypeVisibility = false;
+  }
+
+  public toggleTypeInputVisibility(): void {
+    this.activityTypeVisibility = !this.activityTypeVisibility;
   }
 
   @Dispatch()
-  private initialize(state: StoreState): StoreAction {
+  private initialize(state: ActivityState): PayloadAction<ActivityState> {
     return {
       type: ActivityActionsKey.INITIALIZE,
       payload: state

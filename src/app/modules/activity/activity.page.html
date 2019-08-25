@@ -37,16 +37,17 @@
   <ion-toolbar *ngIf="state$ | async as state">
     <!-- TODO: temporary there will be input as in previous approach; in future it will be moved to the separate modal dialog-->
     <ion-input
-      *ngIf="isIdle(state.status)"
+      *ngIf="isIdle(state.status) || activityTypeVisibility"
       [(ngModel)]="activityType"
       class="custom-type-input"
       clear-input="true"
       placeholder="Enter new activity type"
     >
     </ion-input>
+
     <app-type-selector
       [types]="types$ | async"
-      (typeSelect)="isPerform(state.status) ? switchActivity($event): applyActivityType($event)"
+      (typeSelect)="handleActivityButtonClick(state.status, $event)"
     ></app-type-selector>
 
     <div class="footer-btns-container">
@@ -66,6 +67,7 @@
         *ngIf="isPerform(state.status)"
         color="dark"
         expand="full"
+        (click)="toggleTypeInputVisibility()"
       >
         <ion-icon name="create"></ion-icon>
       </ion-button>
