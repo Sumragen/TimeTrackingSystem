@@ -14,14 +14,16 @@ export class InnerButtonStylesDirective {
   @HostBinding('attr.style')
   public get valueAsStyle(): SafeStyle {
     const color: HLColor = this.color;
-    const border: string = `hsla(${color.hue}, 100%, ${color.luminance}%, 1)`;
-    const bg: string = `hsla(${color.hue}, 100%, ${color.luminance}%, 0.3)`;
-    const bgActivated: string = `hsla(${color.hue}, 100%, ${color.luminance - 10}%, 1)`;
+    const border = `hsla(${color.hue}, 100%, ${color.luminance}%, 1)`;
+    const bg = `hsla(${color.hue}, 100%, ${color.luminance}%, 0.3)`;
+    const bgActivated = `hsla(${color.hue}, 100%, ${color.luminance - 10}%, 0.6)`;
+    const ripple = `hsla(${color.hue}, 100%, ${color.luminance - 10}%, 0.6)`;
 
     const style = `
       --border-color:${border};
       --background:${bg};
       --background-activated:${bgActivated};
+      --ripple-color:${ripple};
       --color:black;
       --color-activated:black;
     `;
