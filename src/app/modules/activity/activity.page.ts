@@ -113,4 +113,14 @@ export class ActivityPage implements OnInit {
       }
     };
   }
+
+  @Dispatch()
+  public updateType(type: string) {
+    return {
+      type: ActivityActionsKey.SET_TYPE,
+      payload: {
+        type
+      }
+    };
+  }
 }
