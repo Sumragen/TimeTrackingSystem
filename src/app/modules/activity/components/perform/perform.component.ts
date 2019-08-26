@@ -1,10 +1,6 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, Input } from '@angular/core';
 
 import { ActivityActionsKey, ActivityState } from '../../store/activity.reducer';
-import { ACTIVITY_STATE_KEY } from '../../../../shared/store/store';
-import { STORAGE_EFFECT } from '../../../../shared/store/effects/storage.effect';
-import { Select } from '../../../../shared/store/decorators/select';
 import { Dispatch } from '../../../../shared/store/decorators/dispatch';
 
 @Component({
@@ -13,7 +9,7 @@ import { Dispatch } from '../../../../shared/store/decorators/dispatch';
   styleUrls: ['./perform.component.scss']
 })
 export class PerformComponent {
-  @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
+  @Input() public state: ActivityState;
 
   constructor() {}
 
@@ -25,37 +21,5 @@ export class PerformComponent {
         description
       }
     };
-  }
-
-  @Dispatch()
-  public completeActivity() {
-    return {
-      type: STORAGE_EFFECT.COMPLETE,
-      payload: {
-        target: {
-          type: ActivityActionsKey.COMPLETE
-        }
-      }
-    };
-  }
-
-  @Dispatch()
-  public switchActivity(activityType: string) {
-    return {
-      type: STORAGE_EFFECT.COMPLETE,
-      payload: {
-        target: {
-          type: STORAGE_EFFECT.LOG_TIME,
-          payload: {
-            target: {
-              type: ActivityActionsKey.PERFORM,
-              payload: {
-                type: activityType
-              }
-            }
-          }
-        }
-      }
-    }
   }
 }

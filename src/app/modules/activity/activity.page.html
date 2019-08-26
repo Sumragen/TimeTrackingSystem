@@ -12,30 +12,12 @@
 <ion-content *ngIf="state$ | async as state">
   <!--  TODO: This content could be in separate component which relays to the perform activity-->
   <div *ngIf="isPerform(state.status)">
-    <ion-item>
-      <ion-label>
-        {{state.type}}
-      </ion-label>
-    </ion-item>
-    <ion-item *ngIf="!!state.date">
-      <app-stopwatch></app-stopwatch>
-    </ion-item>
-    <ion-item>
-      <!-- TODO: grab placeholder from const (probably it could be in configs)-->
-      <ion-textarea
-        placeholder="What we plan to do?"
-        clearOnEdit="true"
-        [value]="state.description"
-        (ionChange)="updateDescription($event.target.value)"
-      >
-      </ion-textarea>
-    </ion-item>
+    <app-perform [state]="state"></app-perform>
   </div>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar *ngIf="state$ | async as state">
-    <!-- TODO: temporary there will be input as in previous approach; in future it will be moved to the separate modal dialog-->
     <ion-input
       #activityTypeInput
       *ngIf="isIdle(state.status) || activityTypeVisibility"

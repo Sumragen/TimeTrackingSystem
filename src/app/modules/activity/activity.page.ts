@@ -126,16 +126,6 @@ export class ActivityPage implements OnInit {
   }
 
   @Dispatch()
-  public updateDescription(description: string) {
-    return {
-      type: ActivityActionsKey.SET_DESCRIPTION,
-      payload: {
-        description
-      }
-    };
-  }
-
-  @Dispatch()
   public completeActivity() {
     return {
       type: STORAGE_EFFECT.COMPLETE,
