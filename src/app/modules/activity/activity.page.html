@@ -10,10 +10,7 @@
 </ion-header>
 
 <ion-content *ngIf="state$ | async as state">
-  <!--  TODO: This content could be in separate component which relays to the perform activity-->
-  <div *ngIf="isPerform(state.status)">
-    <app-perform [state]="state"></app-perform>
-  </div>
+  <app-perform *ngIf="isPerform(state.status)" [state]="state"></app-perform>
 </ion-content>
 
 <ion-footer>
