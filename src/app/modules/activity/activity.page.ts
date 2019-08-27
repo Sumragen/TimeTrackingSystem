@@ -1,17 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { map, startWith, switchMap, tap } from 'rxjs/operators';
+import { Actions, ofType } from '@ngrx/effects';
+import { IonInput } from '@ionic/angular';
 
 import { ActivityActionsKey, ActivityState } from './store/activity.reducer';
 import { Dispatch } from '../../shared/store/decorators/dispatch';
 import { ACTIVITY_STATE_KEY, PayloadAction, TargetAction } from '../../shared/store/store';
 import { ActivityStorageService } from './services/activity-storage.service';
-import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import { Select } from '../../shared/store/decorators/select';
 import { Observable } from 'rxjs';
 import { Activity, ACTIVITY_STATUS, ActivityTypeButton } from './models/activity.types';
 import { STORAGE_EFFECT } from '../../shared/store/effects/storage.effect';
 import { ActivityService } from './services/activity.service';
-import { Actions, ofType } from '@ngrx/effects';
-import { IonInput } from '@ionic/angular';
 
 @Component({
   selector: 'app-activity',
