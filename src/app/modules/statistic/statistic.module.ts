@@ -6,15 +6,11 @@ import { IonicModule } from '@ionic/angular';
 import { ChartsModule } from 'ng2-charts';
 
 import { StatisticPage } from './statistic.page';
-import { StatisticResolver } from './statistic.resolver';
 
 const routes: Routes = [
   {
     path: '',
     component: StatisticPage,
-    resolve: {
-      chart: StatisticResolver
-    }
   }
 ];
 

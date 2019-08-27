@@ -8,8 +8,6 @@ import { Device } from '@ionic-native/device/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-
-import { StatisticResolver } from './modules/statistic/statistic.resolver';
 import { TimeService } from './shared/services/time/time.service';
 import { SharedModule } from './shared/shared.module';
 import { reducers } from './shared/store/store';
@@ -36,7 +34,6 @@ import { AppRoutingModule } from './app-routing.module';
     NativeStorage,
     Device,
     TimeService,
-    StatisticResolver,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

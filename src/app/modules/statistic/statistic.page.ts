@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ChartOptions, ChartTooltipItem, ChartType } from 'chart.js';
-import { Label } from 'ng2-charts';
+import { Color } from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
-
-import { StorageService } from '../../shared/services/storage/storage.service';
-import { TimeService } from '../../shared/services/time/time.service';
-import { HLColor } from '../../shared/models/colors.models';
+import { convertActivityStorageToChartData } from './statistic.operators';
+import { ActivityStorageService } from '../activity/services/activity-storage.service';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { StatisticService } from './statistic.service';
 
 export interface ChartData {
   labels: string[];
   data: number[];
-  colors: HLColor[];
+  colors: Color[];
 }
 
 @Component({
@@ -20,73 +20,45 @@ export interface ChartData {
   styleUrls: ['./statistic.page.scss']
 })
 export class StatisticPage implements OnInit {
-  public pieChartOptions: ChartOptions = {
-    responsive: true,
-    legend: {
-      position: 'top' // possibly contain this in settings
-    },
-    plugins: {
-      datalabels: {
-        formatter: (value, ctx) => ctx.chart.data.labels[ctx.dataIndex]
-      }
-    },
-    tooltips: {
-      callbacks: {
-        label: (tooltipItem: ChartTooltipItem, data: any) => {
-          const dataset = data.datasets[tooltipItem.datasetIndex];
-          const milliseconds = dataset.data[tooltipItem.index];
+  public chart$: Observable<ChartData>;
 
-          const inSeconds: number = Math.floor(milliseconds / 1000);
-          const inMinutes: number = Math.floor(inSeconds / 60);
-          const inHours: number = Math.floor(inMinutes / 60);
-
-          const hours = inHours;
-          const minutes = inMinutes - inHours * 60;
-          const seconds = inSeconds - minutes * 60;
-
-          let label = '';
-
-          if (hours > 0) {
-            label += `${hours} hour${hours > 1 ? 's' : ''} `;
-          }
-
-          if (hours > 0 || minutes > 0) {
-            const mLabel = !!label ? TimeService.twoDigitNumber(minutes) : minutes;
-            label += `${mLabel} minute${minutes > 1 ? 's' : ''} `;
-          }
-
-          if (hours > 0 || minutes > 0 || seconds > 0) {
-            const sLabel = !!label ? TimeService.twoDigitNumber(seconds) : seconds;
-            label += `${sLabel} second${seconds > 1 ? 's' : ''}`;
-          }
-          // adapt to plural and singular
-          return label;
-        }
-      }
-    }
-  };
-  // activity type array
-  public pieChartLabels: Label[] = [];
-  // activity spent time
-  public pieChartData: number[] = [];
+  public pieChartOptions: ChartOptions;
   public pieChartType: ChartType = 'pie';
   // investigate which plugins exist
   public pieChartPlugins = [pluginDataLabels];
-  public pieChartColors = [
-    {
-      // activity type colors
-      backgroundColor: []
-    }
-  ];
 
-  constructor(private storageService: StorageService, private route: ActivatedRoute) {
-    const chartData: ChartData = this.route.snapshot.data.chart;
-    this.pieChartLabels = chartData.labels;
-    this.pieChartData = chartData.data;
-    this.pieChartColors[0].backgroundColor = chartData.colors.map(
-      (color: HLColor) => `hsla(${color.hue}, 100%, ${color.luminance}%, 1)`
-    );
+  constructor(
+    private storageService: ActivityStorageService,
+    private statisticService: StatisticService
+  ) {}
+
+  ngOnInit() {
+    this.chart$ = this.initChart$();
+    this.pieChartOptions = this.initChartOptions();
   }
 
-  ngOnInit() {}
+  private initChart$(): Observable<ChartData> {
+    return this.storageService.getStorage().pipe(map(convertActivityStorageToChartData));
+  }
+
+  private initChartOptions(): ChartOptions {
+    return {
+      responsive: true,
+      legend: {
+        position: 'top' // possibly contain this in settings
+      },
+      plugins: {
+        datalabels: {
+          formatter: (value, ctx) => ctx.chart.data.labels[ctx.dataIndex]
+        }
+      },
+      tooltips: {
+        callbacks: {
+          label: (tooltipItem: ChartTooltipItem, data: any) => {
+            return this.statisticService.convertChartLabelToUserFriendlyText(tooltipItem, data);
+          }
+        }
+      }
+    };
+  }
 }

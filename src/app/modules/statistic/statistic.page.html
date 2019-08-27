@@ -7,15 +7,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="chart$ | async as chart">
   <div style="display: block">
     <canvas baseChart
-            [data]="pieChartData"
-            [labels]="pieChartLabels"
+            [data]="chart.data"
+            [labels]="chart.labels"
             [chartType]="pieChartType"
             [options]="pieChartOptions"
             [plugins]="pieChartPlugins"
-            [colors]="pieChartColors">
+            [colors]="chart.colors">
     </canvas>
   </div>
 </ion-content>

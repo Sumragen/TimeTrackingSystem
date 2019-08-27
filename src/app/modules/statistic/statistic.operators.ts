@@ -1,6 +1,6 @@
 import { add, converge, map, pipe, prop, reduce, toPairs } from 'ramda';
+
 import { ChartData } from './statistic.page';
-import { HLColor } from '../../shared/models/colors.models';
 
 const mapArrayByProp = (property: string) => map(prop(property));
 
@@ -16,13 +16,19 @@ const getData = mapArrayByProp('data');
 
 const convertChartPropsToObject = (
   labels: string[],
-  colors: HLColor[],
+  colors: string[],
   data: number[]
 ): ChartData => ({
   labels,
-  colors,
+  colors: [
+    {
+      backgroundColor: colors
+    }
+  ],
   data
 });
+
+const toHSLA = color => `hsla(${color.hue}, 100%, ${color.luminance}%, 1)`;
 
 const getPerformedTimeData = pipe(
   mapArrayByProp('performedTime'),
@@ -35,7 +41,10 @@ export const convertActivityStorageToChartData = pipe(
   convertPairedStorageToObject,
   converge(convertChartPropsToObject, [
     getLabels,
-    getColors,
+    pipe(
+      getColors,
+      map(toHSLA)
+    ),
     pipe(
       getData,
       map(getPerformedTimeData)
