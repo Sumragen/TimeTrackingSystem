@@ -1,4 +1,17 @@
-import { add, converge, filter, gt, lt, lte, map, pipe, prop, reduce, toPairs } from 'ramda';
+import {
+  add,
+  complement,
+  converge,
+  filter,
+  isEmpty,
+  lte,
+  map,
+  pipe,
+  prop,
+  propSatisfies,
+  reduce,
+  toPairs
+} from 'ramda';
 
 import { ChartData } from './statistic.page';
 import { ActivityStorage } from '../activity/services/activity-storage.types';
@@ -51,6 +64,8 @@ const filterInnerData = (startDate: number) => (storage: { label; color; data }[
   });
 };
 
+const filterEmptyRecords = filter(propSatisfies(complement(isEmpty), 'data'));
+
 export const convertActivityStorageToChartData = ([startDate, storage]: [
   number,
   ActivityStorage
@@ -59,6 +74,8 @@ export const convertActivityStorageToChartData = ([startDate, storage]: [
     toPairs,
     convertPairedStorageToObject,
     filterInnerData(startDate),
+    filterEmptyRecords,
+    // @ts-ignore
     converge(convertChartPropsToObject, [
       getLabels,
       pipe(
