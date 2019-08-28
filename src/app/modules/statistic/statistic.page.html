@@ -4,7 +4,12 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Statistic</ion-title>
-    <ion-button slot="end" color="dark" fill="clear" (click)="isCalendarVisible = !isCalendarVisible">
+    <ion-button
+      slot="end"
+      color="dark"
+      fill="clear"
+      (click)="isCalendarVisible = !isCalendarVisible"
+    >
       <ion-icon name="calendar"></ion-icon>
     </ion-button>
   </ion-toolbar>
@@ -19,16 +24,23 @@
       (ionChange)="handleStartDateChange($event.target.value)"
     ></ion-datetime>
   </ion-item>
-  <div style="display: block">
-    <canvas
-      baseChart
-      [data]="chart.data"
-      [labels]="chart.labels"
-      [chartType]="pieChartType"
-      [options]="pieChartOptions"
-      [plugins]="pieChartPlugins"
-      [colors]="chart.colors"
-    >
-    </canvas>
+  <div *ngIf="chart.labels.length > 0; else noDataItem">
+    <div style="display: block">
+      <canvas
+        baseChart
+        [data]="chart.data"
+        [labels]="chart.labels"
+        [chartType]="pieChartType"
+        [options]="pieChartOptions"
+        [plugins]="pieChartPlugins"
+        [colors]="chart.colors"
+      >
+      </canvas>
+    </div>
   </div>
+  <ng-template #noDataItem>
+    <ion-item>
+      There is no data. Try to point other dates
+    </ion-item>
+  </ng-template>
 </ion-content>

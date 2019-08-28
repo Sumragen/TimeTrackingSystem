@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartTooltipItem, ChartType } from 'chart.js';
-import { Color } from 'ng2-charts';
+import { Color, PluginServiceGlobalRegistrationAndOptions } from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { convertActivityStorageToChartData } from './statistic.operators';
 import { ActivityStorageService } from '../activity/services/activity-storage.service';
@@ -26,7 +26,7 @@ export class StatisticPage implements OnInit {
   public pieChartOptions: ChartOptions;
   public pieChartType: ChartType = 'pie';
   // investigate which plugins exist
-  public pieChartPlugins = [pluginDataLabels];
+  public pieChartPlugins: PluginServiceGlobalRegistrationAndOptions[] = [pluginDataLabels];
   public customPickerOptions: any;
   private startDate$: BehaviorSubject<number>;
 
