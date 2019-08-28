@@ -10,6 +10,7 @@ import {
   prop,
   propSatisfies,
   reduce,
+  tap,
   toPairs
 } from 'ramda';
 
@@ -65,6 +66,8 @@ const filterInnerData = (startDate: number) => (storage: { label; color; data }[
 };
 
 const filterEmptyRecords = filter(propSatisfies(complement(isEmpty), 'data'));
+
+export const log = (key: string) => tap(data => console.log(key, data));
 
 export const convertActivityStorageToChartData = ([startDate, storage]: [
   number,

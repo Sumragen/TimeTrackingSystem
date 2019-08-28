@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { combineLatest, map } from 'rxjs/operators';
 import { ChartOptions, ChartTooltipItem, ChartType } from 'chart.js';
 import { Color, PluginServiceGlobalRegistrationAndOptions } from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+
+import { StatisticService } from './statistic.service';
 import { convertActivityStorageToChartData } from './statistic.operators';
 import { ActivityStorageService } from '../activity/services/activity-storage.service';
-import { map, withLatestFrom } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { StatisticService } from './statistic.service';
 
 export interface ChartData {
   labels: string[];
@@ -63,6 +64,11 @@ export class StatisticPage implements OnInit {
   public handleStartDateChange(value): void {
     const time: number = new Date(value).getTime();
     this.startDate$.next(time);
+    this.isCalendarVisible = false;
+  }
+
+  public toggleDatepicker(): void {
+    this.isCalendarVisible = !this.isCalendarVisible;
   }
 
   private initStartDate$(): BehaviorSubject<number> {
@@ -76,7 +82,7 @@ export class StatisticPage implements OnInit {
 
   private initChart$(): Observable<ChartData> {
     return this.startDate$.pipe(
-      withLatestFrom(this.storageService.getStorage()),
+      combineLatest(this.storageService.getStorage()),
       map(convertActivityStorageToChartData)
     );
     // return this.storageService.getStorage().pipe(map(convertActivityStorageToChartData));
