@@ -4,12 +4,7 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Statistic</ion-title>
-    <ion-button
-      slot="end"
-      color="dark"
-      fill="clear"
-      (click)="toggleDatepicker()"
-    >
+    <ion-button slot="end" color="dark" fill="clear" (click)="toggleDatepicker()">
       <ion-icon name="calendar"></ion-icon>
     </ion-button>
   </ion-toolbar>
@@ -37,6 +32,12 @@
       >
       </canvas>
     </div>
+    <ion-list>
+      <ion-item *ngFor="let type of chart.labels; let i = index">
+        <ion-label>{{ type }}</ion-label>
+        {{ convertTime(chart.data[i]) }}
+      </ion-item>
+    </ion-list>
   </div>
   <ng-template #noDataItem>
     <ion-item>

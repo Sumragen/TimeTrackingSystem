@@ -8,6 +8,7 @@ import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { StatisticService } from './statistic.service';
 import { convertActivityStorageToChartData } from './statistic.operators';
 import { ActivityStorageService } from '../activity/services/activity-storage.service';
+import { TimeService } from '../../shared/services/time/time.service';
 
 export interface ChartData {
   labels: string[];
@@ -69,6 +70,10 @@ export class StatisticPage implements OnInit {
 
   public toggleDatepicker(): void {
     this.isCalendarVisible = !this.isCalendarVisible;
+  }
+
+  public convertTime(value: number): string {
+    return TimeService.millisecondsToUFFormat(value);
   }
 
   private initStartDate$(): BehaviorSubject<number> {
