@@ -22,6 +22,7 @@ export interface ChartData {
 export class StatisticPage implements OnInit {
   public chart$: Observable<ChartData>;
 
+  public isCalendarVisible = false;
   public pieChartOptions: ChartOptions;
   public pieChartType: ChartType = 'pie';
   // investigate which plugins exist
