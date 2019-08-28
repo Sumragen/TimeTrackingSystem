@@ -1,6 +1,7 @@
-import { add, converge, map, pipe, prop, reduce, toPairs } from 'ramda';
+import { add, converge, filter, gt, lt, lte, map, pipe, prop, reduce, toPairs } from 'ramda';
 
 import { ChartData } from './statistic.page';
+import { ActivityStorage } from '../activity/services/activity-storage.types';
 
 const mapArrayByProp = (property: string) => map(prop(property));
 
@@ -36,18 +37,37 @@ const getPerformedTimeData = pipe(
   reduce(add, 0)
 );
 
-export const convertActivityStorageToChartData = pipe(
-  toPairs,
-  convertPairedStorageToObject,
-  converge(convertChartPropsToObject, [
-    getLabels,
-    pipe(
-      getColors,
-      map(toHSLA)
-    ),
-    pipe(
-      getData,
-      map(getPerformedTimeData)
-    )
-  ])
-);
+const filterInnerData = (startDate: number) => (storage: { label; color; data }[]) => {
+  return storage.map(category => {
+    return {
+      ...category,
+      data: category.data.filter(
+        pipe(
+          prop('date'),
+          lte(startDate)
+        )
+      )
+    };
+  });
+};
+
+export const convertActivityStorageToChartData = ([startDate, storage]: [
+  number,
+  ActivityStorage
+]) =>
+  pipe(
+    toPairs,
+    convertPairedStorageToObject,
+    filterInnerData(startDate),
+    converge(convertChartPropsToObject, [
+      getLabels,
+      pipe(
+        getColors,
+        map(toHSLA)
+      ),
+      pipe(
+        getData,
+        map(getPerformedTimeData)
+      )
+    ])
+  )(storage);

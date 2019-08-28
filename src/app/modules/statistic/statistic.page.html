@@ -4,18 +4,31 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Statistic</ion-title>
+    <ion-button slot="end" color="dark" fill="clear">
+      <ion-icon name="calendar"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="chart$ | async as chart">
+  <ion-item>
+    <ion-label>From</ion-label>
+    <ion-datetime
+      placeholder="Start Date"
+      displayFormat="YYYY DD MMMM HH:MM"
+      (ionChange)="handleStartDateChange($event.target.value)"
+    ></ion-datetime>
+  </ion-item>
   <div style="display: block">
-    <canvas baseChart
-            [data]="chart.data"
-            [labels]="chart.labels"
-            [chartType]="pieChartType"
-            [options]="pieChartOptions"
-            [plugins]="pieChartPlugins"
-            [colors]="chart.colors">
+    <canvas
+      baseChart
+      [data]="chart.data"
+      [labels]="chart.labels"
+      [chartType]="pieChartType"
+      [options]="pieChartOptions"
+      [plugins]="pieChartPlugins"
+      [colors]="chart.colors"
+    >
     </canvas>
   </div>
 </ion-content>

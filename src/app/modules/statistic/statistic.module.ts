@@ -10,7 +10,7 @@ import { StatisticPage } from './statistic.page';
 const routes: Routes = [
   {
     path: '',
-    component: StatisticPage,
+    component: StatisticPage
   }
 ];
 
