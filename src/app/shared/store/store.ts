@@ -21,4 +21,6 @@ export interface TargetAction<T> {
   target: T;
 }
 
+export type PayloadTargetAction<T> = PayloadAction<TargetAction<T>>;
+
 export const reducers: ActionReducerMap<StoreState, Action> = {};

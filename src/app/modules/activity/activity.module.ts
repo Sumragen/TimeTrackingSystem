@@ -21,6 +21,7 @@ import { ActivityService } from './services/activity.service';
 import { ActivityRoutingModule } from './activity-routing.module';
 import { ActivityPage } from './activity.page';
 import { ActivityFooterComponent } from './components/activity-footer/activity-footer.component';
+import { ActivityDispatch } from './store/activity.dispatch';
 
 @NgModule({
   imports: [
@@ -42,6 +43,6 @@ import { ActivityFooterComponent } from './components/activity-footer/activity-f
     TypeSelectorComponent,
     ActivityFooterComponent
   ],
-  providers: [ActivityService]
+  providers: [ActivityService, ActivityDispatch]
 })
 export class ActivityPageModule {}

@@ -1,15 +1,13 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Activity, ACTIVITY_STATUS, ActivityTypeButton } from '../../models/activity.types';
+import { ACTIVITY_STATUS, ActivityTypeButton } from '../../models/activity.types';
 import { IonInput } from '@ionic/angular';
-import { Dispatch } from '../../../../shared/store/decorators/dispatch';
-import { PayloadAction, TargetAction } from '../../../../shared/store/store';
-import { STORAGE_EFFECT } from '../../../../shared/store/effects/storage.effect';
 import { ActivityActionsKey, ActivityState } from '../../store/activity.reducer';
 import { Actions, ofType } from '@ngrx/effects';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { ActivityService } from '../../services/activity.service';
 import { Observable } from 'rxjs';
 import { always, cond, equals, ifElse, T } from 'ramda';
+import { ActivityDispatch } from '../../store/activity.dispatch';
 
 @Component({
   selector: 'app-activity-footer',
@@ -26,7 +24,11 @@ export class ActivityFooterComponent implements OnInit {
   public isIdle = equals(ACTIVITY_STATUS.IDLE);
   public isPerform = equals(ACTIVITY_STATUS.PERFORM);
 
-  constructor(private activityService: ActivityService, private actions$: Actions) {}
+  constructor(
+    private activityService: ActivityService,
+    private actions$: Actions,
+    private activityDispatch: ActivityDispatch
+  ) {}
 
   ngOnInit() {
     this.types$ = this.actions$.pipe(
@@ -47,17 +49,18 @@ export class ActivityFooterComponent implements OnInit {
   public handleActivityButtonClick(status: ACTIVITY_STATUS, type?: string): void {
     if (this.isPerform(status)) {
       if (type) {
-        this.switchActivity(type);
+        this.activityDispatch.switchActivity(type);
       } else {
         if (this.shouldSwitchActivity()) {
-          this.switchActivity(this.activityTypeInputEl.value);
+          this.activityDispatch.switchActivity(this.activityTypeInputEl.value);
         } else {
-          this.completeActivity();
+          this.activityDispatch.completeActivity();
         }
       }
     } else {
-      this.applyActivityType(type);
+      this.activityDispatch.applyActivityType(type || this.activityTypeInputEl.value);
     }
+
     this.activityTypeVisibility = false;
   }
 
@@ -80,64 +83,5 @@ export class ActivityFooterComponent implements OnInit {
       this.activityTypeInputEl.value.length > 0 &&
       this.activityTypeVisibility
     );
-  }
-
-  @Dispatch()
-  public applyActivityType(
-    type: string = this.activityTypeInputEl.value
-  ): PayloadAction<TargetAction<PayloadAction<Activity>>> {
-    return {
-      type: STORAGE_EFFECT.LOG_TIME,
-      payload: {
-        target: {
-          type: ActivityActionsKey.PERFORM,
-          payload: {
-            type
-          }
-        }
-      }
-    };
-  }
-
-  @Dispatch()
-  public completeActivity() {
-    return {
-      type: STORAGE_EFFECT.COMPLETE,
-      payload: {
-        target: {
-          type: ActivityActionsKey.COMPLETE
-        }
-      }
-    };
-  }
-
-  @Dispatch()
-  public switchActivity(activityType: string) {
-    return {
-      type: STORAGE_EFFECT.COMPLETE,
-      payload: {
-        target: {
-          type: STORAGE_EFFECT.LOG_TIME,
-          payload: {
-            target: {
-              type: ActivityActionsKey.PERFORM,
-              payload: {
-                type: activityType
-              }
-            }
-          }
-        }
-      }
-    };
-  }
-
-  @Dispatch()
-  public updateType(type: string) {
-    return {
-      type: ActivityActionsKey.SET_TYPE,
-      payload: {
-        type
-      }
-    };
   }
 }
