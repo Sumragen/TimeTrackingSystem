@@ -9,6 +9,7 @@ import { Actions, ofType } from '@ngrx/effects';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { ActivityService } from '../../services/activity.service';
 import { Observable } from 'rxjs';
+import { equals } from 'ramda';
 
 @Component({
   selector: 'app-activity-footer',
@@ -18,8 +19,10 @@ import { Observable } from 'rxjs';
 export class ActivityFooterComponent implements OnInit {
   public activityTypeVisibility: boolean;
   public types$: Observable<ActivityTypeButton[]>;
+
   @Input() state: ActivityState;
   @ViewChild('activityTypeInput', { static: false }) public activityTypeInputEl: IonInput;
+
   constructor(private activityService: ActivityService, private actions$: Actions) {}
 
   ngOnInit() {
@@ -78,13 +81,9 @@ export class ActivityFooterComponent implements OnInit {
       this.activityTypeVisibility
     );
   }
-  public isIdle(status: ACTIVITY_STATUS): boolean {
-    return status === ACTIVITY_STATUS.IDLE;
-  }
 
-  public isPerform(status: ACTIVITY_STATUS): boolean {
-    return status === ACTIVITY_STATUS.PERFORM;
-  }
+  public isIdle = equals(ACTIVITY_STATUS.IDLE);
+  public isPerform = equals(ACTIVITY_STATUS.PERFORM);
 
   @Dispatch()
   public applyActivityType(
