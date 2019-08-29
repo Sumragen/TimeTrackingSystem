@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { combineLatest, map } from 'rxjs/operators';
-import { ChartOptions, ChartTooltipItem, ChartType } from 'chart.js';
-import { Color, PluginServiceGlobalRegistrationAndOptions } from 'ng2-charts';
-import * as pluginDataLabels from 'chartjs-plugin-datalabels';
-
-import { StatisticService } from './statistic.service';
+import { Color } from 'ng2-charts';
 import { convertActivityStorageToChartData } from './statistic.operators';
 import { ActivityStorageService } from '../activity/services/activity-storage.service';
 import { TimeService } from '../../shared/services/time/time.service';
@@ -25,40 +21,12 @@ export class StatisticPage implements OnInit {
   public chart$: Observable<ChartData>;
 
   public isCalendarVisible = false;
-  public pieChartOptions: ChartOptions;
-  public pieChartType: ChartType = 'pie';
-  // investigate which plugins exist
-  public pieChartPlugins: PluginServiceGlobalRegistrationAndOptions[] = [pluginDataLabels];
-  public customPickerOptions: any;
   private startDate$: BehaviorSubject<number>;
 
-  constructor(
-    private storageService: ActivityStorageService,
-    private statisticService: StatisticService
-  ) {
-    this.customPickerOptions = {
-      buttons: [
-        {
-          text: 'Save',
-          handler: () => {
-            console.log('Clicked Save!');
-            return true;
-          }
-        },
-        {
-          text: 'Log',
-          handler: () => {
-            console.log('Clicked Log. Do not Dismiss.');
-            return false;
-          }
-        }
-      ]
-    };
-  }
+  constructor(private storageService: ActivityStorageService) {}
 
   ngOnInit() {
-    this.pieChartOptions = this.initChartOptions();
-    this.startDate$ = this.initStartDate$();
+    this.startDate$ = StatisticPage.initStartDate$();
     this.chart$ = this.initChart$();
   }
 
@@ -76,7 +44,7 @@ export class StatisticPage implements OnInit {
     return TimeService.millisecondsToUFFormat(value);
   }
 
-  private initStartDate$(): BehaviorSubject<number> {
+  private static initStartDate$(): BehaviorSubject<number> {
     const today = new Date();
     const dd = today.getDate();
     const mm = today.getMonth() + 1;
@@ -91,26 +59,5 @@ export class StatisticPage implements OnInit {
       map(convertActivityStorageToChartData)
     );
     // return this.storageService.getStorage().pipe(map(convertActivityStorageToChartData));
-  }
-
-  private initChartOptions(): ChartOptions {
-    return {
-      responsive: true,
-      legend: {
-        position: 'top' // possibly contain this in settings
-      },
-      plugins: {
-        datalabels: {
-          formatter: (value, ctx) => ctx.chart.data.labels[ctx.dataIndex]
-        }
-      },
-      tooltips: {
-        callbacks: {
-          label: (tooltipItem: ChartTooltipItem, data: any) => {
-            return this.statisticService.convertChartLabelToUserFriendlyText(tooltipItem, data);
-          }
-        }
-      }
-    };
   }
 }

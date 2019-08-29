@@ -20,18 +20,7 @@
     ></ion-datetime>
   </ion-item>
   <div *ngIf="chart.labels.length > 0; else noDataItem">
-    <div style="display: block">
-      <canvas
-        baseChart
-        [data]="chart.data"
-        [labels]="chart.labels"
-        [chartType]="pieChartType"
-        [options]="pieChartOptions"
-        [plugins]="pieChartPlugins"
-        [colors]="chart.colors"
-      >
-      </canvas>
-    </div>
+    <app-chart [chart]="chart"></app-chart>
     <ion-list>
       <ion-item *ngFor="let type of chart.labels; let i = index">
         <ion-label>{{ type }}</ion-label>

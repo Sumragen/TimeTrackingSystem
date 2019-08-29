@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { ChartsModule } from 'ng2-charts';
 
 import { StatisticPage } from './statistic.page';
+import { ChartComponent } from './chart/chart.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule, RouterModule.forChild(routes), ChartsModule],
-  declarations: [StatisticPage]
+  declarations: [StatisticPage, ChartComponent]
 })
 export class StatisticPageModule {}
