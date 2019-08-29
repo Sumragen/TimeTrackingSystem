@@ -9,8 +9,6 @@ import { ACTIVITY_STATE_KEY } from '../../shared/store/store';
 import { StorageEffect } from '../../shared/store/effects/storage.effect';
 import { SecondsToClockFormatPipe } from '../../shared/pipes/time/seconds-to-clock-format.pipe';
 import { SharedModule } from '../../shared/shared.module';
-
-import { IdleComponent } from './components/idle/idle.component';
 import { PerformComponent } from './components/perform/perform.component';
 import { StopwatchComponent } from './components/perform/stopwatch/stopwatch.component';
 import { TypeInputComponent } from './components/type-input/type-input.component';
@@ -35,7 +33,6 @@ import { ActivityDispatch } from './store/activity.dispatch';
   ],
   declarations: [
     ActivityPage,
-    IdleComponent,
     PerformComponent,
     TypeInputComponent,
     StopwatchComponent,
