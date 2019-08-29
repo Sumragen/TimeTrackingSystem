@@ -8,7 +8,7 @@ export interface ActivityStorage {
 
 export interface ActivityCategoryStorage {
   color: HLColor;
-  data: Activity[];
+  data: Required<Activity>[];
 }
 
 export type ActivityStorageEntities = [string, ActivityCategoryStorage];
