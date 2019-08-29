@@ -1,8 +1,11 @@
-<ion-item>
-  <ion-label>From</ion-label>
-  <ion-datetime
-          placeholder="Start Date"
-          displayFormat="YYYY DD MMMM HH:mm"
-          (ionChange)="handleStartDateChange($event.target.value)"
-  ></ion-datetime>
-</ion-item>
+<ion-list>
+  <ion-item>
+    <ion-label>From</ion-label>
+    <ion-datetime
+            placeholder="Start Date"
+            displayFormat="YYYY DD MMMM HH:mm"
+            [(ngModel)]="dateFilter.from"
+            (ionChange)="handleFilterChange($event.target.value)"
+    ></ion-datetime>
+  </ion-item>
+</ion-list>

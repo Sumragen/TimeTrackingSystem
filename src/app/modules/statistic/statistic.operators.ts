@@ -3,6 +3,7 @@ import {
   complement,
   converge,
   filter,
+  fromPairs,
   isEmpty,
   lte,
   map,
@@ -91,3 +92,10 @@ export const convertActivityStorageToChartData = ([startDate, storage]: [
       )
     ])
   )(storage);
+
+export const convertFilterDates = pipe(
+  toPairs,
+  map(([key, date]: [string, string]) => [key, new Date(date).getTime()]),
+  // @ts-ignore
+  fromPairs
+);

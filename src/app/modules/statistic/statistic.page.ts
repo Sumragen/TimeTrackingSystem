@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { BehaviorSubject, combineLatest, fromEvent, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Color } from 'ng2-charts';
 import { convertActivityStorageToChartData } from './statistic.operators';
 import { ActivityStorageService } from '../activity/services/activity-storage.service';
 import { TimeService } from '../../shared/services/time/time.service';
-import { prop } from 'ramda';
+import { path, prop } from 'ramda';
 
 export interface ChartData {
   labels: string[];
@@ -43,7 +43,12 @@ export class StatisticPage implements AfterViewInit {
   }
 
   private initDateFilter$(): Observable<number> {
-    return fromEvent(this.dateFilterEl.nativeElement, 'filterChange').pipe(map(prop('detail')))
+    return fromEvent(this.dateFilterEl.nativeElement, 'filterChange').pipe(
+      map(prop('detail')),
+      // todo: that will be removed when TO filter is exist
+      map(prop('from')),
+      tap(v => console.log(v))
+    );
   }
 
   private static initStartDate$(): BehaviorSubject<number> {
@@ -56,9 +61,8 @@ export class StatisticPage implements AfterViewInit {
   }
 
   private initChart$(): Observable<ChartData> {
-    return combineLatest([
-      this.dateFilter$,
-      this.storageService.getStorage()
-    ]).pipe(map(convertActivityStorageToChartData));
+    return combineLatest([this.dateFilter$, this.storageService.getStorage()]).pipe(
+      map(convertActivityStorageToChartData)
+    );
   }
 }
