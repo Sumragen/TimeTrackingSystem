@@ -2,11 +2,10 @@
   <ion-input
     #activityTypeInput
     *ngIf="isIdle(state.status) || activityTypeVisibility"
-    [(ngModel)]="activityType"
     class="custom-type-input"
     clear-input="true"
     placeholder="Enter new activity type"
-    (keyup.enter)="handleActivityButtonClick(state.status, activityType)"
+    (keyup.enter)="handleActivityButtonClick(state.status, activityTypeInput.value)"
   >
   </ion-input>
 
@@ -22,7 +21,7 @@
       color="dark"
       fill="solid"
       expand="full"
-      [disabled]="!activityType && !isPerform(state.status)"
+      [disabled]="isActionButtonDisabled()"
       (click)="handleActivityButtonClick(state.status)"
     >
       {{ getActionButtonText(state.status) }}

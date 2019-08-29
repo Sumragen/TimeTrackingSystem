@@ -16,7 +16,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./activity-footer.component.scss']
 })
 export class ActivityFooterComponent implements OnInit {
-  public activityType = '';
   public activityTypeVisibility: boolean;
   public types$: Observable<ActivityTypeButton[]>;
   @Input() state: ActivityState;
@@ -32,13 +31,20 @@ export class ActivityFooterComponent implements OnInit {
     );
   }
 
+  public isActionButtonDisabled(): boolean {
+    return (
+      (!this.activityTypeInputEl || !this.activityTypeInputEl.value) &&
+      !this.isPerform(this.state.status)
+    );
+  }
+
   public handleActivityButtonClick(status: ACTIVITY_STATUS, type?: string): void {
     if (this.isPerform(status)) {
       if (type) {
         this.switchActivity(type);
       } else {
         if (this.shouldSwitchActivity()) {
-          this.switchActivity(this.activityType);
+          this.switchActivity(this.activityTypeInputEl.value);
         } else {
           this.completeActivity();
         }
@@ -46,13 +52,10 @@ export class ActivityFooterComponent implements OnInit {
     } else {
       this.applyActivityType(type);
     }
-
-    this.activityType = '';
     this.activityTypeVisibility = false;
   }
 
   public toggleTypeInputVisibility(): void {
-    this.activityType = '';
     this.activityTypeVisibility = !this.activityTypeVisibility;
     if (this.activityTypeVisibility) {
       setTimeout(() => this.activityTypeInputEl.setFocus(), 0);
@@ -68,7 +71,12 @@ export class ActivityFooterComponent implements OnInit {
   }
 
   private shouldSwitchActivity(): boolean {
-    return this.activityType.length > 0 && this.activityTypeVisibility;
+    return (
+      !!this.activityTypeInputEl &&
+      !!this.activityTypeInputEl.value &&
+      this.activityTypeInputEl.value.length > 0 &&
+      this.activityTypeVisibility
+    );
   }
   public isIdle(status: ACTIVITY_STATUS): boolean {
     return status === ACTIVITY_STATUS.IDLE;
@@ -79,8 +87,9 @@ export class ActivityFooterComponent implements OnInit {
   }
 
   @Dispatch()
-  public applyActivityType(type?: string): PayloadAction<TargetAction<PayloadAction<Activity>>> {
-    type = type || this.activityType;
+  public applyActivityType(
+    type: string = this.activityTypeInputEl.value
+  ): PayloadAction<TargetAction<PayloadAction<Activity>>> {
     return {
       type: STORAGE_EFFECT.LOG_TIME,
       payload: {
