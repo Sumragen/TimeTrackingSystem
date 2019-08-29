@@ -21,6 +21,15 @@ export class DateFilterComponent implements OnInit {
     this.applyDefaultFilter();
   }
 
+  public applyYesterday(): void {
+    this.filterYesterday();
+    this.handleFilterChange();
+  }
+  public applyToday(): void {
+    this.filterToday();
+    this.handleFilterChange();
+  }
+
   public handleFilterChange(): void {
     const domEvent = new CustomEvent('filterChange', {
       bubbles: true,
@@ -29,18 +38,32 @@ export class DateFilterComponent implements OnInit {
     this.elementRef.nativeElement.dispatchEvent(domEvent);
   }
 
+  public filterYesterday(): void {
+    this.dateFilter = {
+      from: moment()
+        .subtract(1, 'days')
+        .startOf('day')
+        .toString(),
+      to: moment()
+        .subtract(1, 'days')
+        .endOf('day')
+        .toString()
+    };
+  }
+
   public filterToday(): void {
     this.dateFilter = {
       from: moment()
-         .startOf('day')
-         .toString(),
+        .startOf('day')
+        .toString(),
       to: moment()
-         .endOf('day')
-         .toString()
+        .endOf('day')
+        .toString()
     };
   }
 
   private applyDefaultFilter(): void {
     this.filterToday();
+    this.handleFilterChange();
   }
 }
