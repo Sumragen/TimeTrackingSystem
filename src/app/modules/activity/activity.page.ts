@@ -1,27 +1,31 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { map, startWith, switchMap, tap } from 'rxjs/operators';
-import { Actions, ofType } from '@ngrx/effects';
-import { IonInput } from '@ionic/angular';
-
-import { ActivityActionsKey, ActivityState } from './store/activity.reducer';
-import { Dispatch } from '../../shared/store/decorators/dispatch';
-import { ACTIVITY_STATE_KEY, PayloadAction, TargetAction } from '../../shared/store/store';
-import { ActivityStorageService } from './services/activity-storage.service';
-import { Select } from '../../shared/store/decorators/select';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Activity, ACTIVITY_STATUS, ActivityTypeButton } from './models/activity.types';
-import { STORAGE_EFFECT } from '../../shared/store/effects/storage.effect';
-import { ActivityService } from './services/activity.service';
+import { takeUntil, tap } from 'rxjs/operators';
+import { equals } from 'ramda';
+
+import { DestroyComponent } from '../../shared/components/destroy/destroy.component';
+import { ACTIVITY_STATE_KEY } from '../../shared/store/store';
+import { Select } from '../../shared/store/decorators/select';
+
+import { ActivityState } from './store/activity.reducer';
+import { ActivityStorageService } from './services/activity-storage.service';
+import { ACTIVITY_STATUS } from './models/activity.types';
+import { ActivityDispatch } from './store/activity.dispatch';
 
 @Component({
   selector: 'app-activity',
   templateUrl: 'activity.page.html',
   styleUrls: ['activity.page.scss']
 })
-export class ActivityPage implements OnInit {
+export class ActivityPage extends DestroyComponent implements OnInit {
   @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
 
-  constructor(private storageService: ActivityStorageService) {}
+  constructor(
+    private storageService: ActivityStorageService,
+    private activityDispatch: ActivityDispatch
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.setupInitialStoreState();
@@ -31,24 +35,11 @@ export class ActivityPage implements OnInit {
     this.storageService
       .getSavedState()
       .pipe(
-        tap(this.initialize)
-        // tap(
-        //   (state: ActivityState) =>
-        //     (this.activityTypeVisibility = !state || !this.isPerform(state.status))
-        // )
+        takeUntil(this.dispose$),
+        tap(this.activityDispatch.initialize)
       )
       .subscribe();
   }
 
-  public isPerform(status: ACTIVITY_STATUS): boolean {
-    return status === ACTIVITY_STATUS.PERFORM;
-  }
-
-  @Dispatch()
-  private initialize(state: ActivityState): PayloadAction<ActivityState> {
-    return {
-      type: ActivityActionsKey.INITIALIZE,
-      payload: state
-    };
-  }
+  public isPerform = equals(ACTIVITY_STATUS.PERFORM);
 }
