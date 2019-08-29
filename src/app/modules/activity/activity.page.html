@@ -10,6 +10,7 @@
 </ion-header>
 
 <ion-content *ngIf="state$ | async as state">
+<!--  Interesting point. Why TS is not dedicated typings of ramda function-->
   <app-perform *ngIf="isPerform(state.status)" [state]="state"></app-perform>
 </ion-content>
 
