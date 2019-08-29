@@ -2,7 +2,14 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { exhaustMap, map, tap, withLatestFrom } from 'rxjs/internal/operators';
+import { defaultTo, pipe } from 'ramda';
 
+import { ActivityState } from '../../../modules/activity/store/activity.reducer';
+import { ActivityService } from '../../../modules/activity/services/activity.service';
+import { ActivityStorageService } from '../../../modules/activity/services/activity-storage.service';
+import { ActivityStorage } from '../../../modules/activity/services/activity-storage.types';
+
+import { Activity } from '../../../modules/activity/models/activity.types';
 import { TimeService } from '../../services/time/time.service';
 import {
   ACTIVITY_STATE_KEY,
@@ -11,12 +18,7 @@ import {
   StoreState,
   TargetAction
 } from '../store';
-import { ActivityState } from '../../../modules/activity/store/activity.reducer';
-import { ActivityService } from '../../../modules/activity/services/activity.service';
-import { ActivityStorageService } from '../../../modules/activity/services/activity-storage.service';
-import { ActivityStorage } from '../../../modules/activity/services/activity-storage.types';
-import { Activity } from '../../../modules/activity/models/activity.types';
-import { defaultTo, pipe } from 'ramda';
+import { ActionBuilder } from '../action-builder';
 
 export enum STORAGE_EFFECT {
   LOG_TIME = 'E_LOG_ACTIVITY_TIME',
@@ -38,13 +40,10 @@ export class StorageEffect {
       map(
         (action: PayloadAction<TargetAction<PayloadAction<Activity>>>): PayloadAction<Activity> => {
           const target: PayloadAction<Activity> = action.payload.target;
-          return {
-            type: target.type,
-            payload: {
-              ...target.payload,
-              date: this.timeService.now()
-            }
-          };
+          return ActionBuilder.payload(target.type, {
+            ...target.payload,
+            date: this.timeService.now()
+          });
         }
       )
     )
@@ -62,9 +61,10 @@ export class StorageEffect {
             // TODO it's looks like something that could be written in FP style
             const time: number = this.timeService.rangeBetweenNowAnd(state.date);
 
-            const activity: Activity = {
-              ...state,
+            const activity: Required<Activity> = {
               type: state.type,
+              description: state.description,
+              date: state.date,
               performedTime: time
             };
 
