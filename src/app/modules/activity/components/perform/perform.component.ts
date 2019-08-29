@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { ActivityActionsKey, ActivityState } from '../../store/activity.reducer';
-import { Dispatch } from '../../../../shared/store/decorators/dispatch';
+import { ActivityState } from '../../store/activity.reducer';
+import { ActivityDispatch } from '../../store/activity.dispatch';
 
 @Component({
   selector: 'app-perform',
@@ -11,15 +11,9 @@ import { Dispatch } from '../../../../shared/store/decorators/dispatch';
 export class PerformComponent {
   @Input() public state: ActivityState;
 
-  constructor() {}
+  constructor(private activityDispatch: ActivityDispatch) {}
 
-  @Dispatch()
-  public updateDescription(description: string) {
-    return {
-      type: ActivityActionsKey.SET_DESCRIPTION,
-      payload: {
-        description
-      }
-    };
+  updateDescription(description: string): void {
+    this.activityDispatch.updateDescription(description);
   }
 }

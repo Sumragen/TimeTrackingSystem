@@ -1,15 +1,17 @@
-import { Dispatch } from '../../../shared/store/decorators/dispatch';
-import { ActivityActionsKey, ActivityState } from './activity.reducer';
 import { Injectable } from '@angular/core';
+
+import { Dispatch } from '../../../shared/store/decorators/dispatch';
 import { STORAGE_EFFECT } from '../../../shared/store/effects/storage.effect';
+import { PayloadAction } from '../../../shared/store/store';
+import { ActionBuilder } from '../../../shared/store/action-builder';
+
+import { ActivityActionsKey, ActivityState } from './activity.reducer';
+import { Activity } from '../models/activity.types';
 import {
   ApplyActivityAction,
   CompleteActivityAction,
   SwitchActivityAction
 } from '../models/activity-action.types';
-import { PayloadAction, PayloadTargetAction } from '../../../shared/store/store';
-import { Activity } from '../models/activity.types';
-import { ActionBuilder } from '../../../shared/store/action-builder';
 
 @Injectable()
 export class ActivityDispatch {
@@ -49,5 +51,10 @@ export class ActivityDispatch {
   @Dispatch()
   public initialize(state: ActivityState): PayloadAction<ActivityState> {
     return ActionBuilder.payload(ActivityActionsKey.INITIALIZE, state);
+  }
+
+  @Dispatch()
+  public updateDescription(description: string) {
+    return ActionBuilder.payload(ActivityActionsKey.SET_DESCRIPTION, { description });
   }
 }
