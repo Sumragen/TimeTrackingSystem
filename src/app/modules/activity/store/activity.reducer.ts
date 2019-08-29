@@ -56,7 +56,6 @@ function setDescription(
   };
 }
 
-// TODO remove those duplications (and also ACTIVITY_STATUS looks the same)
 export const ActivityActionsKey = {
   PERFORM: 'PERFORM',
   COMPLETE: 'COMPLETE',
@@ -65,19 +64,11 @@ export const ActivityActionsKey = {
   SET_DESCRIPTION: 'SET_DESCRIPTION'
 };
 
-export const ActivityActions = {
-  perform: createAction(ActivityActionsKey.PERFORM),
-  complete: createAction(ActivityActionsKey.COMPLETE),
-  initialize: createAction(ActivityActionsKey.INITIALIZE),
-  setType: createAction(ActivityActionsKey.SET_TYPE),
-  setDescription: createAction(ActivityActionsKey.SET_DESCRIPTION)
-};
-
 export const activityReducer = createReducer<ActivityState>(
   initialState,
-  on(ActivityActions.initialize, initialize),
-  on(ActivityActions.perform, perform),
-  on(ActivityActions.complete, complete),
-  on(ActivityActions.setType, setType),
-  on(ActivityActions.setDescription, setDescription)
+  on(createAction(ActivityActionsKey.INITIALIZE), initialize),
+  on(createAction(ActivityActionsKey.PERFORM), perform),
+  on(createAction(ActivityActionsKey.COMPLETE), complete),
+  on(createAction(ActivityActionsKey.SET_TYPE), setType),
+  on(createAction(ActivityActionsKey.SET_DESCRIPTION), setDescription)
 );

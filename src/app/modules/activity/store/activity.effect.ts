@@ -1,15 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
-import { switchMap, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 
-import { ActivityActionsKey, ActivityState } from './activity.reducer';
 import { ACTIVITY_STATE_KEY, StoreState } from '../../../shared/store/store';
+import { Select } from '../../../shared/store/decorators/select';
+
 import { ActivityStorageService } from '../services/activity-storage.service';
+import { ActivityActionsKey, ActivityState } from './activity.reducer';
 
 @Injectable()
 export class ActivityEffect {
+  @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
+
   constructor(
     private actions$: Actions,
     private router: Router,
@@ -26,7 +31,7 @@ export class ActivityEffect {
           ActivityActionsKey.PERFORM,
           ActivityActionsKey.COMPLETE
         ),
-        switchMap(() => this.store$.select(ACTIVITY_STATE_KEY)),
+        switchMap(() => this.state$),
         tap((state: ActivityState) => this.storageService.setSavedState(state))
       ),
     {

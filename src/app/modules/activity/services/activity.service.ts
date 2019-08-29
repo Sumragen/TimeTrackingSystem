@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map as mapO } from 'rxjs/operators';
+import { descend, map, pipe, prop, sort, toPairs } from 'ramda';
 
 import { HLColor } from '../../../shared/models/colors.models';
-import { ActivityTypeButton } from '../models/activity.types';
 
-import { ActivityStorageService } from './activity-storage.service';
 import { createActivityTypeButton, getLatestActivityTypes } from './activity.operators';
-import { descend, map, pipe, prop, sort, toPairs } from 'ramda';
+import { ActivityStorageService } from './activity-storage.service';
+import { ActivityTypeButton } from '../models/activity.types';
 
 @Injectable()
 export class ActivityService {

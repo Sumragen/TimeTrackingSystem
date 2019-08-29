@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { StorageService } from '../../../shared/services/storage/storage.service';
+
 import { ActivityState } from '../store/activity.reducer';
 import {
   ActivityStorage
@@ -19,7 +20,7 @@ export class ActivityStorageService {
   }
 
   public setStorage(storage: ActivityStorage): Observable<void> {
-    return this.storageService.setItem(ACTIVITY_STORAGE_KEY, storage);
+    return this.storageService.setItem<ActivityStorage>(ACTIVITY_STORAGE_KEY, storage);
   }
 
   public getSavedState(): Observable<any> {
