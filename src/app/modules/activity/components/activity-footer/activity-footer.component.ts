@@ -1,13 +1,14 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ACTIVITY_STATUS, ActivityTypeButton } from '../../models/activity.types';
 import { IonInput } from '@ionic/angular';
-import { ActivityActionsKey, ActivityState } from '../../store/activity.reducer';
 import { Actions, ofType } from '@ngrx/effects';
-import { map, startWith, switchMap } from 'rxjs/operators';
-import { ActivityService } from '../../services/activity.service';
-import { Observable } from 'rxjs';
 import { always, cond, equals, ifElse, T } from 'ramda';
+import { Observable } from 'rxjs';
+import { map, startWith, switchMap } from 'rxjs/operators';
+
+import { ActivityService } from '../../services/activity.service';
+import { ActivityActionsKey, ActivityState } from '../../store/activity.reducer';
 import { ActivityDispatch } from '../../store/activity.dispatch';
+import { ACTIVITY_STATUS, ActivityTypeButton } from '../../models/activity.types';
 
 @Component({
   selector: 'app-activity-footer',
