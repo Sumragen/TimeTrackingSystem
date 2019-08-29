@@ -18,7 +18,9 @@ export class DateFilterComponent implements OnInit {
   constructor(private elementRef: ElementRef) {}
 
   ngOnInit() {
-    this.applyDefaultFilter();
+    this.filterToday();
+    // todo temp solution. It happens due to parents subscription has inited in AfterViewInit lifecycle hook
+    setTimeout(() => this.handleFilterChange(), 0);
   }
 
   public applyYesterday(): void {
