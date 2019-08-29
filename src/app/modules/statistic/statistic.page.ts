@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { BehaviorSubject, combineLatest, fromEvent, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Color } from 'ng2-charts';
 import { convertActivityStorageToChartData } from './statistic.operators';
 import { ActivityStorageService } from '../activity/services/activity-storage.service';
@@ -23,12 +23,14 @@ export class StatisticPage implements AfterViewInit {
 
   public isCalendarVisible = false;
   private startDate$: BehaviorSubject<number>;
+  private dateFilter$: Observable<number>;
 
   @ViewChild('dateFilter', { static: false }) public dateFilterEl: ElementRef;
   constructor(private storageService: ActivityStorageService) {}
 
   ngAfterViewInit() {
     this.startDate$ = StatisticPage.initStartDate$();
+    this.dateFilter$ = this.initDateFilter$();
     this.chart$ = this.initChart$();
   }
 
@@ -38,6 +40,10 @@ export class StatisticPage implements AfterViewInit {
 
   public convertTime(value: number): string {
     return TimeService.millisecondsToUFFormat(value);
+  }
+
+  private initDateFilter$(): Observable<number> {
+    return fromEvent(this.dateFilterEl.nativeElement, 'filterChange').pipe(map(prop('detail')))
   }
 
   private static initStartDate$(): BehaviorSubject<number> {
@@ -51,13 +57,8 @@ export class StatisticPage implements AfterViewInit {
 
   private initChart$(): Observable<ChartData> {
     return combineLatest([
-      fromEvent(this.dateFilterEl.nativeElement, 'filterChange')
-         .pipe(map(prop('detail'))),
+      this.dateFilter$,
       this.storageService.getStorage()
-    ]).pipe(
-      tap(v => console.log(v)),
-      map(convertActivityStorageToChartData)
-    );
-    // return this.storageService.getStorage().pipe(map(convertActivityStorageToChartData));
+    ]).pipe(map(convertActivityStorageToChartData));
   }
 }
