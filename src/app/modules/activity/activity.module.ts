@@ -5,21 +5,22 @@ import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { activityReducer } from './store/activity.reducer';
 import { ACTIVITY_STATE_KEY } from '../../shared/store/store';
 import { StorageEffect } from '../../shared/store/effects/storage.effect';
-import { ActivityEffect } from './store/activity.effect';
 import { SecondsToClockFormatPipe } from '../../shared/pipes/time/seconds-to-clock-format.pipe';
+import { SharedModule } from '../../shared/shared.module';
 
-import { ActivityPage } from './activity.page';
 import { IdleComponent } from './components/idle/idle.component';
 import { PerformComponent } from './components/perform/perform.component';
-import { ActivityRoutingModule } from './activity-routing.module';
 import { StopwatchComponent } from './components/perform/stopwatch/stopwatch.component';
 import { TypeInputComponent } from './components/type-input/type-input.component';
-import { ActivityService } from './services/activity.service';
-import { SharedModule } from '../../shared/shared.module';
 import { TypeSelectorComponent } from './components/type-selector/type-selector.component';
+import { activityReducer } from './store/activity.reducer';
+import { ActivityEffect } from './store/activity.effect';
+import { ActivityService } from './services/activity.service';
+import { ActivityRoutingModule } from './activity-routing.module';
+import { ActivityPage } from './activity.page';
+import { ActivityFooterComponent } from './components/activity-footer/activity-footer.component';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { TypeSelectorComponent } from './components/type-selector/type-selector.
     TypeInputComponent,
     StopwatchComponent,
     SecondsToClockFormatPipe,
-    TypeSelectorComponent
+    TypeSelectorComponent,
+    ActivityFooterComponent
   ],
   providers: [ActivityService]
 })

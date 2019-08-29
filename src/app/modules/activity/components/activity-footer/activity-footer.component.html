@@ -1,0 +1,40 @@
+<div>
+  <ion-input
+    #activityTypeInput
+    *ngIf="isIdle(state.status) || activityTypeVisibility"
+    [(ngModel)]="activityType"
+    class="custom-type-input"
+    clear-input="true"
+    placeholder="Enter new activity type"
+    (keyup.enter)="handleActivityButtonClick(state.status, activityType)"
+  >
+  </ion-input>
+
+  <app-type-selector
+    [types]="types$ | async"
+    (typeSelect)="handleActivityButtonClick(state.status, $event)"
+  ></app-type-selector>
+
+  <div class="footer-btns-container">
+    <ion-button
+      class="activity-toggle"
+      [ngClass]="isIdle(state.status) ? 'fullwidth-activity-toggle' : ''"
+      color="dark"
+      fill="solid"
+      expand="full"
+      [disabled]="!activityType && !isPerform(state.status)"
+      (click)="handleActivityButtonClick(state.status)"
+    >
+      {{ getActionButtonText(state.status) }}
+    </ion-button>
+    <ion-button
+      class="activity-search-toggle"
+      *ngIf="isPerform(state.status)"
+      color="dark"
+      expand="full"
+      (click)="toggleTypeInputVisibility()"
+    >
+      <ion-icon name="add"></ion-icon>
+    </ion-button>
+  </div>
+</div>
