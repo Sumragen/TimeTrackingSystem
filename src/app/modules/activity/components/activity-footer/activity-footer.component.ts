@@ -9,7 +9,7 @@ import { Actions, ofType } from '@ngrx/effects';
 import { map, startWith, switchMap } from 'rxjs/operators';
 import { ActivityService } from '../../services/activity.service';
 import { Observable } from 'rxjs';
-import { equals } from 'ramda';
+import { always, cond, equals, ifElse, T } from 'ramda';
 
 @Component({
   selector: 'app-activity-footer',
@@ -22,6 +22,9 @@ export class ActivityFooterComponent implements OnInit {
 
   @Input() state: ActivityState;
   @ViewChild('activityTypeInput', { static: false }) public activityTypeInputEl: IonInput;
+
+  public isIdle = equals(ACTIVITY_STATUS.IDLE);
+  public isPerform = equals(ACTIVITY_STATUS.PERFORM);
 
   constructor(private activityService: ActivityService, private actions$: Actions) {}
 
@@ -65,13 +68,10 @@ export class ActivityFooterComponent implements OnInit {
     }
   }
 
-  public getActionButtonText(status: ACTIVITY_STATUS): string {
-    if (this.isIdle(status)) {
-      return 'Start';
-    } else {
-      return this.shouldSwitchActivity() ? 'Switch' : 'Stop';
-    }
-  }
+  public getActionText = cond([
+    [this.isIdle, always('start')],
+    [T, ifElse(this.shouldSwitchActivity, always('switch'), always('stop'))]
+  ]);
 
   private shouldSwitchActivity(): boolean {
     return (
@@ -81,9 +81,6 @@ export class ActivityFooterComponent implements OnInit {
       this.activityTypeVisibility
     );
   }
-
-  public isIdle = equals(ACTIVITY_STATUS.IDLE);
-  public isPerform = equals(ACTIVITY_STATUS.PERFORM);
 
   @Dispatch()
   public applyActivityType(
