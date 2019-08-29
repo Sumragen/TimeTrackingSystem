@@ -18,12 +18,7 @@ export class DateFilterComponent implements OnInit {
   constructor(private elementRef: ElementRef) {}
 
   ngOnInit() {
-    this.dateFilter = {
-      from: moment()
-        .startOf('day')
-        .toString(),
-      to: moment().toString()
-    };
+    this.applyDefaultFilter();
   }
 
   public handleFilterChange(): void {
@@ -32,5 +27,20 @@ export class DateFilterComponent implements OnInit {
       detail: convertFilterDates(this.dateFilter)
     });
     this.elementRef.nativeElement.dispatchEvent(domEvent);
+  }
+
+  public filterToday(): void {
+    this.dateFilter = {
+      from: moment()
+         .startOf('day')
+         .toString(),
+      to: moment()
+         .endOf('day')
+         .toString()
+    };
+  }
+
+  private applyDefaultFilter(): void {
+    this.filterToday();
   }
 }
