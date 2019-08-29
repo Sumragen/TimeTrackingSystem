@@ -1,5 +1,6 @@
 <div style="display: block">
   <canvas
+          *ngIf="!!chart"
           baseChart
           [data]="chart.data"
           [labels]="chart.labels"

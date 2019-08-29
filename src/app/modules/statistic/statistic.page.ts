@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { combineLatest, map } from 'rxjs/operators';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { BehaviorSubject, combineLatest, fromEvent, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { Color } from 'ng2-charts';
 import { convertActivityStorageToChartData } from './statistic.operators';
 import { ActivityStorageService } from '../activity/services/activity-storage.service';
 import { TimeService } from '../../shared/services/time/time.service';
+import { prop } from 'ramda';
 
 export interface ChartData {
   labels: string[];
@@ -17,23 +18,18 @@ export interface ChartData {
   templateUrl: './statistic.page.html',
   styleUrls: ['./statistic.page.scss']
 })
-export class StatisticPage implements OnInit {
+export class StatisticPage implements AfterViewInit {
   public chart$: Observable<ChartData>;
 
   public isCalendarVisible = false;
   private startDate$: BehaviorSubject<number>;
 
+  @ViewChild('dateFilter', { static: false }) public dateFilterEl: ElementRef;
   constructor(private storageService: ActivityStorageService) {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.startDate$ = StatisticPage.initStartDate$();
     this.chart$ = this.initChart$();
-  }
-
-  public handleStartDateChange(value): void {
-    const time: number = new Date(value).getTime();
-    this.startDate$.next(time);
-    this.isCalendarVisible = false;
   }
 
   public toggleDatepicker(): void {
@@ -54,8 +50,12 @@ export class StatisticPage implements OnInit {
   }
 
   private initChart$(): Observable<ChartData> {
-    return this.startDate$.pipe(
-      combineLatest(this.storageService.getStorage()),
+    return combineLatest([
+      fromEvent(this.dateFilterEl.nativeElement, 'filterChange')
+         .pipe(map(prop('detail'))),
+      this.storageService.getStorage()
+    ]).pipe(
+      tap(v => console.log(v)),
       map(convertActivityStorageToChartData)
     );
     // return this.storageService.getStorage().pipe(map(convertActivityStorageToChartData));

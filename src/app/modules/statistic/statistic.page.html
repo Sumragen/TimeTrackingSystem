@@ -10,23 +10,24 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="chart$ | async as chart">
-  <ion-item *ngIf="isCalendarVisible">
-    <ion-label>From</ion-label>
-    <ion-datetime
-      placeholder="Start Date"
-      displayFormat="YYYY DD MMMM HH:mm"
-      (ionChange)="handleStartDateChange($event.target.value)"
-    ></ion-datetime>
-  </ion-item>
-  <div *ngIf="chart.labels.length > 0; else noDataItem">
-    <app-chart [chart]="chart"></app-chart>
-    <ion-list>
-      <ion-item *ngFor="let type of chart.labels; let i = index">
-        <ion-label>{{ type }}</ion-label>
-        {{ convertTime(chart.data[i]) }}
-      </ion-item>
-    </ion-list>
+<ion-content *ngLet="chart$ | async as chart">
+  <div class="chart-related">
+    <div #dateFilter class="filter-wrapper">
+      <app-date-filter></app-date-filter>
+    </div>
+    <div class="chart-wrapper">
+      <app-chart [chart]="chart"></app-chart>
+    </div>
+  </div>
+  <div class="statistic-list" *ngIf="!!chart">
+    <div *ngIf="chart.labels.length > 0; else noDataItem">
+      <ion-list>
+        <ion-item *ngFor="let type of chart.labels; let i = index">
+          <ion-label>{{ type }}</ion-label>
+          {{ convertTime(chart.data[i]) }}
+        </ion-item>
+      </ion-list>
+    </div>
   </div>
   <ng-template #noDataItem>
     <ion-item>

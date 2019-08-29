@@ -7,6 +7,8 @@ import { ChartsModule } from 'ng2-charts';
 
 import { StatisticPage } from './statistic.page';
 import { ChartComponent } from './chart/chart.component';
+import { SharedModule } from '../../shared/shared.module';
+import { DateFilterComponent } from './date-filter/date-filter.component';
 
 const routes: Routes = [
   {
@@ -16,7 +18,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule, RouterModule.forChild(routes), ChartsModule],
-  declarations: [StatisticPage, ChartComponent]
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    RouterModule.forChild(routes),
+    SharedModule,
+    ChartsModule
+  ],
+  declarations: [StatisticPage, ChartComponent, DateFilterComponent]
 })
 export class StatisticPageModule {}
