@@ -2,9 +2,18 @@
   <ion-item>
     <ion-label>From</ion-label>
     <ion-datetime
-            placeholder="Start Date"
-            displayFormat="YYYY DD MMMM HH:mm"
+            placeholder="From"
+            [displayFormat]="displayFormat"
             [(ngModel)]="dateFilter.from"
+            (ionChange)="handleFilterChange()"
+    ></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label>To</ion-label>
+    <ion-datetime
+            placeholder="To"
+            [displayFormat]="displayFormat"
+            [(ngModel)]="dateFilter.to"
             (ionChange)="handleFilterChange()"
     ></ion-datetime>
   </ion-item>

@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { fromPairs, map, pipe, toPairs } from 'ramda';
 import { convertFilterDates } from '../statistic.operators';
 
 export interface DateFilter {
@@ -15,6 +14,7 @@ export interface DateFilter {
 })
 export class DateFilterComponent implements OnInit {
   public dateFilter: DateFilter;
+  public displayFormat = 'YYYY MMM DD HH:mm';
   constructor(private elementRef: ElementRef) {}
 
   ngOnInit() {
