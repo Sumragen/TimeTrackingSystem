@@ -32,12 +32,7 @@ export class ActivityFooterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.types$ = this.actions$.pipe(
-      ofType(ActivityActionsKey.PERFORM, ActivityActionsKey.COMPLETE),
-      startWith(null),
-      switchMap(() => this.activityService.getCurrentTypes()),
-      map((types: ActivityTypeButton[]) => types.slice(0, 4))
-    );
+    this.types$ = this.initTypes$();
   }
 
   public isActionButtonDisabled(): boolean {
@@ -83,6 +78,15 @@ export class ActivityFooterComponent implements OnInit {
       !!this.activityTypeInputEl.value &&
       this.activityTypeInputEl.value.length > 0 &&
       this.activityTypeVisibility
+    );
+  }
+
+  private initTypes$(): Observable<ActivityTypeButton[]> {
+    return this.actions$.pipe(
+      ofType(ActivityActionsKey.PERFORM, ActivityActionsKey.COMPLETE),
+      startWith(null),
+      switchMap(() => this.activityService.getCurrentTypes()),
+      map((types: ActivityTypeButton[]) => types.slice(0, 4))
     );
   }
 }
