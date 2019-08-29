@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { interval, Observable } from 'rxjs';
-import { map, pluck, withLatestFrom } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
-import { ACTIVITY_STATE_KEY, StoreState } from '../../../../../shared/store/store';
+import { combineLatest, interval, Observable } from 'rxjs';
+import { map, pluck } from 'rxjs/operators';
+
+import { ACTIVITY_STATE_KEY } from '../../../../../shared/store/store';
+import { Select } from '../../../../../shared/store/decorators/select';
+import { ActivityState } from '../../../store/activity.reducer';
 
 @Component({
   selector: 'app-stopwatch',
@@ -11,16 +13,16 @@ import { ACTIVITY_STATE_KEY, StoreState } from '../../../../../shared/store/stor
 })
 export class StopwatchComponent implements OnInit {
   public time$: Observable<number>;
+  @Select(ACTIVITY_STATE_KEY) public state$: Observable<ActivityState>;
 
-  constructor(private store: Store<StoreState>) {}
+  constructor() {}
 
   ngOnInit() {
     this.time$ = this.setupTimeInterval();
   }
 
   private setupTimeInterval(): Observable<number> {
-    return interval(1000).pipe(
-      withLatestFrom(this.store.select(ACTIVITY_STATE_KEY).pipe(pluck('date'))),
+    return combineLatest(interval(1000), this.state$.pipe(pluck('date'))).pipe(
       map(([, date]: [number, number]) => {
         return Math.floor((Date.now() - date) / 1000);
       })
