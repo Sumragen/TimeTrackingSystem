@@ -7,6 +7,9 @@ import { ActivityStorageService } from '../activity/services/activity-storage.se
 import { TimeService } from '../../shared/services/time/time.service';
 import { prop } from 'ramda';
 import { DateFilter } from './date-filter/date-filter.component';
+import { ColorPickerComponent } from '../../shared/components/color-picker/color-picker.component';
+import { PopoverController } from '@ionic/angular';
+import { ColorPickerPopoverComponent } from '../../shared/components/color-picker-popover/color-picker-popover.component';
 
 export interface ChartData {
   labels: string[];
@@ -22,14 +25,28 @@ export interface ChartData {
 export class StatisticPage implements AfterViewInit {
   public isFilterHidden = true;
   public chart$: Observable<ChartData>;
+
   private dateFilter$: Observable<DateFilter>;
   @ViewChild('dateFilter', { static: false }) public dateFilterEl: ElementRef;
 
-  constructor(private storageService: ActivityStorageService) {}
+  constructor(
+    private storageService: ActivityStorageService,
+    private popoverController: PopoverController
+  ) {}
 
   ngAfterViewInit() {
     this.dateFilter$ = this.initDateFilter$();
     this.chart$ = this.initChart$();
+  }
+
+  public async selectColor(ev: Event): Promise<any> {
+    const popover = await this.popoverController.create({
+      component: ColorPickerComponent,
+      event: ev,
+      translucent: true,
+      cssClass: 'color-picker-popover'
+    });
+    return await popover.present();
   }
 
   public toggleDatepicker(): void {
