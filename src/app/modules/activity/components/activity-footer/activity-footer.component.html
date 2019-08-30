@@ -33,7 +33,7 @@
       expand="full"
       (click)="toggleTypeInputVisibility()"
     >
-      <ion-icon name="add"></ion-icon>
+      <ion-icon [name]="getInputButtonName()"></ion-icon>
     </ion-button>
   </div>
 </div>

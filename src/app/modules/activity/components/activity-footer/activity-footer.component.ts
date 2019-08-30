@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { IonInput } from '@ionic/angular';
 import { Actions, ofType } from '@ngrx/effects';
-import { always, cond, equals, T } from 'ramda';
+import { always, cond, equals, ifElse, T } from 'ramda';
 import { Observable } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
 
@@ -72,6 +72,8 @@ export class ActivityFooterComponent implements OnInit {
     [this.shouldSwitchActivity, always('switch')],
     [T, always('stop')]
   ]);
+
+  public getInputButtonName = () => (this.activityTypeVisibility ? 'close' : 'add');
 
   private shouldSwitchActivity(): boolean {
     return (
