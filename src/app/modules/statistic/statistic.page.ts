@@ -21,7 +21,7 @@ export interface ChartData {
 export class StatisticPage implements AfterViewInit {
   public chart$: Observable<ChartData>;
 
-  public isCalendarVisible = false;
+  public isFilterHidden = true;
   private startDate$: BehaviorSubject<number>;
   private dateFilter$: Observable<number>;
 
@@ -35,7 +35,7 @@ export class StatisticPage implements AfterViewInit {
   }
 
   public toggleDatepicker(): void {
-    this.isCalendarVisible = !this.isCalendarVisible;
+    this.isFilterHidden = !this.isFilterHidden;
   }
 
   public convertTime(value: number): string {

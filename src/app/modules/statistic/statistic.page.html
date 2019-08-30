@@ -34,7 +34,7 @@
 </ion-content>
 
 <ion-footer>
-  <div #dateFilter class="filter-wrapper">
-    <app-date-filter [isFilterVisible]="isCalendarVisible"></app-date-filter>
+  <div #dateFilter class="filter-wrapper" [hidden]="isFilterHidden">
+    <app-date-filter></app-date-filter>
   </div>
 </ion-footer>

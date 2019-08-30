@@ -15,7 +15,6 @@ export interface DateFilter {
 export class DateFilterComponent implements OnInit {
   public dateFilter: DateFilter;
   public displayFormat = 'YYYY MMM DD HH:mm';
-  @Input() public isFilterVisible = true;
   constructor(private elementRef: ElementRef) {}
 
   ngOnInit() {
