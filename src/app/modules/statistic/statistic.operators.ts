@@ -1,9 +1,12 @@
 import {
   add,
+  both,
   complement,
   converge,
   filter,
+  flip,
   fromPairs,
+  gte,
   isEmpty,
   lte,
   map,
@@ -17,6 +20,7 @@ import {
 
 import { ChartData } from './statistic.page';
 import { ActivityStorage } from '../activity/services/activity-storage.types';
+import { DateFilter } from './date-filter/date-filter.component';
 
 const mapArrayByProp = (property: string) => map(prop(property));
 
@@ -52,14 +56,17 @@ const getPerformedTimeData = pipe(
   reduce(add, 0)
 );
 
-const filterInnerData = (startDate: number) => (storage: { label; color; data }[]) => {
+const grE = flip(gte);
+const lessE = flip(lte);
+
+const filterInnerData = (date: DateFilter) => (storage: { label; color; data }[]) => {
   return storage.map(category => {
     return {
       ...category,
       data: category.data.filter(
         pipe(
           prop('date'),
-          lte(startDate)
+          both(grE(date.from), lessE(date.to))
         )
       )
     };
@@ -70,14 +77,11 @@ const filterEmptyRecords = filter(propSatisfies(complement(isEmpty), 'data'));
 
 export const log = (key: string) => tap(data => console.log(key, data));
 
-export const convertActivityStorageToChartData = ([startDate, storage]: [
-  number,
-  ActivityStorage
-]) =>
+export const convertActivityStorageToChartData = ([date, storage]: [DateFilter, ActivityStorage]) =>
   pipe(
     toPairs,
     convertPairedStorageToObject,
-    filterInnerData(startDate),
+    filterInnerData(date),
     filterEmptyRecords,
     // @ts-ignore
     converge(convertChartPropsToObject, [

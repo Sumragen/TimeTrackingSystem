@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { combineLatest, fromEvent, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Color } from 'ng2-charts';
 import { convertActivityStorageToChartData } from './statistic.operators';
 import { ActivityStorageService } from '../activity/services/activity-storage.service';
 import { TimeService } from '../../shared/services/time/time.service';
 import { prop } from 'ramda';
+import { DateFilter } from './date-filter/date-filter.component';
 
 export interface ChartData {
   labels: string[];
@@ -19,12 +20,11 @@ export interface ChartData {
   styleUrls: ['./statistic.page.scss']
 })
 export class StatisticPage implements AfterViewInit {
-  public chart$: Observable<ChartData>;
-
   public isFilterHidden = true;
-  private dateFilter$: Observable<number>;
-
+  public chart$: Observable<ChartData>;
+  private dateFilter$: Observable<DateFilter>;
   @ViewChild('dateFilter', { static: false }) public dateFilterEl: ElementRef;
+
   constructor(private storageService: ActivityStorageService) {}
 
   ngAfterViewInit() {
@@ -40,13 +40,8 @@ export class StatisticPage implements AfterViewInit {
     return TimeService.millisecondsToUFFormat(value);
   }
 
-  private initDateFilter$(): Observable<number> {
-    return fromEvent(this.dateFilterEl.nativeElement, 'filterChange').pipe(
-      map(prop('detail')),
-      // todo: that will be removed when TO filter is exist
-      map(prop('from')),
-      tap(v => console.log(v))
-    );
+  private initDateFilter$(): Observable<DateFilter> {
+    return fromEvent(this.dateFilterEl.nativeElement, 'filterChange').pipe(map(prop('detail')));
   }
 
   private initChart$(): Observable<ChartData> {
