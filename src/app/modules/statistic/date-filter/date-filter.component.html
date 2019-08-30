@@ -2,23 +2,23 @@
   <ion-item>
     <ion-label>From</ion-label>
     <ion-datetime
-            placeholder="From"
-            [displayFormat]="displayFormat"
-            [(ngModel)]="dateFilter.from"
-            (ionChange)="handleFilterChange()"
+      placeholder="From"
+      [displayFormat]="displayFormat"
+      [(ngModel)]="dateFilter.from"
+      (ionChange)="handleFilterChange()"
     ></ion-datetime>
   </ion-item>
   <ion-item>
     <ion-label>To</ion-label>
     <ion-datetime
-            placeholder="To"
-            [displayFormat]="displayFormat"
-            [(ngModel)]="dateFilter.to"
-            (ionChange)="handleFilterChange()"
+      placeholder="To"
+      [displayFormat]="displayFormat"
+      [(ngModel)]="dateFilter.to"
+      (ionChange)="handleFilterChange()"
     ></ion-datetime>
   </ion-item>
-    <ion-item>
-        <ion-button (click)="applyYesterday()">Yesterday</ion-button>
-        <ion-button (click)="applyToday()">Today</ion-button>
-    </ion-item>
+  <ion-item>
+    <ion-button slot="end" color="dark" fill="clear" (click)="applyYesterday()">Yesterday</ion-button>
+    <ion-button slot="end" color="dark" fill="clear" (click)="applyToday()">Today</ion-button>
+  </ion-item>
 </ion-list>
