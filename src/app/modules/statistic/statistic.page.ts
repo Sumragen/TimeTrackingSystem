@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { BehaviorSubject, combineLatest, fromEvent, Observable } from 'rxjs';
+import { combineLatest, fromEvent, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Color } from 'ng2-charts';
 import { convertActivityStorageToChartData } from './statistic.operators';
 import { ActivityStorageService } from '../activity/services/activity-storage.service';
 import { TimeService } from '../../shared/services/time/time.service';
-import { path, prop } from 'ramda';
+import { prop } from 'ramda';
 
 export interface ChartData {
   labels: string[];
@@ -22,14 +22,12 @@ export class StatisticPage implements AfterViewInit {
   public chart$: Observable<ChartData>;
 
   public isFilterHidden = true;
-  private startDate$: BehaviorSubject<number>;
   private dateFilter$: Observable<number>;
 
   @ViewChild('dateFilter', { static: false }) public dateFilterEl: ElementRef;
   constructor(private storageService: ActivityStorageService) {}
 
   ngAfterViewInit() {
-    this.startDate$ = StatisticPage.initStartDate$();
     this.dateFilter$ = this.initDateFilter$();
     this.chart$ = this.initChart$();
   }
@@ -49,15 +47,6 @@ export class StatisticPage implements AfterViewInit {
       map(prop('from')),
       tap(v => console.log(v))
     );
-  }
-
-  private static initStartDate$(): BehaviorSubject<number> {
-    const today = new Date();
-    const dd = today.getDate();
-    const mm = today.getMonth() + 1;
-    const yyyy = today.getFullYear();
-    const time = new Date(yyyy, mm, dd).getTime();
-    return new BehaviorSubject<number>(time);
   }
 
   private initChart$(): Observable<ChartData> {
