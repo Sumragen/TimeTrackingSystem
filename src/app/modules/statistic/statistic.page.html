@@ -13,7 +13,7 @@
 <ion-content *ngLet="chart$ | async as chart">
   <div class="chart-related">
     <div #dateFilter class="filter-wrapper">
-      <app-date-filter></app-date-filter>
+      <app-date-filter [isFilterVisible]="isCalendarVisible"></app-date-filter>
     </div>
     <div class="chart-wrapper">
       <app-chart [chart]="chart"></app-chart>

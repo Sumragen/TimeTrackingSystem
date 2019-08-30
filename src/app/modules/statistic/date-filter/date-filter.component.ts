@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { convertFilterDates } from '../statistic.operators';
 
@@ -15,6 +15,7 @@ export interface DateFilter {
 export class DateFilterComponent implements OnInit {
   public dateFilter: DateFilter;
   public displayFormat = 'YYYY MMM DD HH:mm';
+  @Input() public isFilterVisible = true;
   constructor(private elementRef: ElementRef) {}
 
   ngOnInit() {
@@ -62,10 +63,5 @@ export class DateFilterComponent implements OnInit {
         .endOf('day')
         .toString()
     };
-  }
-
-  private applyDefaultFilter(): void {
-    this.filterToday();
-    this.handleFilterChange();
   }
 }
