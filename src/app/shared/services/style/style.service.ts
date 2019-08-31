@@ -28,7 +28,7 @@ export class StyleService {
       --knob-size:20px;
       --bar-height:5px;
       --bar-border-radius:2px;
-      --bar-background:#ea1818;
+      --bar-background:linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
       --knob-background:#bc38ff;
       --bar-background-active:rgba(1,1,1,0);
       --pin-background:#ffdd38;
