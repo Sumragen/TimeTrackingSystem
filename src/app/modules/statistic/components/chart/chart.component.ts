@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
-import { ChartData } from '../statistic.page';
+import { ChartData } from '../../statistic.page';
 import { ChartOptions, ChartTooltipItem, ChartType } from 'chart.js';
 import { Color, PluginServiceGlobalRegistrationAndOptions } from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
-import { StatisticService } from '../statistic.service';
-import { toHSLA } from '../statistic.operators';
+import { StatisticService } from '../../services/statistic.service';
+import { toHSLA } from '../../services/statistic.operators';
 
 @Component({
   selector: 'app-chart',

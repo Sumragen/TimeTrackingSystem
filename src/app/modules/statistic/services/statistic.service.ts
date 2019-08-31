@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ChartTooltipItem } from 'chart.js';
 
-import { TimeService } from '../../shared/services/time/time.service';
+import { TimeService } from '../../../shared/services/time/time.service';
 
 @Injectable({
   providedIn: 'root'

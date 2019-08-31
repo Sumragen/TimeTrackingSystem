@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { StyleService } from '../../services/style/style.service';
 import { HSLColor } from '../../models/colors.models';
-import { toHSLA } from '../../../modules/statistic/statistic.operators';
+import { toHSLA } from '../../../modules/statistic/services/statistic.operators';
 
 @Component({
   selector: 'app-color-picker-popover',

@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { convertFilterDates } from '../statistic.operators';
+import { convertFilterDates } from '../../services/statistic.operators';
 
 export interface DateFilter {
   from: string;

@@ -2,15 +2,18 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { combineLatest, fromEvent, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Color } from 'ng2-charts';
-import { convertActivityStorageToChartData, toHSLA } from './statistic.operators';
+import { convertActivityStorageToChartData, toHSLA } from './services/statistic.operators';
 import { ActivityStorageService } from '../activity/services/activity-storage.service';
 import { TimeService } from '../../shared/services/time/time.service';
 import { prop } from 'ramda';
-import { DateFilter } from './date-filter/date-filter.component';
+import { DateFilter } from './components/date-filter/date-filter.component';
 import { PopoverController } from '@ionic/angular';
 import { ColorPickerPopoverComponent } from '../../shared/components/color-picker-popover/color-picker-popover.component';
 import { StyleService } from '../../shared/services/style/style.service';
 import { HSLColor } from '../../shared/models/colors.models';
+import { StatisticService } from './services/statistic.service';
+import { OverlayEventDetail } from '@ionic/core';
+import { StatisticDispatch } from './store/statistic.dispatch';
 
 export interface ChartData {
   labels: string[];
@@ -32,7 +35,8 @@ export class StatisticPage implements AfterViewInit {
 
   constructor(
     private storageService: ActivityStorageService,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private statisticDispatch: StatisticDispatch
   ) {}
 
   ngAfterViewInit() {
@@ -44,7 +48,8 @@ export class StatisticPage implements AfterViewInit {
     return StyleService.bg(toHSLA(color));
   }
 
-  public async selectColor(color: HSLColor): Promise<any> {
+  public async selectColor(chart: ChartData, index: number): Promise<any> {
+    const color: HSLColor = chart.colors[index];
     const popover = await this.popoverController.create({
       component: ColorPickerPopoverComponent,
       componentProps: {
@@ -53,8 +58,8 @@ export class StatisticPage implements AfterViewInit {
       translucent: true,
       cssClass: 'color-picker-popover'
     });
-    popover.onDidDismiss().then(data => {
-      console.log(data);
+    popover.onDidDismiss().then((data: OverlayEventDetail<HSLColor>) => {
+      this.statisticDispatch.updateType(chart.labels[index], data.data);
     });
     return await popover.present();
   }

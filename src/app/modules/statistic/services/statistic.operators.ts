@@ -18,10 +18,10 @@ import {
   toPairs
 } from 'ramda';
 
-import { ChartData } from './statistic.page';
-import { ActivityStorage } from '../activity/services/activity-storage.types';
-import { DateFilter } from './date-filter/date-filter.component';
-import { HSLColor } from '../../shared/models/colors.models';
+import { ChartData } from '../statistic.page';
+import { ActivityStorage } from '../../activity/services/activity-storage.types';
+import { DateFilter } from '../components/date-filter/date-filter.component';
+import { HSLColor } from '../../../shared/models/colors.models';
 
 const mapArrayByProp = (property: string) => map(prop(property));
 

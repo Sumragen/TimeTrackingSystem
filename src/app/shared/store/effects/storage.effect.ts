@@ -19,10 +19,14 @@ import {
   TargetAction
 } from '../store';
 import { ActionBuilder } from '../action-builder';
+import { combineLatest, Observable } from 'rxjs';
+import { ApplyActivityAction } from '../../../modules/activity/models/activity-action.types';
+import { HSLColor } from '../../models/colors.models';
 
 export enum STORAGE_EFFECT {
   LOG_TIME = 'E_LOG_ACTIVITY_TIME',
-  COMPLETE = 'E_ACTIVITY_COMPLETE'
+  COMPLETE = 'E_ACTIVITY_COMPLETE',
+  UPDATE_KEY = 'E_UPDATE_KEY'
 }
 
 @Injectable()
@@ -38,7 +42,7 @@ export class StorageEffect {
     this.actions$.pipe(
       ofType(STORAGE_EFFECT.LOG_TIME),
       map(
-        (action: PayloadAction<TargetAction<PayloadAction<Activity>>>): PayloadAction<Activity> => {
+        (action: ApplyActivityAction): PayloadAction<Activity> => {
           const target: PayloadAction<Activity> = action.payload.target;
           return ActionBuilder.payload(target.type, {
             ...target.payload,
@@ -47,6 +51,33 @@ export class StorageEffect {
         }
       )
     )
+  );
+
+  updateKey$ = createEffect(
+    () =>
+      combineLatest(
+        this.actions$.pipe(ofType(STORAGE_EFFECT.UPDATE_KEY)),
+        this.storageService.getStorage()
+      ).pipe(
+        map(
+          ([action, storage]: [
+            PayloadAction<{ color: HSLColor; type: string }>,
+            ActivityStorage
+          ]): ActivityStorage => {
+            const type: string = action.payload.type;
+            const color: HSLColor = action.payload.color;
+            return {
+              ...storage,
+              [type]: {
+                ...storage[type],
+                color
+              }
+            };
+          }
+        ),
+        tap((storage: ActivityStorage) => this.storageService.setStorage(storage))
+      ),
+    { dispatch: false }
   );
 
   complete$ = createEffect(() =>
