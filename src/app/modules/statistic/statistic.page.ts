@@ -19,7 +19,7 @@ import { isNull } from 'util';
 
 export interface ChartData {
   labels: string[];
-  data: number[];
+  data: { amount: number; value: number }[];
   colors: HSLColor[];
 }
 

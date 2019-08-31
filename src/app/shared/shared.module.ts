@@ -12,6 +12,7 @@ import { StyleDirective } from './directives/style.directive';
 import { HslColorPickerComponent } from './components/hsl-color-picker/hsl-color-picker.component';
 import { StyleService } from './services/style/style.service';
 import { FormsModule } from '@angular/forms';
+import { PropPipe } from './pipes/prop/prop.pipe';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FormsModule } from '@angular/forms';
     NgLetDirective,
     ColorPickerComponent,
     ColorPickerPopoverComponent,
-    HslColorPickerComponent
+    HslColorPickerComponent,
+    PropPipe
   ],
   imports: [CommonModule, RouterModule, IonicModule, FormsModule],
   exports: [
@@ -29,7 +31,8 @@ import { FormsModule } from '@angular/forms';
     NgLetDirective,
     ColorPickerComponent,
     ColorPickerPopoverComponent,
-    HslColorPickerComponent
+    HslColorPickerComponent,
+    PropPipe
   ],
   providers: [ActionBuilder, StyleService],
   entryComponents: [ColorPickerPopoverComponent]

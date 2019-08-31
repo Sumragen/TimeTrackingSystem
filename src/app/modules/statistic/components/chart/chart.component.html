@@ -2,7 +2,7 @@
   <canvas
     *ngIf="!!chart"
     baseChart
-    [data]="chart.data"
+    [data]="chart.data | prop:'value'"
     [labels]="chart.labels"
     [chartType]="pieChartType"
     [options]="pieChartOptions"

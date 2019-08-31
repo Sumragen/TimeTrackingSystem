@@ -8,6 +8,7 @@ import {
   fromPairs,
   gte,
   isEmpty,
+  length,
   lte,
   map,
   pipe,
@@ -19,17 +20,22 @@ import {
 } from 'ramda';
 
 import { ChartData } from '../statistic.page';
-import { ActivityStorage } from '../../activity/services/activity-storage.types';
+import {
+  ActivityCategoryStorage,
+  ActivityStorage
+} from '../../activity/services/activity-storage.types';
 import { DateFilter } from '../components/date-filter/date-filter.component';
 import { HSLColor } from '../../../shared/models/colors.models';
 
 const mapArrayByProp = (property: string) => map(prop(property));
 
-const convertPairedStorageToObject = map(([label, { color, data }]: any) => ({
-  label,
-  color,
-  data
-}));
+const convertPairedStorageToObject = map(
+  ([label, { color, data }]: [string, ActivityCategoryStorage]) => ({
+    label,
+    color,
+    data
+  })
+);
 
 const getLabels = mapArrayByProp('label');
 const getColors = mapArrayByProp('color');
@@ -38,7 +44,7 @@ const getData = mapArrayByProp('data');
 const convertChartPropsToObject = (
   labels: string[],
   colors: HSLColor[],
-  data: number[]
+  data: { amount: number; value: number }[]
 ): ChartData => ({
   labels,
   colors,
@@ -48,9 +54,14 @@ const convertChartPropsToObject = (
 export const toHSLA = color => `hsla(${color.hue}, ${color.saturation}%, ${color.luminance}%, 1)`;
 
 const getPerformedTimeData = pipe(
-  mapArrayByProp('performedTime'),
-  // @ts-ignore
-  reduce(add, 0)
+  converge((amount: number, value: number) => ({ amount, value }), [
+    length,
+    pipe(
+      mapArrayByProp('performedTime'),
+      // @ts-ignore
+      reduce(add, 0)
+    )
+  ])
 );
 
 const grE = flip(gte);
