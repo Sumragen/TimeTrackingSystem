@@ -11,6 +11,7 @@ import { ColorPickerPopoverComponent } from './components/color-picker-popover/c
 import { StyleDirective } from './directives/style.directive';
 import { HslColorPickerComponent } from './components/hsl-color-picker/hsl-color-picker.component';
 import { StyleService } from './services/style/style.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { StyleService } from './services/style/style.service';
     ColorPickerPopoverComponent,
     HslColorPickerComponent
   ],
-  imports: [CommonModule, RouterModule, IonicModule],
+  imports: [CommonModule, RouterModule, IonicModule, FormsModule],
   exports: [
     MenuComponent,
     StyleDirective,

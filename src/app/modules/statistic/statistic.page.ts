@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { combineLatest, fromEvent, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Color } from 'ng2-charts';
-import { convertActivityStorageToChartData } from './statistic.operators';
+import { convertActivityStorageToChartData, toHSLA } from './statistic.operators';
 import { ActivityStorageService } from '../activity/services/activity-storage.service';
 import { TimeService } from '../../shared/services/time/time.service';
 import { prop } from 'ramda';
@@ -10,11 +10,12 @@ import { DateFilter } from './date-filter/date-filter.component';
 import { PopoverController } from '@ionic/angular';
 import { ColorPickerPopoverComponent } from '../../shared/components/color-picker-popover/color-picker-popover.component';
 import { StyleService } from '../../shared/services/style/style.service';
+import { HLColor } from '../../shared/models/colors.models';
 
 export interface ChartData {
   labels: string[];
   data: number[];
-  colors: Color[];
+  colors: HLColor[];
 }
 
 @Component({
@@ -39,15 +40,15 @@ export class StatisticPage implements AfterViewInit {
     this.chart$ = this.initChart$();
   }
 
-  public bgStyle(color: string): string {
-    return StyleService.bg(color);
+  public bgStyle(color: HLColor): string {
+    return StyleService.bg(toHSLA(color));
   }
 
-  public async selectColor(): Promise<any> {
+  public async selectColor(color: HLColor): Promise<any> {
     const popover = await this.popoverController.create({
       component: ColorPickerPopoverComponent,
       componentProps: {
-        color: '#50FF6B'
+        color
       },
       translucent: true,
       cssClass: 'color-picker-popover'

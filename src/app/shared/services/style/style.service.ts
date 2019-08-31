@@ -23,15 +23,15 @@ export class StyleService {
     `;
   }
 
-  public static colorPickerRange(): string {
+  public static colorPickerRange(color: HLColor): string {
     return `
       --knob-size:20px;
       --bar-height:5px;
       --bar-border-radius:2px;
       --bar-background:linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
-      --knob-background:#bc38ff;
+      --knob-background:hsla(${color.hue}, 100%, 50%, 1);
       --bar-background-active:rgba(1,1,1,0);
-      --pin-background:#ffdd38;
+      --pin-background:hsla(${color.hue}, 100%, 50%, 1);
     `;
   }
 }

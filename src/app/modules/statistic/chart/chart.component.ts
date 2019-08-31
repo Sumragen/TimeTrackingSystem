@@ -1,15 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 import { ChartData } from '../statistic.page';
 import { ChartOptions, ChartTooltipItem, ChartType } from 'chart.js';
-import { PluginServiceGlobalRegistrationAndOptions } from 'ng2-charts';
+import { Color, PluginServiceGlobalRegistrationAndOptions } from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { StatisticService } from '../statistic.service';
+import { toHSLA } from '../statistic.operators';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.scss']
+  styleUrls: ['./chart.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChartComponent implements OnInit {
   @Input() public chart: ChartData;
@@ -23,6 +25,13 @@ export class ChartComponent implements OnInit {
   ngOnInit() {
     this.pieChartOptions = this.initChartOptions();
   }
+
+  public getColors(): Color[] {
+    return [{
+      backgroundColor: this.chart.colors.map(toHSLA)
+    }]
+  }
+
   private initChartOptions(): ChartOptions {
     return {
       responsive: true,

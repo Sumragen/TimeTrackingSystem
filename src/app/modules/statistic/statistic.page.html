@@ -21,7 +21,7 @@
       <div>
         <ion-list>
           <ion-item *ngFor="let type of chart.labels; let i = index">
-            <ion-chip [appStyle]="bgStyle(chart.colors[0].backgroundColor[i])" (click)="selectColor()">
+            <ion-chip [appStyle]="bgStyle(chart.colors[i])" (click)="selectColor(chart.colors[i])">
               <ion-label>{{ type }}</ion-label>
             </ion-chip>
             <ion-note slot="end">99 amount</ion-note>
