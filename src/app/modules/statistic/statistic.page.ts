@@ -1,19 +1,20 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { combineLatest, fromEvent, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Color } from 'ng2-charts';
+import { map, startWith } from 'rxjs/operators';
 import { convertActivityStorageToChartData, toHSLA } from './services/statistic.operators';
 import { ActivityStorageService } from '../activity/services/activity-storage.service';
 import { TimeService } from '../../shared/services/time/time.service';
-import { prop } from 'ramda';
+import { dropLast, pipe, prop } from 'ramda';
 import { DateFilter } from './components/date-filter/date-filter.component';
 import { PopoverController } from '@ionic/angular';
 import { ColorPickerPopoverComponent } from '../../shared/components/color-picker-popover/color-picker-popover.component';
 import { StyleService } from '../../shared/services/style/style.service';
 import { HSLColor } from '../../shared/models/colors.models';
-import { StatisticService } from './services/statistic.service';
 import { OverlayEventDetail } from '@ionic/core';
 import { StatisticDispatch } from './store/statistic.dispatch';
+import { Actions, ofType } from '@ngrx/effects';
+import { STORAGE_EFFECT } from '../../shared/store/effects/storage.effect';
+import { ActivityStorage } from '../activity/services/activity-storage.types';
 
 export interface ChartData {
   labels: string[];
@@ -31,16 +32,22 @@ export class StatisticPage implements AfterViewInit {
   public chart$: Observable<ChartData>;
 
   private dateFilter$: Observable<DateFilter>;
+  private storageUpdate$: Observable<ActivityStorage>;
   @ViewChild('dateFilter', { static: false }) public dateFilterEl: ElementRef;
 
   constructor(
     private storageService: ActivityStorageService,
     private popoverController: PopoverController,
-    private statisticDispatch: StatisticDispatch
+    private statisticDispatch: StatisticDispatch,
+    private actions$: Actions
   ) {}
 
   ngAfterViewInit() {
     this.dateFilter$ = this.initDateFilter$();
+    this.storageUpdate$ = this.actions$.pipe(
+      ofType(STORAGE_EFFECT.UPDATE_KEY),
+      startWith(null)
+    );
     this.chart$ = this.initChart$();
   }
 
@@ -77,8 +84,17 @@ export class StatisticPage implements AfterViewInit {
   }
 
   private initChart$(): Observable<ChartData> {
-    return combineLatest([this.dateFilter$, this.storageService.getStorage()]).pipe(
-      map(convertActivityStorageToChartData)
+    return combineLatest([
+      this.dateFilter$,
+      this.storageService.getStorage(),
+      this.storageUpdate$
+    ]).pipe(
+      map(
+        pipe(
+          dropLast(1),
+          convertActivityStorageToChartData
+        )
+      )
     );
   }
 }

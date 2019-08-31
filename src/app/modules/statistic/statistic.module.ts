@@ -10,6 +10,7 @@ import { ChartComponent } from './components/chart/chart.component';
 import { SharedModule } from '../../shared/shared.module';
 import { DateFilterComponent } from './components/date-filter/date-filter.component';
 import { StatisticDispatch } from './store/statistic.dispatch';
+import { HslToStringPipe } from './pipes/hsl-to-string.pipe';
 
 const routes: Routes = [
   {
@@ -27,8 +28,7 @@ const routes: Routes = [
     SharedModule,
     ChartsModule
   ],
-  declarations: [StatisticPage, ChartComponent, DateFilterComponent],
+  declarations: [StatisticPage, ChartComponent, DateFilterComponent, HslToStringPipe],
   providers: [StatisticDispatch]
 })
 export class StatisticPageModule {}
-

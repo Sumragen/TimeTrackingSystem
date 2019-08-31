@@ -7,7 +7,7 @@
     [chartType]="pieChartType"
     [options]="pieChartOptions"
     [plugins]="pieChartPlugins"
-    [colors]="getColors()"
+    [colors]="chart.colors | hslToString"
   >
   </canvas>
 </div>
