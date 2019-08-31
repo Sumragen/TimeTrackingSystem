@@ -9,6 +9,7 @@ import { NgLetDirective } from './directives/ng-let';
 import { ActionBuilder } from './store/action-builder';
 import { ColorPickerComponent } from './components/color-picker/color-picker.component';
 import { ColorPickerPopoverComponent } from './components/color-picker-popover/color-picker-popover.component';
+import { ColorStyleDirective } from './directives/color-style.directive';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ColorPickerPopoverComponent } from './components/color-picker-popover/c
     InnerButtonStylesDirective,
     NgLetDirective,
     ColorPickerComponent,
-    ColorPickerPopoverComponent
+    ColorPickerPopoverComponent,
+    ColorStyleDirective
   ],
   imports: [CommonModule, RouterModule, IonicModule],
   exports: [
@@ -24,9 +26,10 @@ import { ColorPickerPopoverComponent } from './components/color-picker-popover/c
     InnerButtonStylesDirective,
     NgLetDirective,
     ColorPickerComponent,
-    ColorPickerPopoverComponent
+    ColorPickerPopoverComponent,
+    ColorStyleDirective
   ],
   providers: [ActionBuilder],
-  entryComponents: [ColorPickerComponent]
+  entryComponents: [ColorPickerPopoverComponent]
 })
 export class SharedModule {}

@@ -7,7 +7,6 @@ import { ActivityStorageService } from '../activity/services/activity-storage.se
 import { TimeService } from '../../shared/services/time/time.service';
 import { prop } from 'ramda';
 import { DateFilter } from './date-filter/date-filter.component';
-import { ColorPickerComponent } from '../../shared/components/color-picker/color-picker.component';
 import { PopoverController } from '@ionic/angular';
 import { ColorPickerPopoverComponent } from '../../shared/components/color-picker-popover/color-picker-popover.component';
 
@@ -39,12 +38,17 @@ export class StatisticPage implements AfterViewInit {
     this.chart$ = this.initChart$();
   }
 
-  public async selectColor(ev: Event): Promise<any> {
+  public async selectColor(): Promise<any> {
     const popover = await this.popoverController.create({
-      component: ColorPickerComponent,
-      event: ev,
+      component: ColorPickerPopoverComponent,
+      componentProps: {
+        color: '#50FF6B'
+      },
       translucent: true,
       cssClass: 'color-picker-popover'
+    });
+    popover.onDidDismiss().then(data => {
+      console.log(data);
     });
     return await popover.present();
   }
