@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HLColor } from '../../models/colors.models';
+import { StyleService } from '../../services/style/style.service';
 
 @Component({
   selector: 'app-hsl-color-picker',
@@ -15,4 +16,7 @@ export class HslColorPickerComponent implements OnInit {
 
   ngOnInit() {}
 
+  public rangeStyle(): string {
+    return StyleService.colorPickerRange();
+  }
 }

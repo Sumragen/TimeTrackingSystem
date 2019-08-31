@@ -22,4 +22,16 @@ export class StyleService {
       --color-activated:black;
     `;
   }
+
+  public static colorPickerRange(): string {
+    return `
+      --knob-size:20px;
+      --bar-height:5px;
+      --bar-border-radius:2px;
+      --bar-background:#ea1818;
+      --knob-background:#bc38ff;
+      --bar-background-active:rgba(1,1,1,0);
+      --pin-background:#ffdd38;
+    `;
+  }
 }
