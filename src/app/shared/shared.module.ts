@@ -19,7 +19,7 @@ import { StyleService } from './services/style/style.service';
     NgLetDirective,
     ColorPickerComponent,
     ColorPickerPopoverComponent,
-    ColorStyleDirective
+    HslColorPickerComponent
   ],
   imports: [CommonModule, RouterModule, IonicModule],
   exports: [
@@ -28,7 +28,7 @@ import { StyleService } from './services/style/style.service';
     NgLetDirective,
     ColorPickerComponent,
     ColorPickerPopoverComponent,
-    ColorStyleDirective
+    HslColorPickerComponent
   ],
   providers: [ActionBuilder, StyleService],
   entryComponents: [ColorPickerPopoverComponent]
