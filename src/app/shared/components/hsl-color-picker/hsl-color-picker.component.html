@@ -2,10 +2,19 @@
   <ion-item>
     <ion-range
       pin
-      [appStyle]="rangeStyle(color)"
+      [appStyle]="hueStyle(color)"
       [(ngModel)]="color.hue"
       min="0"
       max="360"
+    ></ion-range>
+  </ion-item>
+  <ion-item>
+    <ion-range
+      pin
+      [appStyle]="luminanceStyle(color)"
+      [(ngModel)]="color.luminance"
+      min="0"
+      max="100"
     ></ion-range>
   </ion-item>
 </ion-list>
