@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map as mapO } from 'rxjs/operators';
 import { descend, map, pipe, prop, sort, toPairs } from 'ramda';
 
-import { HLColor } from '../../../shared/models/colors.models';
+import { HSLColor } from '../../../shared/models/colors.models';
 
 import { createActivityTypeButton, getLatestActivityTypes } from './activity.operators';
 import { ActivityStorageService } from './activity-storage.service';
@@ -13,11 +13,12 @@ import { ActivityTypeButton } from '../models/activity.types';
 export class ActivityService {
   constructor(private storageService: ActivityStorageService) {}
 
-  public static getRandomHLColor(): HLColor {
+  public static getRandomHLColor(): HSLColor {
     const hue = Math.floor(Math.random() * 36) * 10;
     const luminance = Math.floor(Math.random() * 17) + 50;
+    const saturation = 100;
 
-    return { hue, luminance };
+    return { hue, luminance, saturation };
   }
 
   public getCurrentTypes(): Observable<ActivityTypeButton[] | null> {

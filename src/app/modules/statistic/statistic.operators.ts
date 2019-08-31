@@ -21,7 +21,7 @@ import {
 import { ChartData } from './statistic.page';
 import { ActivityStorage } from '../activity/services/activity-storage.types';
 import { DateFilter } from './date-filter/date-filter.component';
-import { HLColor } from '../../shared/models/colors.models';
+import { HSLColor } from '../../shared/models/colors.models';
 
 const mapArrayByProp = (property: string) => map(prop(property));
 
@@ -37,7 +37,7 @@ const getData = mapArrayByProp('data');
 
 const convertChartPropsToObject = (
   labels: string[],
-  colors: HLColor[],
+  colors: HSLColor[],
   data: number[]
 ): ChartData => ({
   labels,
@@ -45,7 +45,7 @@ const convertChartPropsToObject = (
   data
 });
 
-export const toHSLA = color => `hsla(${color.hue}, 100%, ${color.luminance}%, 1)`;
+export const toHSLA = color => `hsla(${color.hue}, ${color.saturation}%, ${color.luminance}%, 1)`;
 
 const getPerformedTimeData = pipe(
   mapArrayByProp('performedTime'),

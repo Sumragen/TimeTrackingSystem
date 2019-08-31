@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HLColor } from '../../models/colors.models';
+import { HSLColor } from '../../models/colors.models';
 
 @Injectable()
 export class StyleService {
@@ -7,7 +7,7 @@ export class StyleService {
     return `--background:${color}`;
   }
 
-  public static button(color: HLColor): string {
+  public static button(color: HSLColor): string {
     const border = `hsla(${color.hue}, 100%, ${color.luminance}%, 1)`;
     const bg = `hsla(${color.hue}, 100%, ${color.luminance}%, 0.3)`;
     const bgActivated = `hsla(${color.hue}, 100%, ${color.luminance - 10}%, 0.6)`;
@@ -23,7 +23,7 @@ export class StyleService {
     `;
   }
 
-  public static colorPickerHueRange(color: HLColor): string {
+  public static colorPickerHueRange(color: HSLColor): string {
     return `
       --knob-size: 30px;
       --bar-height: 10px;
@@ -36,7 +36,7 @@ export class StyleService {
     `;
   }
 
-  public static colorPickerLuminanceRange(color: HLColor): string {
+  public static colorPickerLuminanceRange(color: HSLColor): string {
     return `
       --knob-size: 30px;
       --bar-height: 10px;
@@ -46,7 +46,19 @@ export class StyleService {
       --knob-background:hsla(${color.hue}, 100%, ${color.luminance}%, 1);
       --bar-background-active:rgba(1,1,1,0);
       --pin-background:hsla(${color.hue}, 100%, ${color.luminance}%, 1);
-      
+    `;
+  }
+
+  public static colorPickerSaturationRange(color: HSLColor): string {
+    return `
+      --knob-size: 30px;
+      --bar-height: 10px;
+      --bar-border-radius: 5px;
+      --height: 55px;
+      --bar-background:linear-gradient(to right, hsla(${color.hue}, 100%, 0%, 1) 0%, hsla(${color.hue}, 100%, 50%, 1) 50%, hsla(${color.hue}, 100%, 100%, 1) 100%);
+      --knob-background:hsla(${color.hue}, ${color.saturation}%, 50%, 1);
+      --bar-background-active:rgba(1,1,1,0);
+      --pin-background:hsla(${color.hue}, ${color.saturation}%, 50%, 1);
     `;
   }
 }

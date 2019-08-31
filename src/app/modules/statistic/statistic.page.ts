@@ -10,12 +10,12 @@ import { DateFilter } from './date-filter/date-filter.component';
 import { PopoverController } from '@ionic/angular';
 import { ColorPickerPopoverComponent } from '../../shared/components/color-picker-popover/color-picker-popover.component';
 import { StyleService } from '../../shared/services/style/style.service';
-import { HLColor } from '../../shared/models/colors.models';
+import { HSLColor } from '../../shared/models/colors.models';
 
 export interface ChartData {
   labels: string[];
   data: number[];
-  colors: HLColor[];
+  colors: HSLColor[];
 }
 
 @Component({
@@ -40,11 +40,11 @@ export class StatisticPage implements AfterViewInit {
     this.chart$ = this.initChart$();
   }
 
-  public bgStyle(color: HLColor): string {
+  public bgStyle(color: HSLColor): string {
     return StyleService.bg(toHSLA(color));
   }
 
-  public async selectColor(color: HLColor): Promise<any> {
+  public async selectColor(color: HSLColor): Promise<any> {
     const popover = await this.popoverController.create({
       component: ColorPickerPopoverComponent,
       componentProps: {

@@ -1,7 +1,7 @@
-import { HLColor } from '../../../shared/models/colors.models';
+import { HSLColor } from '../../../shared/models/colors.models';
 
 export interface ActivityTypeButton {
-  color: HLColor;
+  color: HSLColor;
   label: string;
 }
 

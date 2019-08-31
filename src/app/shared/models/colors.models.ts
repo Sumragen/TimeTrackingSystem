@@ -1,7 +1,10 @@
 interface Hue {
   hue: number;
 }
+interface Saturation {
+  saturation: number;
+}
 interface Luminance {
   luminance: number;
 }
-export interface HLColor extends Hue, Luminance {}
+export interface HSLColor extends Hue, Saturation, Luminance {}

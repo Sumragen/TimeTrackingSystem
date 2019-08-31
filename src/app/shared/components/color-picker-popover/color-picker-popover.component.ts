@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { StyleService } from '../../services/style/style.service';
-import { HLColor } from '../../models/colors.models';
+import { HSLColor } from '../../models/colors.models';
 import { toHSLA } from '../../../modules/statistic/statistic.operators';
 
 @Component({
@@ -10,8 +10,8 @@ import { toHSLA } from '../../../modules/statistic/statistic.operators';
   styleUrls: ['./color-picker-popover.component.scss']
 })
 export class ColorPickerPopoverComponent implements OnInit {
-  @Input() public color: HLColor;
-  public prevColor: HLColor;
+  @Input() public color: HSLColor;
+  public prevColor: HSLColor;
 
   constructor(private popoverController: PopoverController) {}
 
@@ -19,7 +19,7 @@ export class ColorPickerPopoverComponent implements OnInit {
     this.prevColor = { ...this.color };
   }
 
-  public bgStyle(color: HLColor): string {
+  public bgStyle(color: HSLColor): string {
     if (!color) {
       return '';
     }
