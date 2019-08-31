@@ -30,4 +30,8 @@ export class ColorPickerPopoverComponent implements OnInit {
   public applyColor(): void {
     this.popoverController.dismiss(this.color);
   }
+
+  public cancel(): void {
+    this.popoverController.dismiss(null);
+  }
 }

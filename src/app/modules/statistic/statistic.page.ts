@@ -15,6 +15,7 @@ import { StatisticDispatch } from './store/statistic.dispatch';
 import { Actions, ofType } from '@ngrx/effects';
 import { STORAGE_EFFECT } from '../../shared/store/effects/storage.effect';
 import { ActivityStorage } from '../activity/services/activity-storage.types';
+import { isNull } from 'util';
 
 export interface ChartData {
   labels: string[];
@@ -57,16 +58,21 @@ export class StatisticPage implements AfterViewInit {
 
   public async selectColor(chart: ChartData, index: number): Promise<any> {
     const color: HSLColor = chart.colors[index];
+    const label: string = chart.labels[index];
     const popover = await this.popoverController.create({
       component: ColorPickerPopoverComponent,
       componentProps: {
-        color
+        color,
+        label
       },
+      backdropDismiss: false,
       translucent: true,
       cssClass: 'color-picker-popover'
     });
     popover.onDidDismiss().then((data: OverlayEventDetail<HSLColor>) => {
-      this.statisticDispatch.updateType(chart.labels[index], data.data);
+      if (!isNull(data.data)) {
+        this.statisticDispatch.updateType(label, data.data);
+      }
     });
     return await popover.present();
   }
