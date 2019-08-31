@@ -15,11 +15,15 @@ export class HslColorPickerComponent implements OnInit {
 
   ngOnInit() {}
 
-  public hueStyle(color: HSLColor): string {
+  public hueStyle(): string {
     return StyleService.colorPickerHueRange(this.color);
   }
 
-  public luminanceStyle(color: HSLColor): string {
+  public luminanceStyle(): string {
     return StyleService.colorPickerLuminanceRange(this.color);
+  }
+
+  public saturationStyle(): string {
+    return StyleService.colorPickerSaturationRange(this.color);
   }
 }

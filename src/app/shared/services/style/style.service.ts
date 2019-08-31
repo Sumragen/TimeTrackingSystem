@@ -55,7 +55,7 @@ export class StyleService {
       --bar-height: 10px;
       --bar-border-radius: 5px;
       --height: 55px;
-      --bar-background:linear-gradient(to right, hsla(${color.hue}, 100%, 0%, 1) 0%, hsla(${color.hue}, 100%, 50%, 1) 50%, hsla(${color.hue}, 100%, 100%, 1) 100%);
+      --bar-background:linear-gradient(to right, hsla(${color.hue}, 0%, 50%, 1) 0%, hsla(${color.hue}, 50%, 50%, 1) 50%, hsla(${color.hue}, 100%, 50%, 1) 100%);
       --knob-background:hsla(${color.hue}, ${color.saturation}%, 50%, 1);
       --bar-background-active:rgba(1,1,1,0);
       --pin-background:hsla(${color.hue}, ${color.saturation}%, 50%, 1);
