@@ -23,7 +23,7 @@ export class StyleService {
     `;
   }
 
-  public static colorPickerRange(color: HLColor): string {
+  public static colorPickerHueRange(color: HLColor): string {
     return `
       --knob-size: 30px;
       --bar-height: 10px;
