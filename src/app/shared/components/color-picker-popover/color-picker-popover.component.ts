@@ -11,6 +11,7 @@ import { toHSLA } from '../../../modules/statistic/services/statistic.operators'
 })
 export class ColorPickerPopoverComponent implements OnInit {
   @Input() public color: HSLColor;
+  @Input() public label: string;
   public prevColor: HSLColor;
 
   constructor(private popoverController: PopoverController) {}

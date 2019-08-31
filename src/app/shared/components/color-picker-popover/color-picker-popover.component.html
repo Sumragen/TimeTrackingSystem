@@ -1,13 +1,18 @@
 <div class="color-picker-popover-container">
-  <ion-chip [appStyle]="bgStyle(prevColor)">
-    <ion-label>Previous</ion-label>
-  </ion-chip>
-  <ion-chip [appStyle]="bgStyle(color)">
-    <ion-label>Current</ion-label>
-  </ion-chip>
+  <ion-item lines="none">
+    <ion-chip [appStyle]="bgStyle(prevColor)">
+      <ion-label>Current</ion-label>
+    </ion-chip>
+
+    <ion-chip [appStyle]="bgStyle(color)" slot="end">
+      <ion-label>{{ label || 'New' }}</ion-label>
+    </ion-chip>
+  </ion-item>
 
   <app-hsl-color-picker [(color)]="color"></app-hsl-color-picker>
 
-  <ion-button fill="clear" (click)="applyColor()">Apply</ion-button>
-  <ion-button fill="clear">Cancel</ion-button>
+  <ion-item slot="end" lines="none">
+    <ion-button fill="clear" slot="end" color="danger" (click)="cancel()">Cancel</ion-button>
+    <ion-button fill="clear" slot="end" color="dark" (click)="applyColor()">Apply</ion-button>
+  </ion-item>
 </div>
