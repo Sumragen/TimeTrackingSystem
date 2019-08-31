@@ -1,3 +1,12 @@
-<p>
-  color-picker-popover works!
-</p>
+<div class="color-picker-popover-container">
+  <ion-chip [appColorStyle]="prevColor">
+    <ion-label>Previous</ion-label>
+  </ion-chip>
+  <ion-chip [appColorStyle]="color">
+    <ion-label>Current</ion-label>
+  </ion-chip>
+  <app-color-picker [(hexColor)]="color"></app-color-picker>
+
+  <ion-button fill="clear" (click)="applyColor()">Apply</ion-button>
+  <ion-button fill="clear">Cancel</ion-button>
+</div>

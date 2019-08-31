@@ -1,23 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { ColorPickerComponent } from '../color-picker/color-picker.component';
 
 @Component({
   selector: 'app-color-picker-popover',
   templateUrl: './color-picker-popover.component.html',
-  styleUrls: ['./color-picker-popover.component.scss'],
+  styleUrls: ['./color-picker-popover.component.scss']
 })
 export class ColorPickerPopoverComponent implements OnInit {
-  constructor(public popoverController: PopoverController) {}
+  @Input() public color = '#f2f2f2';
+  public prevColor = this.color;
+
+  constructor(private popoverController: PopoverController) {}
 
   ngOnInit() {}
 
-  public async presentPopover(ev: any) {
-    const popover = await this.popoverController.create({
-      component: ColorPickerComponent,
-      event: ev,
-      translucent: true
-    });
-    return await popover.present();
+  public applyColor(): void {
+    this.popoverController.dismiss(this.color);
   }
 }

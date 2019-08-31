@@ -28,6 +28,7 @@ const POUCH = [
 })
 export class ColorPickerComponent implements AfterViewInit {
   @Input() hexColor: string;
+  @Output() hexColorChange: EventEmitter<string> = new EventEmitter(false);
 
   @Output() colorChanged = new EventEmitter<String>();
   @Output() colorTouchStart = new EventEmitter<void>();
@@ -146,14 +147,14 @@ export class ColorPickerComponent implements AfterViewInit {
 
   initChooser() {
     let canvasChooser = this.chooser.nativeElement;
-    var ctx = canvasChooser.getContext('2d');
+    const ctx = canvasChooser.getContext('2d');
 
-    var currentWidth = window.innerWidth;
+    const currentWidth = window.innerWidth;
 
-    var pixelRatio = ColorPickerComponent.getPixelRatio(ctx);
+    const pixelRatio = ColorPickerComponent.getPixelRatio(ctx);
 
-    var width = (currentWidth * 90) / 100;
-    var height = width * 0.05;
+    const width = (currentWidth * 90) / 100;
+    const height = width * 0.05;
 
     ctx.canvas.width = width * pixelRatio;
     ctx.canvas.height = height * pixelRatio;
@@ -163,7 +164,7 @@ export class ColorPickerComponent implements AfterViewInit {
 
     ColorPickerComponent.drawChooser(ctx);
 
-    var eventChangeColorChooser = event => {
+    const eventChangeColorChooser = event => {
       this.updateColorChooser(event, canvasChooser, ctx);
       this.drawSelector(
         this.ctxPalette,
@@ -201,7 +202,7 @@ export class ColorPickerComponent implements AfterViewInit {
   private static drawChooser(ctx: CanvasRenderingContext2D): void {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-    var gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0);
+    const gradient = ctx.createLinearGradient(0, 0, ctx.canvas.width, 0);
 
     // Create color gradient
     gradient.addColorStop(0, 'rgb(255,   0,   0)');
@@ -218,9 +219,9 @@ export class ColorPickerComponent implements AfterViewInit {
   }
 
   private static getPixelRatio(ctx): number {
-    var dpr = window.devicePixelRatio || 1;
+    const dpr = window.devicePixelRatio || 1;
 
-    var bsr =
+    const bsr =
       ctx.webkitBackingStorePixelRatio ||
       ctx.mozBackingStorePixelRatio ||
       ctx.msBackingStorePixelRatio ||
@@ -234,21 +235,23 @@ export class ColorPickerComponent implements AfterViewInit {
   updateColorChooser(event, canvas, context) {
     this.color = this.colorFromChooser = this.getColor(event, canvas, context, true);
     this.colorChanged.emit(this.color);
+    this.hexColorChange.emit(this.color);
     this.drawPalette(this.color);
   }
 
   updateColor(event, canvas, context) {
     this.color = this.getColor(event, canvas, context, false);
     this.colorChanged.emit(this.color);
+    this.hexColorChange.emit(this.color);
   }
 
   getColor(event, canvas, context, fromChooser: boolean): string {
-    var bounding = canvas.getBoundingClientRect(),
+    const bounding = canvas.getBoundingClientRect(),
       touchX = event.pageX || event.changedTouches[0].pageX || event.changedTouches[0].screenX,
       touchY = event.pageY || event.changedTouches[0].pageY || event.changedTouches[0].screenX;
 
-    var x = (touchX - bounding.left) * ColorPickerComponent.getPixelRatio(context);
-    var y = (touchY - bounding.top) * ColorPickerComponent.getPixelRatio(context);
+    const x = (touchX - bounding.left) * ColorPickerComponent.getPixelRatio(context);
+    const y = (touchY - bounding.top) * ColorPickerComponent.getPixelRatio(context);
 
     if (fromChooser) {
       this.chooserX = x;
@@ -257,10 +260,10 @@ export class ColorPickerComponent implements AfterViewInit {
       this.paletteY = y;
     }
 
-    var imageData = context.getImageData(x, y, 1, 1);
-    var red = imageData.data[0];
-    var green = imageData.data[1];
-    var blue = imageData.data[2];
+    const imageData = context.getImageData(x, y, 1, 1);
+    const red = imageData.data[0];
+    const green = imageData.data[1];
+    const blue = imageData.data[2];
     return (
       '#' +
       ColorPickerComponent.toHex(red) +
