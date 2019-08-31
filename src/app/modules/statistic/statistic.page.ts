@@ -9,6 +9,7 @@ import { prop } from 'ramda';
 import { DateFilter } from './date-filter/date-filter.component';
 import { PopoverController } from '@ionic/angular';
 import { ColorPickerPopoverComponent } from '../../shared/components/color-picker-popover/color-picker-popover.component';
+import { StyleService } from '../../shared/services/style/style.service';
 
 export interface ChartData {
   labels: string[];
@@ -36,6 +37,10 @@ export class StatisticPage implements AfterViewInit {
   ngAfterViewInit() {
     this.dateFilter$ = this.initDateFilter$();
     this.chart$ = this.initChart$();
+  }
+
+  public bgStyle(color: string): string {
+    return StyleService.bg(color);
   }
 
   public async selectColor(): Promise<any> {

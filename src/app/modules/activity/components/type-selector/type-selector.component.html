@@ -4,7 +4,7 @@
     <ion-button
       class="type-button"
       *ngFor="let type of types"
-      [appInnerButtonStyles]="type.color"
+      [appStyle]="buttonStyle(type.color)"
       expand="full"
       fill="outline"
       (click)="selectType(type.label)"

@@ -4,17 +4,18 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 import { MenuComponent } from './components/menu/menu.component';
-import { InnerButtonStylesDirective } from './directives/inner-button-styles.directive';
 import { NgLetDirective } from './directives/ng-let';
 import { ActionBuilder } from './store/action-builder';
 import { ColorPickerComponent } from './components/color-picker/color-picker.component';
 import { ColorPickerPopoverComponent } from './components/color-picker-popover/color-picker-popover.component';
-import { ColorStyleDirective } from './directives/color-style.directive';
+import { StyleDirective } from './directives/style.directive';
+import { HslColorPickerComponent } from './components/hsl-color-picker/hsl-color-picker.component';
+import { StyleService } from './services/style/style.service';
 
 @NgModule({
   declarations: [
     MenuComponent,
-    InnerButtonStylesDirective,
+    StyleDirective,
     NgLetDirective,
     ColorPickerComponent,
     ColorPickerPopoverComponent,
@@ -23,13 +24,13 @@ import { ColorStyleDirective } from './directives/color-style.directive';
   imports: [CommonModule, RouterModule, IonicModule],
   exports: [
     MenuComponent,
-    InnerButtonStylesDirective,
+    StyleDirective,
     NgLetDirective,
     ColorPickerComponent,
     ColorPickerPopoverComponent,
     ColorStyleDirective
   ],
-  providers: [ActionBuilder],
+  providers: [ActionBuilder, StyleService],
   entryComponents: [ColorPickerPopoverComponent]
 })
 export class SharedModule {}

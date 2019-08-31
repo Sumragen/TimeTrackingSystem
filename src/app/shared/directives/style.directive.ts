@@ -2,15 +2,16 @@ import { Directive, HostBinding, Input } from '@angular/core';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 @Directive({
-  selector: '[appColorStyle]'
+  selector: '[appStyle]'
 })
-export class ColorStyleDirective {
-  @Input('appColorStyle') color: string;
+export class StyleDirective {
+  @Input('appStyle') style: string;
 
   constructor(private sanitizer: DomSanitizer) {}
 
+
   @HostBinding('attr.style')
   public get valueAsStyle(): SafeStyle {
-    return this.sanitizer.bypassSecurityTrustStyle(`--background:${this.color};`);
+    return this.sanitizer.bypassSecurityTrustStyle(this.style);
   }
 }

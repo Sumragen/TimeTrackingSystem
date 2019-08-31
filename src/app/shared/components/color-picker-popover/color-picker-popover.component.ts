@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
+import { StyleService } from '../../services/style/style.service';
 
 @Component({
   selector: 'app-color-picker-popover',
@@ -13,6 +14,10 @@ export class ColorPickerPopoverComponent implements OnInit {
   constructor(private popoverController: PopoverController) {}
 
   ngOnInit() {}
+
+  public bgStyle(color: string): string {
+    return StyleService.bg(color)
+  }
 
   public applyColor(): void {
     this.popoverController.dismiss(this.color);

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivityTypeButton } from '../../models/activity.types';
+import { HLColor } from '../../../../shared/models/colors.models';
+import { StyleService } from '../../../../shared/services/style/style.service';
 
 @Component({
   selector: 'app-type-selector',
@@ -16,5 +18,9 @@ export class TypeSelectorComponent implements OnInit {
 
   public selectType(type: string) {
     this.typeSelect.emit(type);
+  }
+
+  public buttonStyle(color: HLColor): string {
+    return StyleService.button(color)
   }
 }
