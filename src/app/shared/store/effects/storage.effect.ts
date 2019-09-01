@@ -26,7 +26,9 @@ import { HSLColor } from '../../models/colors.models';
 export enum STORAGE_EFFECT {
   LOG_TIME = 'E_LOG_ACTIVITY_TIME',
   COMPLETE = 'E_ACTIVITY_COMPLETE',
-  UPDATE_KEY = 'E_UPDATE_KEY'
+  UPDATE_KEY = 'E_UPDATE_KEY',
+  UPDATE = 'E_UPDATE',
+  DID_UPDATE = 'E_DID_UPDATE'
 }
 
 @Injectable()
@@ -53,24 +55,32 @@ export class StorageEffect {
     )
   );
 
-  updateKey$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(STORAGE_EFFECT.UPDATE_KEY),
-        switchMap((action: PayloadAction<{ color: HSLColor; type: string }>) => {
-          return this.storageService.getStorage().pipe(
-            map((storage: ActivityStorage) => ({
-              ...storage,
-              [action.payload.type]: {
-                ...storage[action.payload.type],
-                color: action.payload.color
-              }
-            }))
-          );
-        }),
-        tap((storage: ActivityStorage) => this.storageService.setStorage(storage))
+  updateKey$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(STORAGE_EFFECT.UPDATE_KEY),
+      switchMap((action: PayloadAction<{ color: HSLColor; type: string }>) => {
+        return this.storageService.getStorage().pipe(
+          map((storage: ActivityStorage) => ({
+            ...storage,
+            [action.payload.type]: {
+              ...storage[action.payload.type],
+              color: action.payload.color
+            }
+          }))
+        );
+      }),
+      map((storage: ActivityStorage) => ActionBuilder.payload(STORAGE_EFFECT.UPDATE, storage))
+    )
+  );
+
+  update$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(STORAGE_EFFECT.UPDATE),
+      tap((action: PayloadAction<ActivityStorage>) =>
+        this.storageService.setStorage(action.payload)
       ),
-    { dispatch: false }
+      map(() => ({ type: STORAGE_EFFECT.DID_UPDATE }))
+    )
   );
 
   complete$ = createEffect(() =>

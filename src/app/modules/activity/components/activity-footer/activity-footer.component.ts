@@ -87,7 +87,7 @@ export class ActivityFooterComponent implements OnInit {
 
   private initTypes$(): Observable<ActivityTypeButton[]> {
     return this.actions$.pipe(
-      ofType(ActivityActionsKey.PERFORM, ActivityActionsKey.COMPLETE, STORAGE_EFFECT.UPDATE_KEY),
+      ofType(ActivityActionsKey.PERFORM, ActivityActionsKey.COMPLETE, STORAGE_EFFECT.DID_UPDATE),
       startWith(null),
       switchMap(() => this.activityService.getCurrentTypes()),
       map((types: ActivityTypeButton[]) => types.slice(0, 4))

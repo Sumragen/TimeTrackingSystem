@@ -21,6 +21,6 @@ export class TypeSelectorComponent implements OnInit {
   }
 
   public buttonStyle(color: HSLColor): string {
-    return StyleService.button(color)
+    return StyleService.button(color);
   }
 }

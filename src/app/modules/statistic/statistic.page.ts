@@ -46,7 +46,7 @@ export class StatisticPage implements AfterViewInit {
   ngAfterViewInit() {
     this.dateFilter$ = this.initDateFilter$();
     this.storageUpdate$ = this.actions$.pipe(
-      ofType(STORAGE_EFFECT.UPDATE_KEY),
+      ofType(STORAGE_EFFECT.DID_UPDATE),
       startWith(null)
     );
     this.chart$ = this.initChart$();

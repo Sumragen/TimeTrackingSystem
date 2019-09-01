@@ -19,11 +19,13 @@ export class StorageService {
     if (this.isBrowser()) {
       return of(JSON.parse(localStorage.getItem(key)));
     } else {
-      return fromPromise(this.storage.getItem(key).catch(reason => {
-        if (reason.code === 2) {
-          return null;
-        }
-      }));
+      return fromPromise(
+        this.storage.getItem(key).catch(reason => {
+          if (reason.code === 2) {
+            return null;
+          }
+        })
+      );
     }
   }
 
