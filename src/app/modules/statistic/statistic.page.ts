@@ -69,7 +69,7 @@ export class StatisticPage implements AfterViewInit {
       translucent: true,
       cssClass: 'color-picker-popover'
     });
-    popover.onDidDismiss().then((data: OverlayEventDetail<HSLColor>) => {
+    popover.onWillDismiss().then((data: OverlayEventDetail<HSLColor>) => {
       if (!isNull(data.data)) {
         this.statisticDispatch.updateType(label, data.data);
       }

@@ -9,6 +9,7 @@ import { ActivityService } from '../../services/activity.service';
 import { ActivityActionsKey, ActivityState } from '../../store/activity.reducer';
 import { ActivityDispatch } from '../../store/activity.dispatch';
 import { ACTIVITY_STATUS, ActivityTypeButton } from '../../models/activity.types';
+import { STORAGE_EFFECT } from '../../../../shared/store/effects/storage.effect';
 
 @Component({
   selector: 'app-activity-footer',
@@ -86,7 +87,7 @@ export class ActivityFooterComponent implements OnInit {
 
   private initTypes$(): Observable<ActivityTypeButton[]> {
     return this.actions$.pipe(
-      ofType(ActivityActionsKey.PERFORM, ActivityActionsKey.COMPLETE),
+      ofType(ActivityActionsKey.PERFORM, ActivityActionsKey.COMPLETE, STORAGE_EFFECT.UPDATE_KEY),
       startWith(null),
       switchMap(() => this.activityService.getCurrentTypes()),
       map((types: ActivityTypeButton[]) => types.slice(0, 4))

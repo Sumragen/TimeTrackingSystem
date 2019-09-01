@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { exhaustMap, map, tap, withLatestFrom } from 'rxjs/internal/operators';
+import { exhaustMap, map, switchMap, tap, withLatestFrom } from 'rxjs/internal/operators';
 import { defaultTo, pipe } from 'ramda';
 
 import { ActivityState } from '../../../modules/activity/store/activity.reducer';
@@ -55,26 +55,19 @@ export class StorageEffect {
 
   updateKey$ = createEffect(
     () =>
-      combineLatest(
-        this.actions$.pipe(ofType(STORAGE_EFFECT.UPDATE_KEY)),
-        this.storageService.getStorage()
-      ).pipe(
-        map(
-          ([action, storage]: [
-            PayloadAction<{ color: HSLColor; type: string }>,
-            ActivityStorage
-          ]): ActivityStorage => {
-            const type: string = action.payload.type;
-            const color: HSLColor = action.payload.color;
-            return {
+      this.actions$.pipe(
+        ofType(STORAGE_EFFECT.UPDATE_KEY),
+        switchMap((action: PayloadAction<{ color: HSLColor; type: string }>) => {
+          return this.storageService.getStorage().pipe(
+            map((storage: ActivityStorage) => ({
               ...storage,
-              [type]: {
-                ...storage[type],
-                color
+              [action.payload.type]: {
+                ...storage[action.payload.type],
+                color: action.payload.color
               }
-            };
-          }
-        ),
+            }))
+          );
+        }),
         tap((storage: ActivityStorage) => this.storageService.setStorage(storage))
       ),
     { dispatch: false }
