@@ -21,9 +21,14 @@
       <div>
         <ion-list>
           <ion-item *ngFor="let type of chart.labels; let i = index">
-            <ion-chip [appStyle]="bgStyle(chart.colors[i])" (click)="selectColor(chart, i)">
-              <ion-label>{{ type }}</ion-label>
-            </ion-chip>
+            <ion-button
+              shape="round"
+              [appStyle]="activityTypeStyle(chart.colors[i])"
+              (click)="selectColor(chart, i)"
+              fill="outline"
+            >
+              {{ type }}
+            </ion-button>
             <ion-note slot="end">{{ chart.data[i].amount }} times</ion-note>
             <ion-note slot="end">{{ convertTime(chart.data[i].value) }}</ion-note>
           </ion-item>

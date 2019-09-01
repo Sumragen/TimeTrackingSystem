@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { combineLatest, fromEvent, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { convertActivityStorageToChartData, toHSLA } from './services/statistic.operators';
+import { convertActivityStorageToChartData } from './services/statistic.operators';
 import { ActivityStorageService } from '../activity/services/activity-storage.service';
 import { TimeService } from '../../shared/services/time/time.service';
 import { dropLast, pipe, prop } from 'ramda';
@@ -52,8 +52,8 @@ export class StatisticPage implements AfterViewInit {
     this.chart$ = this.initChart$();
   }
 
-  public bgStyle(color: HSLColor): string {
-    return StyleService.bg(toHSLA(color));
+  public activityTypeStyle(color: HSLColor): string {
+    return StyleService.button(color);
   }
 
   public async selectColor(chart: ChartData, index: number): Promise<any> {

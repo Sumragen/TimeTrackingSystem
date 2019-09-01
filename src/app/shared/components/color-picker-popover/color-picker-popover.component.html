@@ -1,12 +1,11 @@
 <div class="color-picker-popover-container">
   <ion-item lines="none">
-    <ion-chip [appStyle]="bgStyle(prevColor)">
-      <ion-label>Current</ion-label>
-    </ion-chip>
-
-    <ion-chip [appStyle]="bgStyle(color)" slot="end">
-      <ion-label>{{ label || 'New' }}</ion-label>
-    </ion-chip>
+    <ion-button fill="outline" shape="round" [appStyle]="buttonStyle(prevColor)">
+      Current
+    </ion-button>
+    <ion-button fill="outline" shape="round" [appStyle]="buttonStyle(color)" slot="end">
+      {{ label || 'New' }}
+    </ion-button>
   </ion-item>
 
   <app-hsl-color-picker [(color)]="color"></app-hsl-color-picker>

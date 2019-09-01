@@ -8,10 +8,10 @@ export class StyleService {
   }
 
   public static button(color: HSLColor): string {
-    const border = `hsla(${color.hue}, 100%, ${color.luminance}%, 1)`;
-    const bg = `hsla(${color.hue}, 100%, ${color.luminance}%, 0.3)`;
-    const bgActivated = `hsla(${color.hue}, 100%, ${color.luminance - 10}%, 0.6)`;
-    const ripple = `hsla(${color.hue}, 100%, ${color.luminance - 10}%, 0.6)`;
+    const border = `hsla(${color.hue}, ${color.saturation}%, ${color.luminance}%, 1)`;
+    const bg = `hsla(${color.hue}, ${color.saturation}%, ${color.luminance}%, 0.3)`;
+    const bgActivated = `hsla(${color.hue}, ${color.saturation}%, ${color.luminance - 10}%, 0.6)`;
+    const ripple = `hsla(${color.hue}, ${color.saturation}%, ${color.luminance - 10}%, 0.6)`;
 
     return `
       --border-color:${border};
