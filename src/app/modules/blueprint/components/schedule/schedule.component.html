@@ -2,10 +2,10 @@
   <ion-list>
     <ion-reorder-group [disabled]="false" (ionItemReorder)="doReorder($event)">
       <ion-item *ngFor="let item of items" [detail]="false">
-        <ion-reorder slot="start"></ion-reorder>
         <ion-label>
           {{ item }}
         </ion-label>
+        <ion-reorder slot="end"></ion-reorder>
       </ion-item>
     </ion-reorder-group>
   </ion-list>
