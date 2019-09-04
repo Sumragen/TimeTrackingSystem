@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { Device } from '@ionic-native/device/ngx';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { StoreModule } from '@ngrx/store';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { Device } from '@ionic-native/device/ngx';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+
 import { TimeService } from './shared/services/time/time.service';
 import { SharedModule } from './shared/shared.module';
-import { reducers } from './shared/store/store';
 import { InjectableStoreModule } from './shared/store/decorators/injectable-store/injectable-store.module';
+import { reducers } from './shared/store/store';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +34,7 @@ import { AppRoutingModule } from './app-routing.module';
   providers: [
     StatusBar,
     SplashScreen,
+    LocalNotifications,
     NativeStorage,
     Device,
     TimeService,

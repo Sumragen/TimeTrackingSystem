@@ -13,6 +13,7 @@ import { HslColorPickerComponent } from './components/hsl-color-picker/hsl-color
 import { StyleService } from './services/style/style.service';
 import { FormsModule } from '@angular/forms';
 import { PropPipe } from './pipes/prop/prop.pipe';
+import { NotificationService } from './services/notification/notification.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { PropPipe } from './pipes/prop/prop.pipe';
     HslColorPickerComponent,
     PropPipe
   ],
-  providers: [ActionBuilder, StyleService],
+  providers: [ActionBuilder, StyleService, NotificationService],
   entryComponents: [ColorPickerPopoverComponent]
 })
 export class SharedModule {}
