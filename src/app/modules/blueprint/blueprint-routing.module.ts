@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SchedulePageComponent } from './schedule-page.component';
+import { BlueprintPageComponent } from './blueprint-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: SchedulePageComponent
+    component: BlueprintPageComponent
   }
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ScheduleRoutingModule {}
+export class BlueprintRoutingModule {}
