@@ -10,7 +10,7 @@ import { MenuController } from '@ionic/angular';
 export class MenuComponent {
   constructor(private router: Router, private menuController: MenuController) {}
 
-  public handleStatisticClick(): void {
-    this.router.navigate(['statistic']).then(() => this.menuController.close());
+  public handleNavigation(route: string): void {
+    this.router.navigate([route]).then(() => this.menuController.close());
   }
 }
