@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -29,7 +30,8 @@ import { AppRoutingModule } from './app-routing.module';
     SharedModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([]),
-    InjectableStoreModule
+    InjectableStoreModule,
+    BrowserAnimationsModule
   ],
   providers: [
     StatusBar,
