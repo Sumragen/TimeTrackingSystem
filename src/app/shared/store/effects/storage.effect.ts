@@ -4,24 +4,17 @@ import { Store } from '@ngrx/store';
 import { exhaustMap, map, switchMap, tap, withLatestFrom } from 'rxjs/internal/operators';
 import { defaultTo, pipe } from 'ramda';
 
+import { ApplyActivityAction } from '../../../modules/activity/models/activity-action.types';
+import { Activity } from '../../../modules/activity/models/activity.types';
 import { ActivityState } from '../../../modules/activity/store/activity.reducer';
 import { ActivityService } from '../../../modules/activity/services/activity.service';
 import { ActivityStorageService } from '../../../modules/activity/services/activity-storage.service';
 import { ActivityStorage } from '../../../modules/activity/services/activity-storage.types';
-
-import { Activity } from '../../../modules/activity/models/activity.types';
 import { TimeService } from '../../services/time/time.service';
-import {
-  ACTIVITY_STATE_KEY,
-  ActivityAction,
-  PayloadAction,
-  StoreState,
-  TargetAction
-} from '../store';
-import { ActionBuilder } from '../action-builder';
-import { combineLatest, Observable } from 'rxjs';
-import { ApplyActivityAction } from '../../../modules/activity/models/activity-action.types';
 import { HSLColor } from '../../models/colors.models';
+
+import { ACTIVITY_STATE_KEY, ActivityAction, PayloadAction, StoreState } from '../store';
+import { ActionBuilder } from '../action-builder';
 
 export enum STORAGE_EFFECT {
   LOG_TIME = 'E_LOG_ACTIVITY_TIME',

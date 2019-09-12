@@ -1,21 +1,24 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
+import { OverlayEventDetail } from '@ionic/core';
+import { Actions, ofType } from '@ngrx/effects';
+
 import { combineLatest, fromEvent, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { convertActivityStorageToChartData } from './services/statistic.operators';
-import { ActivityStorageService } from '../activity/services/activity-storage.service';
-import { TimeService } from '../../shared/services/time/time.service';
 import { dropLast, pipe, prop } from 'ramda';
-import { DateFilter } from './components/date-filter/date-filter.component';
-import { PopoverController } from '@ionic/angular';
-import { ColorPickerPopoverComponent } from '../../shared/components/color-picker-popover/color-picker-popover.component';
-import { StyleService } from '../../shared/services/style/style.service';
-import { HSLColor } from '../../shared/models/colors.models';
-import { OverlayEventDetail } from '@ionic/core';
-import { StatisticDispatch } from './store/statistic.dispatch';
-import { Actions, ofType } from '@ngrx/effects';
-import { STORAGE_EFFECT } from '../../shared/store/effects/storage.effect';
-import { ActivityStorage } from '../activity/services/activity-storage.types';
 import { isNull } from 'util';
+
+import { ColorPickerPopoverComponent } from '../../shared/components/color-picker-popover/color-picker-popover.component';
+import { ActivityStorageService } from '../activity/services/activity-storage.service';
+import { ActivityStorage } from '../activity/services/activity-storage.types';
+import { STORAGE_EFFECT } from '../../shared/store/effects/storage.effect';
+import { StyleService } from '../../shared/services/style/style.service';
+import { TimeService } from '../../shared/services/time/time.service';
+import { HSLColor } from '../../shared/models/colors.models';
+
+import { convertActivityStorageToChartData } from './services/statistic.operators';
+import { StatisticDispatch } from './store/statistic.dispatch';
+import { DateFilter } from './components/date-filter/date-filter.component';
 
 export interface ChartData {
   labels: string[];

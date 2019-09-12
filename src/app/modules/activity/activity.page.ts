@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Observable } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { equals } from 'ramda';
-import { ILocalNotification, LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
-import { DestroyComponent } from '../../shared/components/destroy/destroy.component';
+import { NotificationService } from '../../shared/services/notification/notification.service';
+import { NotificationBuilder } from '../../shared/services/notification/notification-builder';
 import { ACTIVITY_STATE_KEY } from '../../shared/store/store';
+import { DestroyComponent } from '../../shared/components/destroy/destroy.component';
 import { Select } from '../../shared/store/decorators/select';
 
 import { ActivityState } from './store/activity.reducer';
 import { ActivityStorageService } from './services/activity-storage.service';
 import { ACTIVITY_STATUS } from './models/activity.types';
 import { ActivityDispatch } from './store/activity.dispatch';
-import { NotificationService } from '../../shared/services/notification/notification.service';
-import { NotificationBuilder } from '../../shared/services/notification/notification-builder';
 
 @Component({
   selector: 'app-activity',
